@@ -13,45 +13,42 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed, ref, toRef, Ref } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { Todo, Meta } from './models';
 
-function useClickCount() {
-  const clickCount = ref(0);
-  function increment() {
-    clickCount.value += 1;
-    return clickCount.value;
-  }
-
-  return { clickCount, increment };
-}
-
-function useDisplayTodo(todos: Ref<Todo[]>) {
-  const todoCount = computed(() => todos.value.length);
-  return { todoCount };
-}
-
 export default defineComponent({
-  name: 'CompositionComponent',
+  name: 'OptionsComponent',
   props: {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     todos: {
       type: Array as PropType<Todo[]>,
-      default: () => [],
+      default: () => [] as Todo[]
     },
     meta: {
       type: Object as PropType<Meta>,
-      required: true,
+      required: true
     },
     active: {
-      type: Boolean,
-    },
+      type: Boolean
+    }
   },
-  setup(props) {
-    return { ...useClickCount(), ...useDisplayTodo(toRef(props, 'todos')) };
+  data(): { clickCount: number } {
+    return {
+      clickCount: 0
+    };
   },
+  methods: {
+    increment(): void {
+      this.clickCount += 1;
+    }
+  },
+  computed: {
+    todoCount(): number {
+      return this.todos.length;
+    }
+  }
 });
 </script>
