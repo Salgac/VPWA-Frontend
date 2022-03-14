@@ -19,3 +19,12 @@ quasar build
 
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
+
+### Database Schema
+
+<details>
+<summary><b>Show database schema</b></summary>
+
+![db_schema](db_schema.svg)
+
+</details>
