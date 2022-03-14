@@ -10,7 +10,13 @@
         placeholder="Type a message"
         v-on:keyup.enter="sendMessage"
       />
-      <q-btn flat icon="insert_emoticon" class="q-mr-sm" />
+      <q-btn
+        flat
+        icon="insert_emoticon"
+        class="q-mr-sm"
+        v-on:click="addEmote"
+      />
+      <q-btn flat icon="attach_file" class="q-mr-sm" v-on:click="addFile" />
       <q-btn flat icon="send" v-on:click="sendMessage" />
     </q-toolbar>
   </div>
@@ -29,6 +35,12 @@ export default defineComponent({
   },
 
   methods: {
+    addEmote() {
+      //TODO
+    },
+    addFile() {
+      //TODO
+    },
     sendMessage() {
       //TODO send data
       console.log(this.message);
