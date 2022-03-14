@@ -34,24 +34,14 @@
     </q-page-container>
 
     <q-footer bordered>
-      <q-toolbar class="bg-grey-2 text-black row">
-        <q-input
-          outlined
-          dense
-          class="WAL__field col-grow q-mr-sm"
-          bg-color="white"
-          v-model="message"
-          placeholder="Type a message"
-        />
-        <q-btn flat icon="insert_emoticon" class="q-mr-sm" />
-        <q-btn flat icon="send" />
-      </q-toolbar>
+      <MessageBox />
     </q-footer>
   </q-layout>
 </template>
 
 <script lang="ts">
 import EssentialLink from "components/EssentialLink.vue";
+import MessageBox from "components/MessageBox.vue";
 
 const linksList = [
   {
@@ -105,13 +95,13 @@ export default defineComponent({
 
   components: {
     EssentialLink,
+    MessageBox,
   },
 
   data() {
     return {
       leftDrawerOpen: false,
       essentialLinks: linksList,
-      message: "",
     };
   },
 
