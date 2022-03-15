@@ -1,20 +1,24 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-mr-sm" style="width: 100%">
     <q-infinite-scroll @load="onLoad" reverse>
       <template v-slot:loading>
-        <div class="row justify-center q-my-md">
+        <div class="q-my-md absolute-center">
           <q-spinner color="primary" name="dots" size="40px" />
         </div>
       </template>
 
-      <div v-for="(item, index) in items" :key="index" class="caption q-py-sm">
-        <q-badge class="shadow-1">
-          {{ items.length - index }}
-        </q-badge>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
-        repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis
-        perferendis totam, ea at omnis vel numquam exercitationem aut, natus
-        minima, porro labore.
+      <div class="q-pa-md row justify-center">
+        <div style="width: 100%">
+          <q-chat-message
+            v-for="(item, index) in messages"
+            :key="index"
+            :name="[item.author]"
+            avatar="https://cdn.quasar.dev/img/avatar4.jpg"
+            :text="[item.text]"
+            :sent="item.author == 'You' ? true : false"
+            :stamp="[item.time]"
+          />
+        </div>
       </div>
     </q-infinite-scroll>
   </div>
@@ -22,29 +26,24 @@
 
 <script>
 import { defineComponent } from "vue";
-import { ref } from "vue";
 
 export default defineComponent({
   name: "MessageField",
 
   data() {
-    return {};
+    return {
+      messages: [
+        { author: "You", time: "12:43", text: "Hello world!" },
+        { author: "Testy", time: "12:44", text: "I like turtles" },
+      ],
+    };
   },
 
-  methods: {},
-
-  setup() {
-    const items = ref([{}, {}, {}, {}, {}, {}, {}]);
-
-    return {
-      items,
-      onLoad(index, done) {
-        setTimeout(() => {
-          items.value.splice(0, 0, {}, {}, {}, {}, {}, {}, {});
-          done();
-        }, 2000);
-      },
-    };
+  methods: {
+    onLoad(index, done) {
+      //TODO implement this
+      done();
+    },
   },
 });
 </script>
