@@ -2,8 +2,6 @@
   <div>
     <q-item
       clickable
-      tag="a"
-      target="_blank"
       v-ripple
     >
       <q-item-section avatar>

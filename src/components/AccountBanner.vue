@@ -5,11 +5,23 @@
       style="height: 150px"
     >
       <div class="absolute-bottom bg-transparent">
-        <q-avatar>
-          <img :src="profilePhoto">
-        </q-avatar>
-        <div><b>{{ username }}</b></div>
-        <div>{{ email }}</div>
+        <div class="horizontal-element">
+          <q-item clickable>
+            <q-item-section>
+              <q-avatar>
+                <img :src="profilePhoto">
+              </q-avatar>
+              <b>{{ username }}</b>
+              {{ email }}
+            </q-item-section>
+          </q-item>
+        </div>
+        <div class="horizontal-element">
+          <q-btn
+            icon="settings"
+            flat
+          />
+        </div>
       </div>
     </q-img>
   </div>
@@ -44,3 +56,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style>
+.horizontal-element {
+  display: inline-block;
+}
+</style>
