@@ -1,5 +1,7 @@
 <template>
-  <div class="q-mr-sm" style="width: 100%">
+  <div
+    class="q-mr-sm" style="width: 100%"
+  >
     <q-infinite-scroll @load="onLoad" reverse>
       <template v-slot:loading>
         <div class="q-my-md absolute-center">

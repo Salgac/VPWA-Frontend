@@ -17,10 +17,18 @@
           </q-item>
         </div>
         <div class="horizontal-element">
-          <q-btn
-            icon="settings"
-            flat
-          />
+          <div>
+            <q-btn
+              icon="settings"
+              flat
+            />
+          </div>
+          <div>
+            <q-btn
+              icon="logout"
+              flat
+            />
+          </div>
         </div>
       </div>
     </q-img>
@@ -53,7 +61,7 @@ export default defineComponent({
       type: String,
       default: 'https://cdn.quasar.dev/img/material.png'
     }
-  }
+  },
 })
 </script>
 
