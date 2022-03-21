@@ -6,7 +6,7 @@ import {
   useStore as vuexUseStore,
 } from 'vuex'
 
-import userStateInterface from './saved-data'
+import userSavedData from './saved-data'
 import { UserStateInterface } from './saved-data/state';
 
 /*
@@ -22,7 +22,7 @@ export interface StateInterface {
   // Define your own store structure, using submodules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-  userStateInterface: UserStateInterface
+  userSavedData: UserStateInterface
 }
 
 // provide typings for `this.$store`
@@ -39,7 +39,7 @@ export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
       // example
-      userStateInterface
+      userSavedData
     },
 
     // enable strict mode (adds overhead!)
