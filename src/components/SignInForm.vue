@@ -38,7 +38,7 @@
       <q-btn
         label="Sign-In"
         rounded
-
+        @click="signedIn = !signedIn"
       />
     </q-form>
   </div>
@@ -55,6 +55,17 @@ export default defineComponent({
       inputUsername: "",
       inputPassword: "",
       showPassword: false
+    }
+  },
+
+  computed: {
+    signedIn: {
+      get() {
+        return this.$store.state.userSavedData.signedIn
+      },
+      set(val) {
+        this.$store.commit('userSavedData/signInOut', val)
+      }
     }
   },
 })

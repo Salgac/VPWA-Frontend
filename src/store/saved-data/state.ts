@@ -1,10 +1,10 @@
-export interface ExampleStateInterface {
-  prop: boolean;
+export interface UserStateInterface {
+  signedIn: boolean;
 }
 
-function state(): ExampleStateInterface {
+function state(): UserStateInterface {
   return {
-    prop: false,
+    signedIn: false,
   };
 }
 

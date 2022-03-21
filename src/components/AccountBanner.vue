@@ -27,6 +27,7 @@
             <q-btn
               icon="logout"
               flat
+              @click="signedIn = !signedIn"
             />
           </div>
         </div>
@@ -60,6 +61,17 @@ export default defineComponent({
     bannerPhoto: {
       type: String,
       default: 'https://cdn.quasar.dev/img/material.png'
+    }
+  },
+
+  computed: {
+    signedIn: {
+      get() {
+        return this.$store.state.userSavedData.signedIn
+      },
+      set(val) {
+        this.$store.commit('userSavedData/signInOut', val)
+      }
     }
   },
 })

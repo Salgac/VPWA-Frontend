@@ -1,9 +1,10 @@
 import { MutationTree } from 'vuex';
-import { ExampleStateInterface } from './state';
+import { UserStateInterface } from './state';
 
-const mutation: MutationTree<ExampleStateInterface> = {
-  someMutation (/* state: ExampleStateInterface */) {
+const mutation: MutationTree<UserStateInterface> = {
+  signInOut(state: UserStateInterface, val: boolean) {
     // your code
+    state.signedIn = val;
   }
 };
 

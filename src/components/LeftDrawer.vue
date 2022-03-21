@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="signedIn">
     <AccountBanner :username="username" :email="email"/>
     <q-item-label header> Channels </q-item-label>
     <q-list padding>
@@ -9,6 +9,9 @@
         v-bind="channel"
       />
     </q-list>
+  </div>
+  <div v-else>
+    <SignInForm />
   </div>
 </template>
 
@@ -60,6 +63,17 @@ export default defineComponent({
       username: username,
       email: email
     };
+  },
+
+  computed: {
+    signedIn: {
+      get() {
+        return this.$store.state.userSavedData.signedIn
+      },
+      set(val) {
+        this.$store.commit('userSavedData/signInOut', val)
+      }
+    }
   },
 })
 </script>
