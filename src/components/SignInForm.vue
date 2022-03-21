@@ -61,10 +61,10 @@ export default defineComponent({
   computed: {
     signedIn: {
       get() {
-        return this.$store.state.userSavedData.signedIn
+        return this.$store.state.userStateInterface.signedIn
       },
       set(val) {
-        this.$store.commit('userSavedData/signInOut', val)
+        this.$store.commit('userStateInterface/signInOut', val)
       }
     }
   },

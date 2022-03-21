@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <MessageField />
+    <MessageField v-if="signedIn"/>
   </q-page>
 </template>
 
@@ -13,6 +13,17 @@ export default defineComponent({
   components: { MessageField },
   data() {
     return {};
+  },
+
+  computed: {
+    signedIn: {
+      get() {
+        return this.$store.state.userStateInterface.signedIn
+      },
+      set(val) {
+        this.$store.commit('userStateInterface/signInOut', val)
+      }
+    }
   },
 });
 </script>

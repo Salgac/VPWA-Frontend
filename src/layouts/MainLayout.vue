@@ -30,7 +30,7 @@
     </q-page-container>
 
     <q-footer bordered>
-      <MessageBox />
+      <MessageBox v-if="signedIn"/>
     </q-footer>
   </q-layout>
 </template>
@@ -59,6 +59,17 @@ export default defineComponent({
     toggleLeftDrawer() {
       this.leftDrawerOpen = !this.leftDrawerOpen;
     },
+  },
+
+  computed: {
+    signedIn: {
+      get() {
+        return this.$store.state.userStateInterface.signedIn
+      },
+      set(val) {
+        this.$store.commit('userStateInterface/signInOut', val)
+      }
+    }
   },
 });
 </script>

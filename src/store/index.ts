@@ -6,7 +6,7 @@ import {
   useStore as vuexUseStore,
 } from 'vuex'
 
-import userSavedData from './saved-data'
+import userStateInterface from './saved-data'
 import { UserStateInterface } from './saved-data/state';
 
 /*
@@ -39,7 +39,7 @@ export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
       // example
-      userSavedData
+      userStateInterface
     },
 
     // enable strict mode (adds overhead!)
