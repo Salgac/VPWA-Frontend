@@ -50,7 +50,7 @@
             <q-btn
               icon="logout"
               flat
-              @click="signedIn = !signedIn"
+              @click="signOut"
             />
           </div>
         </div>
@@ -97,6 +97,12 @@ export default defineComponent({
       }
     }
   },
+
+  methods: {
+    signOut() {
+      this.signedIn = !this.signedIn
+    }
+  }
 })
 </script>
 

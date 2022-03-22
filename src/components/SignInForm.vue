@@ -1,30 +1,46 @@
 <template>
-  <div>
-    <q-dialog v-model="signInPopup" persistent>
-      <q-card>
-        <q-form>
+  <q-dialog
+    v-model="signInPopup"
+    persistent
+    transition-show="slide-up"
+    transition-hide="slide-down"
+    maximized
+  >
+    <q-card>
+      <q-form
+        class="absolute-center"
+      >
+        <div>
           <q-input
-            class="q-mt-md q-mb-md q-mx-md"
+            class="q-mb-md"
             name="Username"
-            clearable
             rounded
             standout
-            label="Enter your username"
+            label="Username"
+            hint="Enter your username"
+            :error="!isValidUsername"
+            error-message="Username is required"
             v-model="inputUsername"
+            no-error-icon
           >
             <template v-slot:prepend>
               <q-icon name="person" />
             </template>
           </q-input>
+        </div>
+        <div>
           <q-input
-            class="q-mb-md q-mx-md"
+            class="q-mb-md"
             name="Password"
-            clearable
             rounded
             standout
             :type="showPassword ? 'text' : 'password'"
-            label="Enter your password"
+            label="Password"
             v-model="inputPassword"
+            hint="Enter your password"
+            :error="!isValidPassword"
+            error-message="Password is required"
+            no-error-icon
           >
             <template v-slot:prepend>
               <q-icon name="password" />
@@ -37,23 +53,28 @@
               />
             </template>
           </q-input>
-          <div>
+        </div>
+        <div>
           <q-btn
-            class="q-mb-md q-ml-md horizontal-element"
+            class="q-mb-md centered"
+            style="width: 75%"
             label="Sign-In"
             rounded
-            @click="signedIn = !signedIn"
+            @click="signIn"
+            :disable="!isValidPassword || !isValidUsername"
           />
+        </div>
+        <div>
           <q-btn
-            class="q-mb-md q-ml-md horizontal-element"
+            class="centered"
+            style="width: 75%"
             label="Create Account"
             rounded
           />
-          </div>
-        </q-form>
-      </q-card>
-    </q-dialog>
-  </div>
+        </div>
+      </q-form>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script lang="ts">
@@ -66,7 +87,8 @@ export default defineComponent({
     return {
       inputUsername: "",
       inputPassword: "",
-      showPassword: false
+      showPassword: false,
+      // passwordRegex: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
     }
   },
 
@@ -80,15 +102,31 @@ export default defineComponent({
       }
     },
 
-    signInPopup() {
+    signInPopup(): boolean {
       return this.$store.getters['userSavedData/signInPopup']
+    },
+
+    isValidPassword(): boolean {
+      return this.inputPassword.length > 0
+    },
+
+    isValidUsername(): boolean {
+      return this.inputUsername.length > 0
     }
   },
+
+  methods: {
+    signIn() {
+      this.signedIn = !this.signedIn
+    }
+  }
 })
 </script>
 
 <style>
-.horizontal-element {
-  display: inline-block;
+.centered {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 </style>

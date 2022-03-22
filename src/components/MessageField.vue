@@ -1,6 +1,8 @@
 <template>
   <div
-    class="q-mr-sm" style="width: 100%"
+    v-if="signedIn"
+    class="q-mr-sm"
+    style="width: 100%"
   >
     <q-infinite-scroll @load="onLoad" reverse>
       <template v-slot:loading>
@@ -10,9 +12,11 @@
       </template>
 
       <div class="q-pa-md row justify-center">
-        <div style="width: 100%">
-          <q-chat-message v-if="signedIn"
-            v-for="(item, index) in messages"
+        <div
+          style="width: 100%"
+          v-for="(item, index) in messages"
+        >
+          <q-chat-message
             :key="index"
             :name="item.author"
             avatar="https://cdn.quasar.dev/img/avatar4.jpg"
@@ -60,3 +64,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+.horizontal-element {
+  display: inline-block;
+}
+</style>
