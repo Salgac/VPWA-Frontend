@@ -10,6 +10,50 @@
       <q-form
         class="absolute-center"
       >
+        <div v-if="openAccountCreation">
+          <q-btn
+            class="q-mb-md"
+            icon="arrow_back"
+            rounded
+            @click="openAccountCreation = !openAccountCreation"
+          />
+        </div>
+        <div v-if="openAccountCreation">
+          <q-input
+            class="q-mb-md"
+            name="Name"
+            rounded
+            standout
+            label="Name"
+            hint="Enter your name"
+            :error="!isValidName"
+            error-message="Name is required"
+            v-model="inputName"
+            no-error-icon
+          >
+            <template v-slot:prepend>
+              <q-icon name="face" />
+            </template>
+          </q-input>
+        </div>
+        <div v-if="openAccountCreation">
+          <q-input
+            class="q-mb-md"
+            name="E-mail"
+            rounded
+            standout
+            label="E-mail"
+            hint="Enter your e-mail"
+            :error="!isValidEmail"
+            error-message="E-mail is required"
+            v-model="inputEmail"
+            no-error-icon
+          >
+            <template v-slot:prepend>
+              <q-icon name="email" />
+            </template>
+          </q-input>
+        </div>
         <div>
           <q-input
             class="q-mb-md"
@@ -54,22 +98,33 @@
             </template>
           </q-input>
         </div>
-        <div>
+        <div v-if="!openAccountCreation">
           <q-btn
             class="q-mb-md centered"
             style="width: 75%"
             label="Sign-In"
             rounded
-            @click="signIn"
+            @click="signIn(); clearFields()"
             :disable="!isValidPassword || !isValidUsername"
           />
         </div>
-        <div>
+        <div v-if="!openAccountCreation">
           <q-btn
             class="centered"
             style="width: 75%"
             label="Create Account"
             rounded
+            @click="openRegistration(); clearFields()"
+          />
+        </div>
+        <div v-if="openAccountCreation">
+          <q-btn
+            class="centered"
+            style="width: 75%"
+            label="Register"
+            rounded
+            @click="register"
+            :disable="!isValidPassword || !isValidUsername || !isValidEmail || !isValidName"
           />
         </div>
       </q-form>
@@ -85,10 +140,14 @@ export default defineComponent({
 
   data() {
     return {
+      inputName: "",
+      inputEmail: "",
       inputUsername: "",
       inputPassword: "",
       showPassword: false,
-      // passwordRegex: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+      openAccountCreation: false,
+      passwordRegex: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      emailRegex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     }
   },
 
@@ -106,7 +165,18 @@ export default defineComponent({
       return this.$store.getters['userSavedData/signInPopup']
     },
 
+    isValidName(): boolean {
+      return this.inputName.length > 0
+    },
+
+    isValidEmail(): boolean {
+      return this.emailRegex.test(this.inputEmail)
+    },
+
     isValidPassword(): boolean {
+      if (this.openAccountCreation) {
+        return this.passwordRegex.test(this.inputPassword)
+      }
       return this.inputPassword.length > 0
     },
 
@@ -118,6 +188,24 @@ export default defineComponent({
   methods: {
     signIn() {
       this.signedIn = !this.signedIn
+    },
+
+    register() {
+      this.openAccountCreation = !this.openAccountCreation
+      this.signedIn = !this.signedIn
+    },
+
+    openRegistration() {
+      this.openAccountCreation = !this.openAccountCreation
+      this.showPassword = false
+    },
+
+    clearFields() {
+      this.inputName = ""
+      this.inputEmail = ""
+      this.inputUsername = ""
+      this.inputPassword = ""
+      this.showPassword = false
     }
   }
 })
@@ -125,8 +213,8 @@ export default defineComponent({
 
 <style>
 .centered {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>
