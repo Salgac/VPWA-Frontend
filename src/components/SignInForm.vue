@@ -56,7 +56,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -75,7 +75,7 @@ export default defineComponent({
       get() {
         return this.$store.state.userSavedData.signedIn
       },
-      set(val) {
+      set(val: boolean) {
         this.$store.commit('userSavedData/signInOut', val)
       }
     },

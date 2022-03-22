@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import ChannelBox from "components/ChannelBox.vue"
 import AccountBanner from "components/AccountBanner.vue"
 import SignInForm from "components/SignInForm.vue";

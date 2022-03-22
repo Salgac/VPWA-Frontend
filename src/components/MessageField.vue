@@ -14,11 +14,11 @@
           <q-chat-message v-if="signedIn"
             v-for="(item, index) in messages"
             :key="index"
-            :name="[item.author]"
+            :name="item.author"
             avatar="https://cdn.quasar.dev/img/avatar4.jpg"
             :text="[item.text]"
             :sent="item.author == 'You' ? true : false"
-            :stamp="[item.time]"
+            :stamp="item.time"
           />
         </div>
       </div>
@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -42,9 +42,9 @@ export default defineComponent({
   },
 
   methods: {
-    onLoad(index, done) {
+    onLoad(/*index, done*/) {
       //TODO implement this
-      done();
+      //done();
     },
   },
 
@@ -53,7 +53,7 @@ export default defineComponent({
       get() {
         return this.$store.state.userSavedData.signedIn
       },
-      set(val) {
+      set(val: boolean) {
         this.$store.commit('userSavedData/signInOut', val)
       }
     }
