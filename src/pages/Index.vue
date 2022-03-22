@@ -14,5 +14,16 @@ export default defineComponent({
   data() {
     return {};
   },
+
+  computed: {
+    signedIn: {
+      get() {
+        return this.$store.state.userSavedData.signedIn
+      },
+      set(val) {
+        this.$store.commit('userSavedData/signInOut', val)
+      }
+    }
+  },
 });
 </script>

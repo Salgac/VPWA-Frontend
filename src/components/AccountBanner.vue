@@ -8,26 +8,58 @@
         <div class="horizontal-element">
           <q-item clickable>
             <q-item-section>
-              <q-avatar>
+              <q-avatar
+                v-if="signedIn"
+              >
                 <img :src="profilePhoto">
               </q-avatar>
-              <b>{{ username }}</b>
-              {{ email }}
+              <q-skeleton
+                type="QAvatar"
+                v-else
+              />
+              <b v-if="signedIn">
+                {{ username }}
+              </b>
+              <q-skeleton
+                v-else
+                type="text"
+                width="96px"
+              />
+              <div v-if="signedIn">
+                {{ email }}
+              </div>
+              <q-skeleton
+                v-else
+                type="text"
+                width="128px"
+              />
             </q-item-section>
           </q-item>
         </div>
-        <div class="horizontal-element">
-          <q-btn
-            icon="settings"
-            flat
-          />
+        <div
+          v-if="signedIn"
+          class="horizontal-element"
+        >
+          <div>
+            <q-btn
+              icon="settings"
+              flat
+            />
+          </div>
+          <div>
+            <q-btn
+              icon="logout"
+              flat
+              @click="signOut"
+            />
+          </div>
         </div>
       </div>
     </q-img>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -52,6 +84,23 @@ export default defineComponent({
     bannerPhoto: {
       type: String,
       default: 'https://cdn.quasar.dev/img/material.png'
+    }
+  },
+
+  computed: {
+    signedIn: {
+      get() {
+        return this.$store.state.userSavedData.signedIn
+      },
+      set(val: boolean) {
+        this.$store.commit('userSavedData/signInOut', val)
+      }
+    }
+  },
+
+  methods: {
+    signOut() {
+      this.signedIn = !this.signedIn
     }
   }
 })

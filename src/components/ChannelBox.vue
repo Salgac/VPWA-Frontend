@@ -5,11 +5,25 @@
       v-ripple
     >
       <q-item-section avatar>
-        <q-icon :name="icon" />
+        <q-icon
+          v-if="signedIn"
+          :name="icon"
+        />
+        <q-skeleton
+          v-else
+          type="QAvatar"
+          square
+        />
       </q-item-section>
 
       <q-item-section>
-        <q-item-label>{{ channelName }}</q-item-label>
+        <q-item-label v-if="signedIn">
+          {{ channelName }}
+        </q-item-label>
+        <q-skeleton
+          v-else
+          type="rect"
+        />
       </q-item-section>
     </q-item>
   </div>
@@ -31,6 +45,17 @@ export default defineComponent({
       type: String,
       required: true
     }
-  }
+  },
+
+  computed: {
+    signedIn: {
+      get() {
+        return this.$store.state.userSavedData.signedIn
+      },
+      set(val: boolean) {
+        this.$store.commit('userSavedData/signInOut', val)
+      }
+    }
+  },
 })
 </script>

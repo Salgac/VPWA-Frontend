@@ -12,9 +12,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import ChannelBox from "components/ChannelBox.vue"
 import AccountBanner from "components/AccountBanner.vue"
+import SignInForm from "components/SignInForm.vue";
 
 import { defineComponent } from "vue";
 
@@ -49,7 +50,8 @@ export default defineComponent({
 
   components: {
     ChannelBox,
-    AccountBanner
+    AccountBanner,
+    SignInForm
   },
 
   data() {
@@ -58,6 +60,6 @@ export default defineComponent({
       username: username,
       email: email
     };
-  },
+  }
 })
 </script>

@@ -33,11 +33,13 @@
       <MessageBox />
     </q-footer>
   </q-layout>
+  <SignInForm />
 </template>
 
 <script lang="ts">
 import LeftDrawer from "components/LeftDrawer.vue";
 import MessageBox from "components/MessageBox.vue";
+import SignInForm from "components/SignInForm.vue";
 
 import { defineComponent } from "vue";
 
@@ -47,11 +49,12 @@ export default defineComponent({
   components: {
     LeftDrawer,
     MessageBox,
+    SignInForm
   },
 
   data() {
     return {
-      leftDrawerOpen: false,
+      leftDrawerOpen: false
     };
   },
 
@@ -59,6 +62,17 @@ export default defineComponent({
     toggleLeftDrawer() {
       this.leftDrawerOpen = !this.leftDrawerOpen;
     },
+  },
+
+  computed: {
+    signedIn: {
+      get() {
+        return this.$store.state.userSavedData.signedIn
+      },
+      set(val) {
+        this.$store.commit('userSavedData/signInOut', val)
+      }
+    }
   },
 });
 </script>

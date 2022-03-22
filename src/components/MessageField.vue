@@ -1,5 +1,9 @@
 <template>
-  <div class="q-mr-sm" style="width: 100%">
+  <div
+    v-if="signedIn"
+    class="q-mr-sm"
+    style="width: 100%"
+  >
     <q-infinite-scroll @load="onLoad" reverse>
       <template v-slot:loading>
         <div class="q-my-md absolute-center">
@@ -8,15 +12,17 @@
       </template>
 
       <div class="q-pa-md row justify-center">
-        <div style="width: 100%">
+        <div
+          style="width: 100%"
+          v-for="(item, index) in messages"
+        >
           <q-chat-message
-            v-for="(item, index) in messages"
             :key="index"
-            :name="[item.author]"
+            :name="item.author"
             avatar="https://cdn.quasar.dev/img/avatar4.jpg"
             :text="[item.text]"
             :sent="item.author == 'You' ? true : false"
-            :stamp="[item.time]"
+            :stamp="item.time"
           />
         </div>
       </div>
@@ -24,7 +30,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -40,10 +46,27 @@ export default defineComponent({
   },
 
   methods: {
-    onLoad(index, done) {
+    onLoad(/*index, done*/) {
       //TODO implement this
-      done();
+      //done();
     },
+  },
+
+  computed: {
+    signedIn: {
+      get() {
+        return this.$store.state.userSavedData.signedIn
+      },
+      set(val: boolean) {
+        this.$store.commit('userSavedData/signInOut', val)
+      }
+    }
   },
 });
 </script>
+
+<style>
+.horizontal-element {
+  display: inline-block;
+}
+</style>
