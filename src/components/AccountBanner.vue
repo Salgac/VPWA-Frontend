@@ -8,15 +8,38 @@
         <div class="horizontal-element">
           <q-item clickable>
             <q-item-section>
-              <q-avatar>
+              <q-avatar
+                v-if="signedIn"
+              >
                 <img :src="profilePhoto">
               </q-avatar>
-              <b>{{ username }}</b>
-              {{ email }}
+              <q-skeleton
+                type="QAvatar"
+                v-else
+              />
+              <b v-if="signedIn">
+                {{ username }}
+              </b>
+              <q-skeleton
+                v-else
+                type="text"
+                width="96px"
+              />
+              <div v-if="signedIn">
+                {{ email }}
+              </div>
+              <q-skeleton
+                v-else
+                type="text"
+                width="128px"
+              />
             </q-item-section>
           </q-item>
         </div>
-        <div class="horizontal-element">
+        <div
+          v-if="signedIn"
+          class="horizontal-element"
+        >
           <div>
             <q-btn
               icon="settings"

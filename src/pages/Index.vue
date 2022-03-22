@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <MessageField v-if="signedIn"/>
+    <MessageField />
   </q-page>
 </template>
 

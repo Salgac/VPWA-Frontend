@@ -30,14 +30,16 @@
     </q-page-container>
 
     <q-footer bordered>
-      <MessageBox v-if="signedIn"/>
+      <MessageBox />
     </q-footer>
   </q-layout>
+  <SignInForm />
 </template>
 
 <script lang="ts">
 import LeftDrawer from "components/LeftDrawer.vue";
 import MessageBox from "components/MessageBox.vue";
+import SignInForm from "components/SignInForm.vue";
 
 import { defineComponent } from "vue";
 
@@ -47,6 +49,7 @@ export default defineComponent({
   components: {
     LeftDrawer,
     MessageBox,
+    SignInForm
   },
 
   data() {

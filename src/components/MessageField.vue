@@ -11,7 +11,7 @@
 
       <div class="q-pa-md row justify-center">
         <div style="width: 100%">
-          <q-chat-message
+          <q-chat-message v-if="signedIn"
             v-for="(item, index) in messages"
             :key="index"
             :name="[item.author]"
@@ -46,6 +46,17 @@ export default defineComponent({
       //TODO implement this
       done();
     },
+  },
+
+  computed: {
+    signedIn: {
+      get() {
+        return this.$store.state.userSavedData.signedIn
+      },
+      set(val) {
+        this.$store.commit('userSavedData/signInOut', val)
+      }
+    }
   },
 });
 </script>

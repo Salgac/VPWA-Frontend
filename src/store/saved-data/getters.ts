@@ -3,8 +3,9 @@ import { StateInterface } from '../index';
 import { UserStateInterface } from './state';
 
 const getters: GetterTree<UserStateInterface, StateInterface> = {
-  someGetter (/* context */) {
+  signInPopup (state: UserStateInterface/* context */) {
     // your code
+    return !state.signedIn;
   }
 };
 
