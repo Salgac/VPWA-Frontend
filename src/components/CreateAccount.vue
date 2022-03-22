@@ -1,6 +1,6 @@
 <template>
   <q-dialog
-    v-model="signInPopup"
+    v-model="openDialog"
     persistent
     transition-show="slide-up"
     transition-hide="slide-down"
@@ -10,6 +10,42 @@
       <q-form
         class="absolute-center"
       >
+        <div>
+          <q-input
+            class="q-mb-md"
+            name="Name"
+            rounded
+            standout
+            label="Name"
+            hint="Enter your name"
+            :error="!isValidName"
+            error-message="Name is required"
+            v-model="inputName"
+            no-error-icon
+          >
+            <template v-slot:prepend>
+              <q-icon name="face" />
+            </template>
+          </q-input>
+        </div>
+        <div>
+          <q-input
+            class="q-mb-md"
+            name="E-mail"
+            rounded
+            standout
+            label="E-mail"
+            hint="Enter your e-mail"
+            :error="!isValidEmail"
+            error-message="E-mail is required"
+            v-model="inputEmail"
+            no-error-icon
+          >
+            <template v-slot:prepend>
+              <q-icon name="email" />
+            </template>
+          </q-input>
+        </div>
         <div>
           <q-input
             class="q-mb-md"
@@ -55,14 +91,6 @@
           </q-input>
         </div>
         <div>
-          <q-btn
-            class="q-mb-md centered"
-            style="width: 75%"
-            label="Sign-In"
-            rounded
-            @click="signIn"
-            :disable="!isValidPassword || !isValidUsername"
-          />
         </div>
         <div>
           <q-btn
@@ -70,52 +98,52 @@
             style="width: 75%"
             label="Create Account"
             rounded
-            @click="openAccountCreation = !openAccountCreation"
+
+            @click="createAccount"
           />
         </div>
       </q-form>
     </q-card>
   </q-dialog>
-  <CreateAccount v-model="openAccountCreation"/>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import CreateAccount from "components/CreateAccount.vue"
-
 export default defineComponent({
-  name: "SignInDialog",
+  name: "CreateAccount",
 
-  components: {
-    CreateAccount
+  props: {
+    openDialog: {
+      type: Boolean,
+      //required: true
+    }
   },
 
   data() {
     return {
+      inputName: "",
+      inputEmail: "",
       inputUsername: "",
       inputPassword: "",
       showPassword: false,
-      openAccountCreation: false
+      passwordRegex: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      emailRegex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      valueData: this.value
     }
   },
 
   computed: {
-    signedIn: {
-      get() {
-        return this.$store.state.userSavedData.signedIn
-      },
-      set(val: boolean) {
-        this.$store.commit('userSavedData/signInOut', val)
-      }
+    isValidName(): boolean {
+      return this.inputName.length > 0
     },
 
-    signInPopup(): boolean {
-      return this.$store.getters['userSavedData/signInPopup']
+    isValidEmail(): boolean {
+      return this.emailRegex.test(this.inputEmail)
     },
 
     isValidPassword(): boolean {
-      return this.inputPassword.length > 0
+      return this.passwordRegex.test(this.inputPassword)
     },
 
     isValidUsername(): boolean {
@@ -124,17 +152,9 @@ export default defineComponent({
   },
 
   methods: {
-    signIn() {
-      this.signedIn = !this.signedIn
+    createAccount() {
+
     }
   }
 })
 </script>
-
-<style>
-.centered {
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-}
-</style>
