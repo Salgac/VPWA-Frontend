@@ -11,6 +11,14 @@
         class="absolute-center"
       >
         <div v-if="openAccountCreation">
+          <q-btn
+            class="q-mb-md"
+            icon="arrow_back"
+            rounded
+            @click="openAccountCreation = !openAccountCreation"
+          />
+        </div>
+        <div v-if="openAccountCreation">
           <q-input
             class="q-mb-md"
             name="Name"
@@ -96,7 +104,7 @@
             style="width: 75%"
             label="Sign-In"
             rounded
-            @click="signIn"
+            @click="signIn(); clearFields()"
             :disable="!isValidPassword || !isValidUsername"
           />
         </div>
@@ -106,7 +114,7 @@
             style="width: 75%"
             label="Create Account"
             rounded
-            @click="openAccountCreation = !openAccountCreation"
+            @click="openRegistration(); clearFields()"
           />
         </div>
         <div v-if="openAccountCreation">
@@ -185,6 +193,19 @@ export default defineComponent({
     register() {
       this.openAccountCreation = !this.openAccountCreation
       this.signedIn = !this.signedIn
+    },
+
+    openRegistration() {
+      this.openAccountCreation = !this.openAccountCreation
+      this.showPassword = false
+    },
+
+    clearFields() {
+      this.inputName = ""
+      this.inputEmail = ""
+      this.inputUsername = ""
+      this.inputPassword = ""
+      this.showPassword = false
     }
   }
 })
