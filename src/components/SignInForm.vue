@@ -10,6 +10,42 @@
       <q-form
         class="absolute-center"
       >
+        <div v-if="openAccountCreation">
+          <q-input
+            class="q-mb-md"
+            name="Name"
+            rounded
+            standout
+            label="Name"
+            hint="Enter your name"
+            :error="!isValidName"
+            error-message="Name is required"
+            v-model="inputName"
+            no-error-icon
+          >
+            <template v-slot:prepend>
+              <q-icon name="face" />
+            </template>
+          </q-input>
+        </div>
+        <div v-if="openAccountCreation">
+          <q-input
+            class="q-mb-md"
+            name="E-mail"
+            rounded
+            standout
+            label="E-mail"
+            hint="Enter your e-mail"
+            :error="!isValidEmail"
+            error-message="E-mail is required"
+            v-model="inputEmail"
+            no-error-icon
+          >
+            <template v-slot:prepend>
+              <q-icon name="email" />
+            </template>
+          </q-input>
+        </div>
         <div>
           <q-input
             class="q-mb-md"
@@ -54,7 +90,7 @@
             </template>
           </q-input>
         </div>
-        <div>
+        <div v-if="!openAccountCreation">
           <q-btn
             class="q-mb-md centered"
             style="width: 75%"
@@ -64,7 +100,7 @@
             :disable="!isValidPassword || !isValidUsername"
           />
         </div>
-        <div>
+        <div v-if="!openAccountCreation">
           <q-btn
             class="centered"
             style="width: 75%"
@@ -73,30 +109,37 @@
             @click="openAccountCreation = !openAccountCreation"
           />
         </div>
+        <div v-if="openAccountCreation">
+          <q-btn
+            class="centered"
+            style="width: 75%"
+            label="Register"
+            rounded
+            @click="register"
+            :disable="!isValidPassword || !isValidUsername || !isValidEmail || !isValidName"
+          />
+        </div>
       </q-form>
     </q-card>
   </q-dialog>
-  <CreateAccount v-model="openAccountCreation"/>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import CreateAccount from "components/CreateAccount.vue"
-
 export default defineComponent({
   name: "SignInDialog",
 
-  components: {
-    CreateAccount
-  },
-
   data() {
     return {
+      inputName: "",
+      inputEmail: "",
       inputUsername: "",
       inputPassword: "",
       showPassword: false,
-      openAccountCreation: false
+      openAccountCreation: false,
+      passwordRegex: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      emailRegex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     }
   },
 
@@ -114,7 +157,18 @@ export default defineComponent({
       return this.$store.getters['userSavedData/signInPopup']
     },
 
+    isValidName(): boolean {
+      return this.inputName.length > 0
+    },
+
+    isValidEmail(): boolean {
+      return this.emailRegex.test(this.inputEmail)
+    },
+
     isValidPassword(): boolean {
+      if (this.openAccountCreation) {
+        return this.passwordRegex.test(this.inputPassword)
+      }
       return this.inputPassword.length > 0
     },
 
@@ -125,6 +179,11 @@ export default defineComponent({
 
   methods: {
     signIn() {
+      this.signedIn = !this.signedIn
+    },
+
+    register() {
+      this.openAccountCreation = !this.openAccountCreation
       this.signedIn = !this.signedIn
     }
   }
