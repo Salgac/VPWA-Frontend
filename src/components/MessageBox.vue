@@ -84,10 +84,10 @@ export default defineComponent({
 
     newMessage: {
       get() {
-        return this.$store.state.userSavedData.newMessage
+        return this.$store.state.messageSavedData.newMessage
       },
       set(val: { author: string, time: string, text: string }) {
-        this.$store.commit('userSavedData/addMessage', val)
+        this.$store.commit('messageSavedData/addMessage', val)
       }
     }
   },

@@ -55,7 +55,7 @@ export default defineComponent({
 
     messages: {
       get() {
-        return this.$store.state.userSavedData.messages
+        return this.$store.state.messageSavedData.messages
       },
       set() {
 

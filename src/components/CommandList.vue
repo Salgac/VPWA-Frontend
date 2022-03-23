@@ -18,23 +18,11 @@
 import { defineComponent } from "vue";
 import CommandItem from "components/CommandItem.vue"
 
-const commands = [
-  { commandName: "ban", commandRole: "admin" },
-  { commandName: "createChannel", commandRole: "admin" },
-  { commandName: "invite", commandRole: "pleb" }
-];
-
 export default defineComponent({
   name: "CommandList",
 
   components: {
     CommandItem
-  },
-
-  data() {
-    return {
-      commands: commands
-    }
   },
 
   computed: {
@@ -50,6 +38,15 @@ export default defineComponent({
     currentUserRole: {
       get() {
         return this.$store.state.userSavedData.role
+      },
+      set() {
+
+      }
+    },
+
+    commands: {
+      get() {
+        return this.$store.state.messageSavedData.commands
       },
       set() {
 
