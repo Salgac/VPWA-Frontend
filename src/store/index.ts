@@ -6,8 +6,8 @@ import {
   useStore as vuexUseStore,
 } from 'vuex'
 
-import userSavedData from './saved-data'
-import { UserStateInterface } from './saved-data/state';
+import userSavedData from './userData'
+import { UserStateInterface } from './userData/state';
 
 /*
  * If not building with SSR mode, you can
