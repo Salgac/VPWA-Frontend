@@ -61,6 +61,12 @@ export default defineComponent({
       //TODO send data
       console.log(this.message);
 
+      this.newMessage = {
+        author: "You",
+        time: new Date().toLocaleTimeString(),
+        text: this.message
+      }
+
       //clear input
       this.message = "";
     },
@@ -73,6 +79,15 @@ export default defineComponent({
       },
       set(val: string) {
         this.$store.commit('messageSavedData/setCommand', val)
+      }
+    },
+
+    newMessage: {
+      get() {
+        return this.$store.state.userSavedData.newMessage
+      },
+      set(val: { author: string, time: string, text: string }) {
+        this.$store.commit('userSavedData/addMessage', val)
       }
     }
   },

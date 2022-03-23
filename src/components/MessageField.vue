@@ -36,15 +36,6 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "MessageField",
 
-  data() {
-    return {
-      messages: [
-        { author: "You", time: "12:43", text: "Hello world!" },
-        { author: "Testy", time: "12:44", text: "I like turtles" },
-      ],
-    };
-  },
-
   methods: {
     onLoad(/*index, done*/) {
       //TODO implement this
@@ -59,6 +50,15 @@ export default defineComponent({
       },
       set(val: boolean) {
         this.$store.commit('userSavedData/signInOut', val)
+      }
+    },
+
+    messages: {
+      get() {
+        return this.$store.state.userSavedData.messages
+      },
+      set() {
+
       }
     }
   },
