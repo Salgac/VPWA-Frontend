@@ -10,7 +10,7 @@ function state(): MessageStateInterface {
     currentCommand: "",
     commands: [
       { commandName: "ban", commandRole: "admin" },
-      { commandName: "createChannel", commandRole: "admin" },
+      { commandName: "createChannel", commandRole: "pleb" },
       { commandName: "invite", commandRole: "pleb" }
     ],
     messages: [
