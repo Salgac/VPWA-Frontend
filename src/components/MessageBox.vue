@@ -61,10 +61,12 @@ export default defineComponent({
       //TODO send data
       console.log(this.message);
 
-      this.newMessage = {
-        author: "You",
-        time: new Date().toLocaleTimeString(),
-        text: this.message
+      if (this.message.length > 0) {
+        this.newMessage = {
+          author: "You",
+          time: new Date().toLocaleTimeString(),
+          text: this.message
+        }
       }
 
       //clear input

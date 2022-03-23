@@ -14,8 +14,8 @@ function state(): MessageStateInterface {
       { commandName: "invite", commandRole: "pleb" }
     ],
     messages: [
-      { author: "You", time: "12:43", text: "Hello world!" },
-      { author: "Testy", time: "12:44", text: "I like turtles" },
+      { author: "You", time: "12:43:08", text: "Hello world!" },
+      { author: "Testy", time: "12:44:45", text: "I like turtles" },
     ],
     newMessage: { author: "", time: "", text: "" }
   };
