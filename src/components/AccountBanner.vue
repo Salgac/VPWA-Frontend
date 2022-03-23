@@ -44,6 +44,7 @@
             <q-btn
               icon="settings"
               flat
+              @click="openSettings = !openSettings"
             />
           </div>
           <div>
@@ -94,6 +95,15 @@ export default defineComponent({
       },
       set(val: boolean) {
         this.$store.commit('userSavedData/signInOut', val)
+      }
+    },
+
+    openSettings: {
+      get() {
+        return this.$store.state.userSavedData.openSettings
+      },
+      set(val: boolean) {
+        this.$store.commit('userSavedData/openCloseSettings', val)
       }
     }
   },
