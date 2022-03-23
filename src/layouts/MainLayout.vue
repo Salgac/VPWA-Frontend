@@ -35,6 +35,7 @@
   </q-layout>
   <SignInForm />
   <Settings />
+  <AccountSettings />
 </template>
 
 <script lang="ts">
@@ -42,6 +43,7 @@ import LeftDrawer from "components/LeftDrawer.vue";
 import MessageBox from "components/MessageBox.vue";
 import SignInForm from "components/SignInForm.vue";
 import Settings from "components/Settings.vue";
+import AccountSettings from "components/AccountSettings.vue";
 
 import { defineComponent } from "vue";
 
@@ -52,7 +54,8 @@ export default defineComponent({
     LeftDrawer,
     MessageBox,
     SignInForm,
-    Settings
+    Settings,
+    AccountSettings
   },
 
   data() {

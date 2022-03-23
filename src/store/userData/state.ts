@@ -3,7 +3,8 @@ export interface UserStateInterface {
   name: string;
   email: string;
   role: string;
-  openSettings: boolean
+  openSettings: boolean;
+  openAccountSettings: boolean
 }
 
 function state(): UserStateInterface {
@@ -12,7 +13,8 @@ function state(): UserStateInterface {
     name: "",
     email: "",
     role: "pleb",
-    openSettings: false
+    openSettings: false,
+    openAccountSettings: false
   };
 }
 
