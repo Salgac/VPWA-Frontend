@@ -123,7 +123,7 @@
             style="width: 75%"
             label="Register"
             rounded
-            @click="register"
+            @click="register(); clearFields()"
             :disable="!isValidPassword || !isValidUsername || !isValidEmail || !isValidName"
           />
         </div>
