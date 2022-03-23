@@ -9,6 +9,9 @@ import {
 import userSavedData from './userData'
 import { UserStateInterface } from './userData/state';
 
+import messageSavedData from './messageData'
+import { MessageStateInterface } from './messageData/state';
+
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;
@@ -23,6 +26,7 @@ export interface StateInterface {
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   userSavedData: UserStateInterface
+  messageSavedData: MessageStateInterface
 }
 
 // provide typings for `this.$store`
@@ -39,7 +43,8 @@ export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
       // example
-      userSavedData
+      userSavedData,
+      messageSavedData
     },
 
     // enable strict mode (adds overhead!)

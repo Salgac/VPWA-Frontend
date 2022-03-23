@@ -2,6 +2,7 @@ export interface UserStateInterface {
   signedIn: boolean;
   name: string;
   email: string;
+  role: string
 }
 
 function state(): UserStateInterface {
@@ -9,6 +10,7 @@ function state(): UserStateInterface {
     signedIn: false,
     name: "",
     email: "",
+    role: "pleb"
   };
 }
 

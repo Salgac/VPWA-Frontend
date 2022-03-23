@@ -1,5 +1,6 @@
 <template>
   <div>
+    <CommandList v-if="openCommandList"/>
     <q-toolbar class="bg-grey-2 text-black row">
       <q-input
         outlined
@@ -33,13 +34,19 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import CommandList from "components/CommandList.vue"
 
 export default defineComponent({
   name: "MessageBox",
 
+  components: {
+    CommandList
+  },
+
   data() {
     return {
       message: "",
+      openCommandList: false
     };
   },
 
@@ -58,5 +65,32 @@ export default defineComponent({
       this.message = "";
     },
   },
+
+  computed: {
+    currentCommand: {
+      get() {
+        return this.$store.state.messageSavedData.currentCommand
+      },
+      set(val: string) {
+        this.$store.commit('messageSavedData/setCommand', val)
+      }
+    }
+  },
+
+  watch: {
+    message(newMessage: string) {
+      if (newMessage.indexOf('\\') == 0) {
+        this.openCommandList = true
+        this.currentCommand = newMessage.slice(1)
+      }
+      else {
+        this.openCommandList = false
+      }
+    },
+
+    currentCommand(newCommand: string) {
+      this.message = "\\" + newCommand
+    }
+  }
 });
 </script>
