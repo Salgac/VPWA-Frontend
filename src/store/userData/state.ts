@@ -3,8 +3,8 @@ export interface UserStateInterface {
   name: string;
   email: string;
   role: string;
-  messages: { author: string, time: string, text: string }[],
-  newMessage: { author: string, time: string, text: string }
+  openSettings: boolean;
+  openAccountSettings: boolean
 }
 
 function state(): UserStateInterface {
@@ -13,11 +13,8 @@ function state(): UserStateInterface {
     name: "",
     email: "",
     role: "pleb",
-    messages: [
-      { author: "You", time: "12:43", text: "Hello world!" },
-      { author: "Testy", time: "12:44", text: "I like turtles" },
-    ],
-    newMessage: { author: "", time: "", text: "" }
+    openSettings: false,
+    openAccountSettings: false
   };
 }
 

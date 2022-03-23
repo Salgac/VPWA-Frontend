@@ -6,7 +6,10 @@
     >
       <div class="absolute-bottom bg-transparent">
         <div class="horizontal-element">
-          <q-item clickable>
+          <q-item
+            clickable
+            @click="openAccountSettings = !openAccountSettings"
+          >
             <q-item-section>
               <q-avatar
                 v-if="signedIn"
@@ -44,6 +47,7 @@
             <q-btn
               icon="settings"
               flat
+              @click="openSettings = !openSettings"
             />
           </div>
           <div>
@@ -94,6 +98,24 @@ export default defineComponent({
       },
       set(val: boolean) {
         this.$store.commit('userSavedData/signInOut', val)
+      }
+    },
+
+    openSettings: {
+      get() {
+        return this.$store.state.userSavedData.openSettings
+      },
+      set(val: boolean) {
+        this.$store.commit('userSavedData/openCloseSettings', val)
+      }
+    },
+
+    openAccountSettings: {
+      get() {
+        return this.$store.state.userSavedData.openAccountSettings
+      },
+      set(val: boolean) {
+        this.$store.commit('userSavedData/openCloseAccountSettings', val)
       }
     }
   },

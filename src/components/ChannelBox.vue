@@ -1,28 +1,46 @@
 <template>
   <div>
-    <q-item
-      clickable
-      v-ripple
-    >
-      <q-item-section avatar>
-        <q-icon
+    <q-item>
+      <q-item-section>
+        <q-btn
           v-if="signedIn"
-          :name="icon"
+          :label="channelName"
+          flat
+          :icon="icon"
+          no-caps
+          align="left"
         />
         <q-skeleton
           v-else
-          type="QAvatar"
-          square
+          type="QBtn"
+          width="100%"
         />
       </q-item-section>
-
-      <q-item-section>
-        <q-item-label v-if="signedIn">
-          {{ channelName }}
-        </q-item-label>
+      <q-item-section avatar>
+        <q-btn-dropdown
+          v-if="signedIn"
+          flat
+          dropdown-icon="more_vert"
+        >
+          <q-list>
+            <q-item
+              v-for="item in dropdown"
+              clickable
+              v-close-popup
+            >
+              <q-item-section side>
+                <q-icon :name="item.icon"/>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ item.label }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
         <q-skeleton
           v-else
-          type="rect"
+          type="QBtn"
+          width="100%"
         />
       </q-item-section>
     </q-item>
@@ -31,6 +49,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+
+type DropdownType = {
+  icon: string,
+  label: string
+}[];
 
 export default defineComponent({
   name: 'ChannelBox',
@@ -44,6 +67,11 @@ export default defineComponent({
     icon: {
       type: String,
       required: true
+    },
+
+    dropdown: {
+      type: Object as () => DropdownType,
+      required: true,
     }
   },
 

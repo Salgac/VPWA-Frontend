@@ -12,6 +12,9 @@ import { UserStateInterface } from './userData/state';
 import messageSavedData from './messageData'
 import { MessageStateInterface } from './messageData/state';
 
+import channelSavedData from './channelData'
+import { ChannelStateInterface } from './channelData/state';
+
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;
@@ -27,6 +30,7 @@ export interface StateInterface {
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   userSavedData: UserStateInterface
   messageSavedData: MessageStateInterface
+  channelSavedData: ChannelStateInterface
 }
 
 // provide typings for `this.$store`
@@ -44,7 +48,8 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       // example
       userSavedData,
-      messageSavedData
+      messageSavedData,
+      channelSavedData
     },
 
     // enable strict mode (adds overhead!)
