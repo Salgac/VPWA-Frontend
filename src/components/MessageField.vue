@@ -37,9 +37,9 @@ export default defineComponent({
   name: "MessageField",
 
   methods: {
-    onLoad(/*index, done*/) {
+    onLoad(index: Number, done: Function) {
       //TODO implement this
-      //done();
+      done();
     },
   },
 
