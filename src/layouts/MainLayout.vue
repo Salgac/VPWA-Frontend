@@ -13,7 +13,7 @@
 
         <q-toolbar-title> Poormans Discord </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>Viktor Modroczký & Dominik Šalgovič</div>
       </q-toolbar>
     </q-header>
 
