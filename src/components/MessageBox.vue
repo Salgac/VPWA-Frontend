@@ -62,10 +62,14 @@ export default defineComponent({
       console.log(this.message);
 
       if (this.message.length > 0) {
-        this.newMessage = {
-          author: "You",
-          time: new Date().toLocaleTimeString(),
-          text: this.message
+        if (this.message.charAt(0) != "/") {
+          this.newMessage = {
+            author: "You",
+            time: new Date().toLocaleTimeString(),
+            text: this.message
+          }
+        } else {
+          // command execution
         }
       }
 
@@ -91,14 +95,27 @@ export default defineComponent({
       set(val: { author: string, time: string, text: string }) {
         this.$store.commit('messageSavedData/addMessage', val)
       }
+    },
+
+    commands: {
+      get() {
+        return this.$store.state.messageSavedData.commands
+      },
+      set() {
+
+      }
     }
   },
 
   watch: {
     message(newMessage: string) {
-      if (newMessage.indexOf('\\') == 0) {
-        this.openCommandList = true
+      if (newMessage.indexOf('/') == 0) {
         this.currentCommand = newMessage.slice(1)
+        if (this.commands.some(i => i.commandName.includes(this.currentCommand))) {
+          this.openCommandList = true
+        } else {
+          this.openCommandList = false
+        }
       }
       else {
         this.openCommandList = false
@@ -106,7 +123,7 @@ export default defineComponent({
     },
 
     currentCommand(newCommand: string) {
-      this.message = "\\" + newCommand
+      this.message = "/".concat(newCommand)
     }
   }
 });
