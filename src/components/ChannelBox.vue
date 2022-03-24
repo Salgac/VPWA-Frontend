@@ -8,6 +8,7 @@
           flat
           :icon="icon"
           no-caps
+          rounded
           align="left"
         />
         <q-skeleton
@@ -20,6 +21,7 @@
         <q-btn-dropdown
           v-if="signedIn"
           flat
+          rounded
           dropdown-icon="more_vert"
         >
           <q-list>

@@ -1,7 +1,9 @@
 <template>
   <div>
     <AccountBanner :username="username" :email="email"/>
-    <q-item-label header> Channels </q-item-label>
+    <q-item dense>
+      <q-item-label header> Channels </q-item-label>
+    </q-item>
     <q-list padding>
       <ChannelBox
         v-for="channel in channels"

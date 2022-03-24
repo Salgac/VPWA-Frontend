@@ -47,6 +47,7 @@
             <q-btn
               icon="settings"
               flat
+              rounded
               @click="openSettings = !openSettings"
             />
           </div>
@@ -54,6 +55,7 @@
             <q-btn
               icon="logout"
               flat
+              rounded
               @click="signOut"
             />
           </div>
