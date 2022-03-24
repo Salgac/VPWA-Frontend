@@ -1,7 +1,8 @@
 export interface UserStateInterface {
   signedIn: boolean;
-  name: string;
+  username: string;
   email: string;
+  userStatus: string;
   role: string;
   openSettings: boolean;
   openAccountSettings: boolean
@@ -10,8 +11,9 @@ export interface UserStateInterface {
 function state(): UserStateInterface {
   return {
     signedIn: false,
-    name: "",
-    email: "",
+    username: "MyUsername",
+    email: "email@example.com",
+    userStatus: "online",
     role: "pleb",
     openSettings: false,
     openAccountSettings: false

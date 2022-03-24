@@ -12,6 +12,10 @@ const mutation: MutationTree<UserStateInterface> = {
 
   openCloseAccountSettings(state: UserStateInterface, val: boolean) {
     state.openAccountSettings = val;
+  },
+
+  setUserStatus(state: UserStateInterface, val: string) {
+    state.userStatus = val;
   }
 };
 

@@ -4,62 +4,63 @@
       :src="bannerPhoto"
       style="height: 150px"
     >
-      <div class="absolute-bottom bg-transparent">
-        <div class="horizontal-element">
-          <q-item
-            clickable
-            @click="openAccountSettings = !openAccountSettings"
-          >
-            <q-item-section>
-              <q-avatar
-                v-if="signedIn"
-              >
-                <img :src="profilePhoto">
-              </q-avatar>
-              <q-skeleton
-                type="QAvatar"
-                v-else
+      <div class="absolute-bottom bg-transparent" style="width: 100%;">
+        <q-item
+          clickable
+          @click="openAccountSettings = !openAccountSettings"
+        >
+          <q-item-section>
+            <q-avatar
+              class="q-mb-sm"
+              v-if="signedIn"
+            >
+              <img :src="profilePhoto">
+            </q-avatar>
+            <q-skeleton
+              type="QAvatar"
+              v-else
+            />
+            <div v-if="signedIn">
+              <q-icon
+                v-if="userStatus == 'online'"
+                left
+                name="person"
+                color="green"
+                size="sm"
               />
-              <b v-if="signedIn">
+              <q-icon
+                v-else-if="userStatus == 'offline'"
+                left
+                name="person"
+                color="red"
+                size="sm"
+              />
+              <q-icon
+                v-else-if="userStatus == 'DND'"
+                left
+                name="person"
+                color="orange"
+                size="sm"
+              />
+              <b>
                 {{ username }}
               </b>
-              <q-skeleton
-                v-else
-                type="text"
-                width="96px"
-              />
-              <div v-if="signedIn">
-                {{ email }}
-              </div>
-              <q-skeleton
-                v-else
-                type="text"
-                width="128px"
-              />
-            </q-item-section>
-          </q-item>
-        </div>
-        <div
-          v-if="signedIn"
-          class="horizontal-element"
-        >
-          <div>
-            <q-btn
-              icon="settings"
-              flat
-              rounded
-              @click="openSettings = !openSettings"
+            </div>
+            <q-skeleton
+              v-else
+              type="text"
+              width="96px"
             />
-          </div>
-          <div>
-            <q-btn
-              icon="logout"
-              flat
-              rounded
-              @click="signOut"
+            <div v-if="signedIn">
+              {{ email }}
+            </div>
+            <q-skeleton
+              v-else
+              type="text"
+              width="128px"
             />
-          </div>
-        </div>
+          </q-item-section>
+        </q-item>
       </div>
     </q-img>
   </div>
@@ -78,6 +79,11 @@ export default defineComponent({
     },
 
     email: {
+      type: String,
+      required: true
+    },
+
+    userStatus: {
       type: String,
       required: true
     },
@@ -103,15 +109,6 @@ export default defineComponent({
       }
     },
 
-    openSettings: {
-      get() {
-        return this.$store.state.userSavedData.openSettings
-      },
-      set(val: boolean) {
-        this.$store.commit('userSavedData/openCloseSettings', val)
-      }
-    },
-
     openAccountSettings: {
       get() {
         return this.$store.state.userSavedData.openAccountSettings
@@ -121,12 +118,6 @@ export default defineComponent({
       }
     }
   },
-
-  methods: {
-    signOut() {
-      this.signedIn = !this.signedIn
-    }
-  }
 })
 </script>
 
