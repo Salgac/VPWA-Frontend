@@ -13,18 +13,6 @@
       />
       <q-btn
         flat
-        icon="insert_emoticon"
-        class="q-mr-sm"
-        v-on:click="addEmote"
-      />
-      <q-btn
-        flat
-        icon="attach_file"
-        class="q-mr-sm"
-        v-on:click="addFile"
-      />
-      <q-btn
-        flat
         icon="send"
         v-on:click="sendMessage"
       />
