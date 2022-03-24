@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-img
+      class="absolute-top"
       :src="bannerPhoto"
       style="height: 150px"
     >

@@ -1,18 +1,26 @@
 <template>
-  <div>
     <AccountBanner
       :username="username"
       :email="email"
       :userStatus="userStatus"
     />
 
-    <q-list padding>
-      <ChannelBox
-        v-for="channel in channels"
-        :key="channel.channelName"
-        v-bind="channel"
-      />
-    </q-list>
+    <q-scroll-area
+      style=
+      "
+        height: calc(100% - 150px - 50px);
+        margin-top: 150px;
+        border-right: 1px solid #ddd
+      "
+    >
+      <q-list>
+        <ChannelBox
+          v-for="channel in channels"
+          :key="channel.channelName"
+          v-bind="channel"
+        />
+      </q-list>
+    </q-scroll-area>
 
     <q-toolbar v-if="signedIn" class="absolute-bottom bg-primary text-white">
       <q-btn-group
@@ -34,7 +42,6 @@
         />
       </q-btn-group>
     </q-toolbar>
-  </div>
 </template>
 
 <script lang="ts">
