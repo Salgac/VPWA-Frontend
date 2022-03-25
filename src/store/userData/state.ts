@@ -13,7 +13,7 @@ function state(): UserStateInterface {
     signedIn: false,
     username: "MyUsername",
     email: "email@example.com",
-    userStatus: "online",
+    userStatus: "",
     role: "pleb",
     openSettings: false,
     openAccountSettings: false

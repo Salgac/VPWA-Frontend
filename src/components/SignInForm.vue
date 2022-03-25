@@ -182,12 +182,22 @@ export default defineComponent({
 
     isValidUsername(): boolean {
       return this.inputUsername.length > 0
-    }
+    },
+
+    userStatus: {
+      get() {
+        return this.$store.state.userSavedData.userStatus
+      },
+      set(val: string) {
+        this.$store.commit('userSavedData/setUserStatus', val)
+      }
+    },
   },
 
   methods: {
     signIn() {
-      this.signedIn = !this.signedIn
+      this.signedIn = !this.signedIn;
+      this.userStatus = "on"
     },
 
     register() {

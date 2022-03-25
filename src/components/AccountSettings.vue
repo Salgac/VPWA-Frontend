@@ -7,14 +7,7 @@
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
       <q-card-section>
-        <q-item>
-          <q-item-section>
-            <q-avatar icon="people"/>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>test acc</q-item-label>
-          </q-item-section>
-        </q-item>
+        <SetStatus />
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -22,9 +15,14 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import SetStatus from "components/SetStatus.vue"
 
 export default defineComponent({
-  name: "Settings",
+  name: "AccountSettings",
+
+  components: {
+    SetStatus
+  },
 
   computed: {
     openAccountSettings: {
@@ -32,7 +30,7 @@ export default defineComponent({
         return this.$store.state.userSavedData.openAccountSettings
       },
       set(val: boolean) {
-        this.$store.commit('userSavedData/openCloseAccountSettings', val)
+        this.$store.commit("userSavedData/openCloseAccountSettings", val)
       }
     }
   }
