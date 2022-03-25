@@ -11,10 +11,10 @@ export interface UserStateInterface {
 function state(): UserStateInterface {
   return {
     signedIn: false,
-    username: "MyUsername",
-    email: "email@example.com",
+    username: "",
+    email: "",
     userStatus: "",
-    role: "pleb",
+    role: "",
     openSettings: false,
     openAccountSettings: false
   };

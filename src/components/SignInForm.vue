@@ -192,12 +192,42 @@ export default defineComponent({
         this.$store.commit('userSavedData/setUserStatus', val)
       }
     },
+
+    username: {
+      get() {
+        return this.$store.state.userSavedData.username
+      },
+      set(val: string) {
+        this.$store.commit('userSavedData/setUsername', val)
+      }
+    },
+
+    email: {
+      get() {
+        return this.$store.state.userSavedData.email
+      },
+      set(val: string) {
+        this.$store.commit('userSavedData/setEmail', val)
+      }
+    },
+
+    role: {
+      get() {
+        return this.$store.state.userSavedData.role
+      },
+      set(val: string) {
+        this.$store.commit('userSavedData/setRole', val)
+      }
+    }
   },
 
   methods: {
     signIn() {
-      this.signedIn = !this.signedIn;
+      this.signedIn = !this.signedIn
       this.userStatus = "on"
+      this.username = this.inputUsername
+      this.email = "example@email.com"
+      this.role = "chatter"
     },
 
     register() {

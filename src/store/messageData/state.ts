@@ -10,8 +10,8 @@ function state(): MessageStateInterface {
     currentCommand: "",
     commands: [
       { commandName: "ban", commandRole: "admin" },
-      { commandName: "createChannel", commandRole: "pleb" },
-      { commandName: "invite", commandRole: "pleb" }
+      { commandName: "createChannel", commandRole: "chatter" },
+      { commandName: "invite", commandRole: "chatter" }
     ],
     messages: [
       { author: "You", time: "12:43:08", text: "Hello world!" },

@@ -16,7 +16,19 @@ const mutation: MutationTree<UserStateInterface> = {
 
   setUserStatus(state: UserStateInterface, val: string) {
     state.userStatus = val;
-  }
+  },
+
+  setUsername(state: UserStateInterface, val: string) {
+    state.username = val;
+  },
+
+  setEmail(state: UserStateInterface, val: string) {
+    state.email = val;
+  },
+
+  setRole(state: UserStateInterface, val: string) {
+    state.role = val;
+  },
 };
 
 export default mutation;
