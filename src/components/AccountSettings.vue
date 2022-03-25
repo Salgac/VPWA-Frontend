@@ -4,12 +4,12 @@
       <q-card-section class="row items-center q-pb-none">
         <div class="text-h6">Account</div>
         <q-space />
-        <q-btn icon="close" flat round dense v-close-popup @click="resetEdit"/>
+        <q-btn icon="close" flat round dense v-close-popup/>
       </q-card-section>
-      <q-card-section>
+      <q-card-section class="q-pa-lg">
         <SetStatus />
       </q-card-section>
-      <q-card-section>
+      <q-card-section class="q-pa-lg">
         <q-item>
           <q-item-section side>
             <q-item-label>Username</q-item-label>
@@ -22,7 +22,7 @@
               standout
               :placeholder="username"
               v-model="inputUsername"
-              :readonly="usernameDisabled"
+              :readonly="usernameEditDisabled"
               no-error-icon
               :rules="usernameRule"
             >
@@ -31,7 +31,7 @@
               </template>
               <template v-slot:append>
                 <q-icon
-                  :name="usernameDisabled ? 'edit' : 'edit_off'"
+                  :name="usernameEditDisabled ? 'edit' : 'edit_off'"
                   class="cursor-pointer"
                   @click="triggerEdit"
                 />
@@ -39,6 +39,15 @@
             </q-input>
           </q-item-section>
         </q-item>
+      </q-card-section>
+      <q-card-section>
+        <q-btn
+          v-if="!usernameEditDisabled && inputUsername.length > 0"
+          label="Save Changes"
+          v-close-popup
+          @click="changeUsername"
+          flat
+        />
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -54,7 +63,7 @@ export default defineComponent({
   data() {
     return {
       inputUsername: "",
-      usernameDisabled: true,
+      usernameEditDisabled: true,
       usernameRule: [ (val: string) => (val.length > 0) || 'Username is required' ]
     }
   },
@@ -85,13 +94,17 @@ export default defineComponent({
 
   methods: {
     triggerEdit() {
-      this.usernameDisabled = !this.usernameDisabled
+      this.usernameEditDisabled = !this.usernameEditDisabled
       this.inputUsername = ""
     },
 
     resetEdit() {
-      this.usernameDisabled = true
+      this.usernameEditDisabled = true
       this.inputUsername = ""
+    },
+
+    changeUsername() {
+      this.username = this.inputUsername
     }
   }
 });
