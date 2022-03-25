@@ -1,6 +1,6 @@
 <template>
   <q-item>
-    <q-item-section>
+    <q-item-section side>
       <q-item-label>Set status</q-item-label>
     </q-item-section>
     <q-item-section>
@@ -10,7 +10,7 @@
       >
         <template
           v-for="statusOption in statusOptions"
-          v-slot:[statusOption.name]
+          #[statusOption.name]
         >
           <div
             class="row items-center no-wrap"
@@ -34,9 +34,9 @@
 import { defineComponent } from "vue";
 
 const statusOptions = [
-  { name: "on", label: "Online", icon: "person", color: "green" },
-  { name: "off", label: "Offline", icon: "person", color: "red" },
-  { name: "dnd", label: "Do Not Disturb", icon: "person", color: "orange" },
+  { name: "on", label: "Online", icon: "circle", color: "green" },
+  { name: "off", label: "Offline", icon: "circle", color: "grey" },
+  { name: "dnd", label: "Do Not Disturb", icon: "do_not_disturb_on", color: "red" },
 ];
 
 export default defineComponent({

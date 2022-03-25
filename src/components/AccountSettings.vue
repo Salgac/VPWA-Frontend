@@ -1,6 +1,6 @@
 <template>
   <q-dialog v-model="openAccountSettings">
-    <q-card>
+    <q-card style="max-width: 80vw;">
       <q-card-section class="row items-center q-pb-none">
         <div class="text-h6">Account</div>
         <q-space />

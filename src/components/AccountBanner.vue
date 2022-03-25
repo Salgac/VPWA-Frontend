@@ -25,23 +25,23 @@
               <q-icon
                 v-if="userStatus == 'on'"
                 left
-                name="person"
+                name="circle"
                 color="green"
-                size="sm"
+                size="xs"
               />
               <q-icon
                 v-else-if="userStatus == 'off'"
                 left
-                name="person"
-                color="red"
-                size="sm"
+                name="circle"
+                color="grey"
+                size="xs"
               />
               <q-icon
                 v-else-if="userStatus == 'dnd'"
                 left
-                name="person"
-                color="orange"
-                size="sm"
+                name="do_not_disturb_on"
+                color="red"
+                size="xs"
               />
               <b>
                 {{ username }}
