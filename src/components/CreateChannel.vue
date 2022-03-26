@@ -17,12 +17,14 @@
           label="Create private channel"
           v-close-popup
           @click="createPrivate"
+          :disable="!channelName.length"
         />
         <q-btn
           flat
           label="Create public channel"
           v-close-popup
           @click="createPublic"
+          :disable="!channelName.length"
         />
       </q-card-actions>
     </q-card>
@@ -33,7 +35,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "Settings",
+  name: "CreateChannel",
 
   data() {
     return {
@@ -47,6 +49,7 @@ export default defineComponent({
         name: this.channelName,
         isPrivate: true,
       });
+      this.channelName = "";
     },
 
     createPublic() {
@@ -54,6 +57,7 @@ export default defineComponent({
         name: this.channelName,
         isPrivate: false,
       });
+      this.channelName = "";
     },
   },
 
