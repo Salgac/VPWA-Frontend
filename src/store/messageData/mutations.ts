@@ -1,8 +1,8 @@
 import { MutationTree } from 'vuex';
-import { MessageStateInterface } from './state';
+import { CommandStateInterface } from './state';
 
-const mutation: MutationTree<MessageStateInterface> = {
-  setCommand(state: MessageStateInterface, val: string) {
+const mutation: MutationTree<CommandStateInterface> = {
+  setCommand(state: CommandStateInterface, val: string) {
     state.currentCommand = val
   },
 };

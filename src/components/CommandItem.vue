@@ -51,10 +51,10 @@ export default defineComponent({
   computed: {
     currentCommand: {
       get() {
-        return this.$store.state.messageSavedData.currentCommand
+        return this.$store.state.commandSavedData.currentCommand
       },
       set(val: string) {
-        this.$store.commit('messageSavedData/setCommand', val)
+        this.$store.commit('commandSavedData/setCommand', val)
       }
     },
   },
