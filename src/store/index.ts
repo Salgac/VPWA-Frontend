@@ -10,8 +10,8 @@ import createPersistedState from 'vuex-persistedstate'
 import userSavedData from './userData'
 import { UserStateInterface } from './userData/state';
 
-import messageSavedData from './messageData'
-import { MessageStateInterface } from './messageData/state';
+import commandSavedData from './messageData'
+import { CommandStateInterface } from './messageData/state';
 
 import channelSavedData from './channelData'
 import { ChannelStateInterface } from './channelData/state';
@@ -30,7 +30,7 @@ export interface StateInterface {
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   userSavedData: UserStateInterface
-  messageSavedData: MessageStateInterface
+  commandSavedData: CommandStateInterface
   channelSavedData: ChannelStateInterface
 }
 
@@ -49,7 +49,7 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       // example
       userSavedData,
-      messageSavedData,
+      commandSavedData,
       channelSavedData
     },
     plugins: [createPersistedState({
