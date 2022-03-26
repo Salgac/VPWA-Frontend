@@ -8,10 +8,9 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
     const data = [
       {
         channelName: "chatting",
-        icon: "tag",
+        isPrivate: false,
         dropdown: [
-          { label: "Invite", icon: "person_add" },
-          { label: "Users", icon: "people" },
+          { label: "Leave", icon: "close" },
         ],
         messages: [
           { author: "You", time: "12:43:08", text: "Hello world!" },
@@ -20,12 +19,9 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
       },
       {
         channelName: "memes",
-        icon: "tag",
+        isPrivate: false,
         dropdown: [
-          { label: "Invite", icon: "person_add" },
-          { label: "Users", icon: "people" },
-          { label: "Permissions", icon: "shield" },
-          { label: "Rename", icon: "edit" },
+          { label: "Leave", icon: "close" },
         ],
         messages: [
           { author: "You", time: "12:43:08", text: "Hello world!" },
@@ -36,33 +32,28 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
       },
       {
         channelName: "music",
-        icon: "tag",
+        isPrivate: false,
         dropdown: [
-          { label: "Invite", icon: "person_add" },
-          { label: "Users", icon: "people" },
-          { label: "Permissions", icon: "shield" },
+          { label: "Leave", icon: "close" },
           { label: "Delete", icon: "delete" },
-          { label: "Rename", icon: "edit" },
         ],
         messages: [],
       },
       {
         channelName: "games",
-        icon: "tag",
+        isPrivate: true,
         dropdown: [
-          { label: "Invite", icon: "person_add" },
-          { label: "Users", icon: "people" },
+          { label: "Leave", icon: "close" },
+          { label: "Delete", icon: "delete" },
         ],
         messages: [],
       },
       {
         channelName: "coding",
-        icon: "tag",
+        isPrivate: false,
         dropdown: [
-          { label: "Invite", icon: "person_add" },
-          { label: "Users", icon: "people" },
+          { label: "Leave", icon: "close" },
           { label: "Delete", icon: "delete" },
-          { label: "Rename", icon: "edit" },
         ],
         messages: [],
       }];
@@ -73,6 +64,30 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
 
   loadChannelMessages({ commit }) {
 
+  },
+
+  createChannel({ commit }, data) {
+    let channelObject = {
+      channelName: data.name,
+      isPrivate: data.isPrivate,
+      dropdown: [
+        { label: "Leave", icon: "close" },
+        { label: "Delete", icon: "delete" },
+      ],
+      messages: [],
+    }
+
+    commit('addChannel', channelObject);
+    commit('setCurrentChannel', data.name)
+  },
+
+  leaveChannel({ commit }, channelName) {
+    commit('removeChannel', channelName);
+  },
+
+  //delete channel call for admin
+  deleteChannel({ commit }, channelName) {
+    commit('removeChannel', channelName);
   }
 };
 

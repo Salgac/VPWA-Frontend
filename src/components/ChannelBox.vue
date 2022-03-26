@@ -9,7 +9,7 @@
           v-if="signedIn"
           :label="channelName"
           flat
-          :icon="icon"
+          :icon="isPrivate ? 'lock' : 'tag'"
           no-caps
           rounded
           align="left"
@@ -25,6 +25,7 @@
               :key="item.label"
               clickable
               v-close-popup
+              v-on:click="handleDropdown(item.label, channelName)"
             >
               <q-item-section side>
                 <q-icon :name="item.icon" />
@@ -58,8 +59,8 @@ export default defineComponent({
       required: true,
     },
 
-    icon: {
-      type: String,
+    isPrivate: {
+      type: Boolean,
       required: true,
     },
 
@@ -77,14 +78,28 @@ export default defineComponent({
       set(val: boolean) {
         this.$store.commit("userSavedData/signInOut", val);
       },
-    }
+    },
   },
 
   methods: {
     setChannel() {
-      this.$store.commit("channelSavedData/setCurrentChannel", this.channelName);
+      this.$store.commit(
+        "channelSavedData/setCurrentChannel",
+        this.channelName
+      );
     },
-  }
+
+    handleDropdown(label: string, channelName: string) {
+      switch (label) {
+        case "Leave":
+          this.$store.dispatch("channelSavedData/leaveChannel", channelName);
+          break;
+        case "Delete":
+          this.$store.dispatch("channelSavedData/deleteChannel", channelName);
+          break;
+      }
+    },
+  },
 });
 </script>
 

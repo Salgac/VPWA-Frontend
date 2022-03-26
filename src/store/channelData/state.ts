@@ -2,7 +2,7 @@ export interface ChannelStateInterface {
   currentChannel: string;
   channels: {
     channelName: string,
-    icon: string,
+    isPrivate: boolean,
     dropdown: {
       label: string,
       icon: string
