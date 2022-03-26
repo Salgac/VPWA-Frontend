@@ -68,6 +68,11 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
       }];
 
     commit('setChannels', data);
+    commit('setCurrentChannel', data[0].channelName)
+  },
+
+  loadChannelMessages({ commit }) {
+
   }
 };
 

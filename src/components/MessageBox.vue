@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CommandList v-if="openCommandList"/>
+    <CommandList v-if="openCommandList" />
     <q-toolbar class="bg-grey-2 text-black row">
       <q-input
         outlined
@@ -11,30 +11,26 @@
         placeholder="Type a message"
         v-on:keyup.enter="sendMessage"
       />
-      <q-btn
-        flat
-        icon="send"
-        v-on:click="sendMessage"
-      />
+      <q-btn flat icon="send" v-on:click="sendMessage" />
     </q-toolbar>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import CommandList from "components/CommandList.vue"
+import CommandList from "components/CommandList.vue";
 
 export default defineComponent({
   name: "MessageBox",
 
   components: {
-    CommandList
+    CommandList,
   },
 
   data() {
     return {
       message: "",
-      openCommandList: false
+      openCommandList: false,
     };
   },
 
@@ -54,8 +50,8 @@ export default defineComponent({
           this.newMessage = {
             author: "You",
             time: new Date().toLocaleTimeString(),
-            text: this.message
-          }
+            text: this.message,
+          };
         } else {
           // command execution
         }
@@ -69,50 +65,49 @@ export default defineComponent({
   computed: {
     currentCommand: {
       get() {
-        return this.$store.state.messageSavedData.currentCommand
+        return this.$store.state.messageSavedData.currentCommand;
       },
       set(val: string) {
-        this.$store.commit('messageSavedData/setCommand', val)
-      }
+        this.$store.commit("messageSavedData/setCommand", val);
+      },
     },
 
     newMessage: {
       get() {
-        return this.$store.state.messageSavedData.newMessage
+        return this.$store.state.messageSavedData.newMessage;
       },
-      set(val: { author: string, time: string, text: string }) {
-        this.$store.commit('messageSavedData/addMessage', val)
-      }
+      set(val: { author: string; time: string; text: string }) {
+        this.$store.commit("channelSavedData/addMessage", val);
+      },
     },
 
     commands: {
       get() {
-        return this.$store.state.messageSavedData.commands
+        return this.$store.state.messageSavedData.commands;
       },
-      set() {
-
-      }
-    }
+      set() {},
+    },
   },
 
   watch: {
     message(newMessage: string) {
-      if (newMessage.indexOf('/') == 0) {
-        this.currentCommand = newMessage.slice(1)
-        if (this.commands.some(i => i.commandName.includes(this.currentCommand))) {
-          this.openCommandList = true
+      if (newMessage.indexOf("/") == 0) {
+        this.currentCommand = newMessage.slice(1);
+        if (
+          this.commands.some((i) => i.commandName.includes(this.currentCommand))
+        ) {
+          this.openCommandList = true;
         } else {
-          this.openCommandList = false
+          this.openCommandList = false;
         }
-      }
-      else {
-        this.openCommandList = false
+      } else {
+        this.openCommandList = false;
       }
     },
 
     currentCommand(newCommand: string) {
-      this.message = "/".concat(newCommand)
-    }
-  }
+      this.message = "/".concat(newCommand);
+    },
+  },
 });
 </script>

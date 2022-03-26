@@ -8,6 +8,7 @@
       </template>
 
       <div class="q-pa-md row justify-center">
+        <div v-if="!messages.length">Channel is empty.</div>
         <div
           style="width: 100%"
           v-for="(item, index) in messages"
