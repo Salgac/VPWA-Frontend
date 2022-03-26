@@ -1,9 +1,5 @@
 <template>
-  <div
-    v-if="signedIn"
-    class="q-mr-sm"
-    style="width: 100%"
-  >
+  <div v-if="signedIn" class="q-mr-sm" style="width: 100%">
     <q-infinite-scroll @load="onLoad" reverse>
       <template v-slot:loading>
         <div class="q-my-md absolute-center">
@@ -15,6 +11,7 @@
         <div
           style="width: 100%"
           v-for="(item, index) in messages"
+          v-bind:key="index"
         >
           <q-chat-message
             :key="index"
@@ -46,21 +43,23 @@ export default defineComponent({
   computed: {
     signedIn: {
       get() {
-        return this.$store.state.userSavedData.signedIn
+        return this.$store.state.userSavedData.signedIn;
       },
       set(val: boolean) {
-        this.$store.commit('userSavedData/signInOut', val)
-      }
+        this.$store.commit("userSavedData/signInOut", val);
+      },
     },
 
     messages: {
       get() {
-        return this.$store.state.messageSavedData.messages
-      },
-      set() {
+        var channels = this.$store.state.channelSavedData.channels;
+        var currentChannel = this.$store.state.channelSavedData.currentChannel;
 
-      }
-    }
+        var obj = channels.find((ch) => ch.channelName === currentChannel);
+        return obj?.messages ? obj.messages : [];
+      },
+      set() {},
+    },
   },
 });
 </script>
