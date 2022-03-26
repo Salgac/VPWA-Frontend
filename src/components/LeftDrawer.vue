@@ -51,7 +51,7 @@ export default defineComponent({
       this.signedIn = !this.signedIn;
     },
     setChannel(channelName: string) {
-      this.$store.commit("channelSavedData/setChannel", channelName);
+      this.$store.commit("channelSavedData/setCurrentChannel", channelName);
     },
   },
 

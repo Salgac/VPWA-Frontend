@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh LpR lFf">
+  <q-layout view="lHh LpR lFf">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -17,11 +17,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <LeftDrawer />
     </q-drawer>
 
@@ -55,12 +51,12 @@ export default defineComponent({
     MessageBox,
     SignInForm,
     Settings,
-    AccountSettings
+    AccountSettings,
   },
 
   data() {
     return {
-      leftDrawerOpen: false
+      leftDrawerOpen: false,
     };
   },
 
@@ -73,12 +69,17 @@ export default defineComponent({
   computed: {
     signedIn: {
       get() {
-        return this.$store.state.userSavedData.signedIn
+        return this.$store.state.userSavedData.signedIn;
       },
       set(val) {
-        this.$store.commit('userSavedData/signInOut', val)
-      }
-    }
+        this.$store.commit("userSavedData/signInOut", val);
+      },
+    },
+  },
+  beforeMount() {
+    //load channels
+    this.$store.dispatch("channelSavedData/loadChannels");
+    console.log("tu som");
   },
 });
 </script>
