@@ -18,6 +18,11 @@ const mutation: MutationTree<ChannelStateInterface> = {
 
     var obj = channels.find((ch) => ch.channelName === currentChannel);
     obj?.messages.push(val);
+  },
+
+  //removes channel from sidebar
+  removeChannel(state, channelName: string) {
+    state.channels = state.channels.filter((ch) => ch.channelName !== channelName)
   }
 };
 

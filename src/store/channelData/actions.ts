@@ -10,8 +10,7 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
         channelName: "chatting",
         icon: "tag",
         dropdown: [
-          { label: "Invite", icon: "person_add" },
-          { label: "Users", icon: "people" },
+          { label: "Leave", icon: "close" },
         ],
         messages: [
           { author: "You", time: "12:43:08", text: "Hello world!" },
@@ -22,10 +21,7 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
         channelName: "memes",
         icon: "tag",
         dropdown: [
-          { label: "Invite", icon: "person_add" },
-          { label: "Users", icon: "people" },
-          { label: "Permissions", icon: "shield" },
-          { label: "Rename", icon: "edit" },
+          { label: "Leave", icon: "close" },
         ],
         messages: [
           { author: "You", time: "12:43:08", text: "Hello world!" },
@@ -38,11 +34,8 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
         channelName: "music",
         icon: "tag",
         dropdown: [
-          { label: "Invite", icon: "person_add" },
-          { label: "Users", icon: "people" },
-          { label: "Permissions", icon: "shield" },
+          { label: "Leave", icon: "close" },
           { label: "Delete", icon: "delete" },
-          { label: "Rename", icon: "edit" },
         ],
         messages: [],
       },
@@ -50,8 +43,8 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
         channelName: "games",
         icon: "tag",
         dropdown: [
-          { label: "Invite", icon: "person_add" },
-          { label: "Users", icon: "people" },
+          { label: "Leave", icon: "close" },
+          { label: "Delete", icon: "delete" },
         ],
         messages: [],
       },
@@ -59,10 +52,8 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
         channelName: "coding",
         icon: "tag",
         dropdown: [
-          { label: "Invite", icon: "person_add" },
-          { label: "Users", icon: "people" },
+          { label: "Leave", icon: "close" },
           { label: "Delete", icon: "delete" },
-          { label: "Rename", icon: "edit" },
         ],
         messages: [],
       }];
@@ -73,6 +64,15 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
 
   loadChannelMessages({ commit }) {
 
+  },
+
+  leaveChannel({ commit }, channelName) {
+    commit('removeChannel', channelName);
+  },
+
+  //delete channel call for admin
+  deleteChannel({ commit }, channelName) {
+    commit('removeChannel', channelName);
   }
 };
 
