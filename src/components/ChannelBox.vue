@@ -9,7 +9,7 @@
           v-if="signedIn"
           :label="channelName"
           flat
-          :icon="icon"
+          :icon="isPrivate ? 'lock' : 'tag'"
           no-caps
           rounded
           align="left"
@@ -59,8 +59,8 @@ export default defineComponent({
       required: true,
     },
 
-    icon: {
-      type: String,
+    isPrivate: {
+      type: Boolean,
       required: true,
     },
 

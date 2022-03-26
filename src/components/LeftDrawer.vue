@@ -14,16 +14,22 @@
         :key="channel.channelName"
         v-bind="channel"
       />
+      <q-item v-if="!channels.length">No channels. Create or join one.</q-item>
+      <q-item>
+        <q-btn
+          v-if="signedIn"
+          label="Create a new channel"
+          flat
+          no-caps
+          style="width: 100%"
+          @click="openSettings = !openSettings"
+        />
+      </q-item>
     </q-list>
   </q-scroll-area>
 
   <q-toolbar v-if="signedIn" class="absolute-bottom bg-primary text-white">
     <q-btn-group push spread square flat style="width: 100%">
-      <q-btn
-        icon="settings"
-        color="primary"
-        @click="openSettings = !openSettings"
-      />
       <q-btn icon="logout" color="primary" @click="signOut" />
     </q-btn-group>
   </q-toolbar>
@@ -48,7 +54,7 @@ export default defineComponent({
   methods: {
     signOut() {
       this.signedIn = !this.signedIn;
-    }
+    },
   },
 
   computed: {

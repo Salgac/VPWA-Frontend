@@ -8,7 +8,7 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
     const data = [
       {
         channelName: "chatting",
-        icon: "tag",
+        isPrivate: false,
         dropdown: [
           { label: "Leave", icon: "close" },
         ],
@@ -19,7 +19,7 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
       },
       {
         channelName: "memes",
-        icon: "tag",
+        isPrivate: false,
         dropdown: [
           { label: "Leave", icon: "close" },
         ],
@@ -32,7 +32,7 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
       },
       {
         channelName: "music",
-        icon: "tag",
+        isPrivate: false,
         dropdown: [
           { label: "Leave", icon: "close" },
           { label: "Delete", icon: "delete" },
@@ -41,7 +41,7 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
       },
       {
         channelName: "games",
-        icon: "tag",
+        isPrivate: true,
         dropdown: [
           { label: "Leave", icon: "close" },
           { label: "Delete", icon: "delete" },
@@ -50,7 +50,7 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
       },
       {
         channelName: "coding",
-        icon: "tag",
+        isPrivate: false,
         dropdown: [
           { label: "Leave", icon: "close" },
           { label: "Delete", icon: "delete" },
@@ -64,6 +64,21 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
 
   loadChannelMessages({ commit }) {
 
+  },
+
+  createChannel({ commit }, data) {
+    let channelObject = {
+      channelName: data.name,
+      isPrivate: data.isPrivate,
+      dropdown: [
+        { label: "Leave", icon: "close" },
+        { label: "Delete", icon: "delete" },
+      ],
+      messages: [],
+    }
+
+    commit('addChannel', channelObject);
+    commit('setCurrentChannel', data.name)
   },
 
   leaveChannel({ commit }, channelName) {
