@@ -13,6 +13,7 @@
           no-caps
           rounded
           align="left"
+          @click="setChannel"
         />
         <q-skeleton v-else type="QBtn" width="100%" />
       </q-item-section>
@@ -76,8 +77,14 @@ export default defineComponent({
       set(val: boolean) {
         this.$store.commit("userSavedData/signInOut", val);
       },
-    },
+    }
   },
+
+  methods: {
+    setChannel() {
+      this.$store.commit("channelSavedData/setCurrentChannel", this.channelName);
+    },
+  }
 });
 </script>
 

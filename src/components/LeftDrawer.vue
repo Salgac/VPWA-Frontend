@@ -13,7 +13,6 @@
         v-for="channel in channels"
         :key="channel.channelName"
         v-bind="channel"
-        v-on:click="setChannel(channel.channelName)"
       />
     </q-list>
   </q-scroll-area>
@@ -49,10 +48,7 @@ export default defineComponent({
   methods: {
     signOut() {
       this.signedIn = !this.signedIn;
-    },
-    setChannel(channelName: string) {
-      this.$store.commit("channelSavedData/setCurrentChannel", channelName);
-    },
+    }
   },
 
   computed: {
