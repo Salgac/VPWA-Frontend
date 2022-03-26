@@ -7,9 +7,7 @@
     maximized
   >
     <q-card>
-      <q-form
-        class="absolute-center"
-      >
+      <q-form class="absolute-center">
         <div v-if="openAccountCreation">
           <q-btn
             class="q-mb-md"
@@ -104,7 +102,10 @@
             style="width: 75%"
             label="Sign-In"
             rounded
-            @click="signIn(); clearFields()"
+            @click="
+              signIn();
+              clearFields();
+            "
             :disable="!isValidPassword || !isValidUsername"
           />
         </div>
@@ -114,7 +115,10 @@
             style="width: 75%"
             label="Create Account"
             rounded
-            @click="openRegistration(); clearFields()"
+            @click="
+              openRegistration();
+              clearFields();
+            "
           />
         </div>
         <div v-if="openAccountCreation">
@@ -123,8 +127,16 @@
             style="width: 75%"
             label="Register"
             rounded
-            @click="register(); clearFields()"
-            :disable="!isValidPassword || !isValidUsername || !isValidEmail || !isValidName"
+            @click="
+              register();
+              clearFields();
+            "
+            :disable="
+              !isValidPassword ||
+              !isValidUsername ||
+              !isValidEmail ||
+              !isValidName
+            "
           />
         </div>
       </q-form>
@@ -146,109 +158,114 @@ export default defineComponent({
       inputPassword: "",
       showPassword: false,
       openAccountCreation: false,
-      passwordRegex: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-      emailRegex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-    }
+      passwordRegex:
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      emailRegex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+    };
   },
 
   computed: {
     signedIn: {
       get() {
-        return this.$store.state.userSavedData.signedIn
+        return this.$store.state.userSavedData.signedIn;
       },
       set(val: boolean) {
-        this.$store.commit('userSavedData/signInOut', val)
-      }
+        this.$store.commit("userSavedData/signInOut", val);
+      },
     },
 
     signInPopup(): boolean {
-      return this.$store.getters['userSavedData/signInPopup']
+      return this.$store.getters["userSavedData/signInPopup"];
     },
 
     isValidName(): boolean {
-      return this.inputName.length > 0
+      return this.inputName.length > 0;
     },
 
     isValidEmail(): boolean {
-      return this.emailRegex.test(this.inputEmail)
+      return this.emailRegex.test(this.inputEmail);
     },
 
     isValidPassword(): boolean {
       if (this.openAccountCreation) {
-        return this.passwordRegex.test(this.inputPassword)
+        return this.passwordRegex.test(this.inputPassword);
       }
-      return this.inputPassword.length > 0
+      return this.inputPassword.length > 0;
     },
 
     isValidUsername(): boolean {
-      return this.inputUsername.length > 0
+      return this.inputUsername.length > 0;
     },
 
     userStatus: {
       get() {
-        return this.$store.state.userSavedData.userStatus
+        return this.$store.state.userSavedData.userStatus;
       },
       set(val: string) {
-        this.$store.commit('userSavedData/setUserStatus', val)
-      }
+        this.$store.commit("userSavedData/setUserStatus", val);
+      },
     },
 
     username: {
       get() {
-        return this.$store.state.userSavedData.username
+        return this.$store.state.userSavedData.username;
       },
       set(val: string) {
-        this.$store.commit('userSavedData/setUsername', val)
-      }
+        this.$store.commit("userSavedData/setUsername", val);
+      },
     },
 
     email: {
       get() {
-        return this.$store.state.userSavedData.email
+        return this.$store.state.userSavedData.email;
       },
       set(val: string) {
-        this.$store.commit('userSavedData/setEmail', val)
-      }
+        this.$store.commit("userSavedData/setEmail", val);
+      },
     },
 
     role: {
       get() {
-        return this.$store.state.userSavedData.role
+        return this.$store.state.userSavedData.role;
       },
       set(val: string) {
-        this.$store.commit('userSavedData/setRole', val)
-      }
-    }
+        this.$store.commit("userSavedData/setRole", val);
+      },
+    },
   },
 
   methods: {
     signIn() {
-      this.signedIn = !this.signedIn
-      this.userStatus = "on"
-      this.username = this.inputUsername
-      this.email = "example@email.com"
-      this.role = "chatter"
+      this.signedIn = !this.signedIn;
+      this.userStatus = "on";
+      this.username = this.inputUsername;
+      this.email = "example@email.com";
+      this.role = "chatter";
     },
 
     register() {
-      this.openAccountCreation = !this.openAccountCreation
-      this.signedIn = !this.signedIn
+      this.openAccountCreation = !this.openAccountCreation;
+      this.signedIn = !this.signedIn;
+      this.userStatus = "on";
+      this.username = this.inputUsername;
+      this.email = this.inputEmail;
+      this.role = "chatter";
     },
 
     openRegistration() {
-      this.openAccountCreation = !this.openAccountCreation
-      this.showPassword = false
+      this.openAccountCreation = !this.openAccountCreation;
+      this.showPassword = false;
     },
 
     clearFields() {
-      this.inputName = ""
-      this.inputEmail = ""
-      this.inputUsername = ""
-      this.inputPassword = ""
-      this.showPassword = false
-    }
-  }
-})
+      this.inputName = "";
+      this.inputEmail = "";
+      this.inputUsername = "";
+      this.inputPassword = "";
+      this.showPassword = false;
+    },
+  },
+});
 </script>
 
 <style>
