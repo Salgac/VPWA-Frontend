@@ -21,7 +21,7 @@
           <q-list>
             <q-item
               v-for="item in dropdown"
-              v-bind:key="item"
+              :key="item.label"
               clickable
               v-close-popup
             >
