@@ -74,7 +74,7 @@ export default defineComponent({
 
     newMessage: {
       get() {
-        return this.$store.state.messageSavedData.newMessage;
+        return this.$store.state.channelSavedData.newMessage;
       },
       set(val: { author: string; time: string; text: string }) {
         this.$store.commit("channelSavedData/addMessage", val);

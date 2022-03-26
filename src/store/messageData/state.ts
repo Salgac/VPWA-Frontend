@@ -1,8 +1,6 @@
 export interface MessageStateInterface {
   currentCommand: string;
-  commands: { commandName: string, commandRole: string }[];
-  messages: { author: string, time: string, text: string }[];
-  newMessage: { author: string, time: string, text: string }
+  commands: { commandName: string, commandRole: string }[]
 }
 
 function state(): MessageStateInterface {
@@ -12,12 +10,7 @@ function state(): MessageStateInterface {
       { commandName: "ban", commandRole: "admin" },
       { commandName: "createChannel", commandRole: "chatter" },
       { commandName: "invite", commandRole: "chatter" }
-    ],
-    messages: [
-      { author: "You", time: "12:43:08", text: "Hello world!" },
-      { author: "Testy", time: "12:44:45", text: "I like turtles" },
-    ],
-    newMessage: { author: "", time: "", text: "" }
+    ]
   };
 }
 

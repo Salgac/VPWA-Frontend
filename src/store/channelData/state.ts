@@ -9,14 +9,16 @@ export interface ChannelStateInterface {
     }[],
     messages: {
       author: string, time: string, text: string
-    }[]
-  }[]
+    }[],
+  }[];
+  newMessage: { author: string, time: string, text: string }
 }
 
 function state(): ChannelStateInterface {
   return {
     currentChannel: "",
-    channels: []
+    channels: [],
+    newMessage: { author: "", time: "", text: "" }
   };
 }
 
