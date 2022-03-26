@@ -1,6 +1,9 @@
 <template>
   <div>
-    <q-item>
+    <q-item
+      :active="channelName == $store.state.channelSavedData.currentChannel"
+      active-class="active-style"
+    >
       <q-item-section>
         <q-btn
           v-if="signedIn"
@@ -11,27 +14,19 @@
           rounded
           align="left"
         />
-        <q-skeleton
-          v-else
-          type="QBtn"
-          width="100%"
-        />
+        <q-skeleton v-else type="QBtn" width="100%" />
       </q-item-section>
       <q-item-section avatar>
-        <q-btn-dropdown
-          v-if="signedIn"
-          flat
-          rounded
-          dropdown-icon="more_vert"
-        >
+        <q-btn-dropdown v-if="signedIn" flat rounded dropdown-icon="more_vert">
           <q-list>
             <q-item
               v-for="item in dropdown"
+              v-bind:key="item"
               clickable
               v-close-popup
             >
               <q-item-section side>
-                <q-icon :name="item.icon"/>
+                <q-icon :name="item.icon" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ item.label }}</q-item-label>
@@ -39,53 +34,56 @@
             </q-item>
           </q-list>
         </q-btn-dropdown>
-        <q-skeleton
-          v-else
-          type="QBtn"
-          width="100%"
-        />
+        <q-skeleton v-else type="QBtn" width="100%" />
       </q-item-section>
     </q-item>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 type DropdownType = {
-  icon: string,
-  label: string
+  icon: string;
+  label: string;
 }[];
 
 export default defineComponent({
-  name: 'ChannelBox',
+  name: "ChannelBox",
 
   props: {
     channelName: {
       type: String,
-      required: true
+      required: true,
     },
 
     icon: {
       type: String,
-      required: true
+      required: true,
     },
 
     dropdown: {
       type: Object as () => DropdownType,
       required: true,
-    }
+    },
   },
 
   computed: {
     signedIn: {
       get() {
-        return this.$store.state.userSavedData.signedIn
+        return this.$store.state.userSavedData.signedIn;
       },
       set(val: boolean) {
-        this.$store.commit('userSavedData/signInOut', val)
-      }
-    }
+        this.$store.commit("userSavedData/signInOut", val);
+      },
+    },
   },
-})
+});
 </script>
+
+
+<style lang="scss" scoped>
+.active-style {
+  background: #e2e2e2;
+}
+</style>

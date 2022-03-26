@@ -2,8 +2,8 @@ import { MutationTree } from 'vuex';
 import { ChannelStateInterface } from './state';
 
 const mutation: MutationTree<ChannelStateInterface> = {
-  someMutation (/* state: ExampleStateInterface */) {
-    // your code
+  setChannel(state, newChannelName: string) {
+    state.currentChannel = newChannelName;
   }
 };
 

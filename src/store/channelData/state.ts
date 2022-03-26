@@ -6,6 +6,9 @@ export interface ChannelStateInterface {
     dropdown: {
       label: string,
       icon: string
+    }[],
+    messages: {
+      author: string, time: string, text: string
     }[]
   }[]
 }
@@ -21,6 +24,10 @@ function state(): ChannelStateInterface {
           { label: "Invite", icon: "person_add" },
           { label: "Users", icon: "people" },
         ],
+        messages: [
+          { author: "You", time: "12:43:08", text: "Hello world!" },
+          { author: "Testy", time: "12:44:45", text: "I like turtles" },
+        ],
       },
       {
         channelName: "memes",
@@ -30,6 +37,12 @@ function state(): ChannelStateInterface {
           { label: "Users", icon: "people" },
           { label: "Permissions", icon: "shield" },
           { label: "Rename", icon: "edit" },
+        ],
+        messages: [
+          { author: "You", time: "12:43:08", text: "Hello world!" },
+          { author: "Testy", time: "12:44:45", text: "I like turtles" },
+          { author: "You", time: "12:43:08", text: "Hello world!" },
+          { author: "Testy", time: "12:44:45", text: "I like turtles" },
         ],
       },
       {
@@ -42,6 +55,7 @@ function state(): ChannelStateInterface {
           { label: "Delete", icon: "delete" },
           { label: "Rename", icon: "edit" },
         ],
+        messages: [],
       },
       {
         channelName: "games",
@@ -50,6 +64,7 @@ function state(): ChannelStateInterface {
           { label: "Invite", icon: "person_add" },
           { label: "Users", icon: "people" },
         ],
+        messages: [],
       },
       {
         channelName: "coding",
@@ -60,6 +75,7 @@ function state(): ChannelStateInterface {
           { label: "Delete", icon: "delete" },
           { label: "Rename", icon: "edit" },
         ],
+        messages: [],
       }
     ]
   };
