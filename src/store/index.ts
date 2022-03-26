@@ -5,6 +5,7 @@ import {
   Store as VuexStore,
   useStore as vuexUseStore,
 } from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 import userSavedData from './userData'
 import { UserStateInterface } from './userData/state';
@@ -51,6 +52,9 @@ export default store(function (/* { ssrContext } */) {
       messageSavedData,
       channelSavedData
     },
+    plugins: [createPersistedState({
+      paths: ['userSavedData'],
+    })],
 
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only
