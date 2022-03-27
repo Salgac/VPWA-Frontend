@@ -20,6 +20,10 @@ const mutation: MutationTree<UserStateInterface> = {
 
   setEmail(state: UserStateInterface, val: string) {
     state.email = val;
+  },
+
+  openCloseUserList(state: UserStateInterface, val: boolean) {
+    state.openUserList = val;
   }
 };
 

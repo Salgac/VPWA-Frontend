@@ -1,5 +1,6 @@
 <template>
   <div>
+    <UserList/>
     <CommandList v-if="openCommandList" />
     <q-toolbar class="bg-grey-2 text-black row">
       <q-input
@@ -19,18 +20,20 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import CommandList from "components/CommandList.vue";
+import UserList from "components/UserList.vue";
 
 export default defineComponent({
   name: "MessageBox",
 
   components: {
     CommandList,
+    UserList
   },
 
   data() {
     return {
       message: "",
-      openCommandList: false,
+      openCommandList: false
     };
   },
 
@@ -63,7 +66,10 @@ export default defineComponent({
           var commandParts = this.currentCommand.split(" ", 3);
 
           if (commandParts.length == 1) {
-            if (commandParts[0] == "quit") {
+            if (commandParts[0] == "list") {
+              this.openUserList = true;
+            }
+            else if (commandParts[0] == "quit") {
               this.deleteChannel();
             }
             else if (commandParts[0] == "cancel") {
@@ -184,6 +190,15 @@ export default defineComponent({
       },
       set() {},
     },
+
+    openUserList: {
+      get() {
+        return this.$store.state.userSavedData.openUserList;
+      },
+      set(val: boolean) {
+        this.$store.commit('userSavedData/openCloseUserList', val)
+      },
+    }
   },
 
   watch: {

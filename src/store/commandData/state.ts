@@ -12,7 +12,8 @@ function state(): CommandStateInterface {
       { commandName: "invite" },
       { commandName: "revoke" },
       { commandName: "cancel" },
-      { commandName: "quit" }
+      { commandName: "quit" },
+      { commandName: "list" }
     ]
   };
 }

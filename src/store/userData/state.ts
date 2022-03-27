@@ -5,7 +5,8 @@ export interface UserStateInterface {
   username: string;
   email: string;
   userStatus: string;
-  openAccountSettings: boolean
+  openAccountSettings: boolean;
+  openUserList: boolean
 }
 
 function state(): UserStateInterface {
@@ -16,7 +17,8 @@ function state(): UserStateInterface {
     username: "",
     email: "",
     userStatus: "",
-    openAccountSettings: false
+    openAccountSettings: false,
+    openUserList: false
   };
 }
 
