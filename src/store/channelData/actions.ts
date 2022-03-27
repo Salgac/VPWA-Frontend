@@ -10,7 +10,6 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
         channelName: "chatting",
         isPrivate: false,
         owner: "viktor",
-        permissions: { owner: "lkji-cq", user: "lkji-c-" },
         messages: [
           { author: "You", time: "12:43:08", text: "Hello world!" },
           { author: "Testy", time: "12:44:45", text: "I like turtles" },
@@ -40,7 +39,6 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
         channelName: "memes",
         isPrivate: false,
         owner: "viktor",
-        permissions: { owner: "lkji-cq", user: "lkji-c-" },
         messages: [
           { author: "You", time: "12:43:08", text: "Hello world!" },
           { author: "Testy", time: "12:44:45", text: "I like turtles" },
@@ -72,7 +70,6 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
         channelName: "music",
         isPrivate: false,
         owner: "jano",
-        permissions: { owner: "lkji-cq", user: "lkji-c-" },
         messages: [],
         users: [
           {
@@ -105,7 +102,6 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
         channelName: "games",
         isPrivate: true,
         owner: "dominik",
-        permissions: { owner: "l-jircq", user: "l-ji-c-" },
         messages: [],
         users: [
           {
@@ -132,7 +128,6 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
         channelName: "coding",
         isPrivate: false,
         owner: "dominik",
-        permissions: { owner: "lkji-cq", user: "lkji-c-" },
         messages: [],
         users: [
           {
@@ -175,7 +170,6 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
       channelName: data.name,
       isPrivate: data.isPrivate,
       owner: this.state.userSavedData.username,
-      permissions: data.isPrivate ? { owner: "l-jircq", user: "l-ji-c-" } : { owner: "lkji-cq", user: "lkji-c-" },
       users: [
         {
           name: this.state.userSavedData.name,

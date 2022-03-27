@@ -5,10 +5,6 @@ export interface ChannelStateInterface {
     channelName: string,
     isPrivate: boolean,
     owner: string,
-    permissions: {
-      owner: string,
-      user: string
-    },
     messages: {
       author: string,
       time: string,

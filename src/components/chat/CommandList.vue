@@ -16,6 +16,9 @@
 import { defineComponent } from "vue";
 import CommandItem from "components/chat/CommandItem.vue";
 
+const permissionsPrivate = { owner: "l-jircq", user: "l-ji-c-" };
+const permissionsPublic = { owner: "lkji-cq", user: "lkji-c-" };
+
 export default defineComponent({
   name: "CommandList",
 
@@ -52,18 +55,16 @@ export default defineComponent({
         return res;
       }
 
+      let permissions = currentChannelObj.isPrivate ? permissionsPrivate : permissionsPublic;
+
       if (currentChannelObj.owner == this.$store.state.userSavedData.username) {
-        if (
-          currentChannelObj.permissions.owner.includes(commandName.charAt(0))
-        ) {
+        if (permissions.owner.includes(commandName.charAt(0))) {
           res = true;
         } else {
           res = false;
         }
       } else {
-        if (
-          currentChannelObj.permissions.user.includes(commandName.charAt(0))
-        ) {
+        if (permissions.user.includes(commandName.charAt(0))) {
           res = true;
         } else {
           res = false;
