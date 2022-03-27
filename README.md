@@ -1,6 +1,6 @@
 # Poormans Discord (vpwa-frontend)
 
-A Discord clone written using Quasar for VPWA (Development of Progressive Web Applications) course. The app implements various use cases according to project assignment.
+A Discord clone written using Quasar for VPWA (Development of Progressive Web Applications) course. The app implements various use cases according to the project assignment.
 
 Please read [submission notes](#Notes) before testing.
 
