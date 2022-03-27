@@ -1,6 +1,6 @@
 # Poormans Discord (vpwa-frontend)
 
-A Discord clone written using Quasar for VPWA (Development of Progressive Web Applications) course. The app implements various use cases according to the project assignment.
+A Discord clone written using Quasar for VPWA (Development of Progressive Web Applications) course. The app implements various use cases according to the project assignment without use cases 6, 8 and 11 (no WTECH).
 
 Please read [submission notes](#Notes) before testing.
 
@@ -29,21 +29,21 @@ Akékoľvek iné vylepšenia sú vítané a potešia ma :-)
     * nickName ako aj channelName sú unikátne
     * správca môže kanál zatvoriť/zrušiť príkazom /quit
 5. používateľ môže zrušiť svoje členstvo v kanáli príkazom /cancel, ak tak spraví správca kanála, kanál zaniká
-6. správu v kanáli je možné adresovať konkrétnemu používateľovi cez príkaz @nickname
-    * správa je zvýraznená danému používateľovi v zozname správ
+6. ~~správu v kanáli je možné adresovať konkrétnemu používateľovi cez príkaz @nickname~~
+    * ~~správa je zvýraznená danému používateľovi v zozname správ~~
 7. používateľ si môže pozrieť kompletnú históriu správ
     * efektívny inifinite scroll
-8. používateľ je informovaný o každej novej správe prostredníctvom notifikácie
-    * notifikácia sa vystavuje iba ak aplikácia nie je v stave "visible" (pozrite quasar docu App Visibility)
-    * notifikácia obsahuje časť zo správy a odosielateľa
-    * používateľ si môže nastaviť, aby mu chodili notifikácie iba pre správy, ktoré sú mu adresované
+8. ~~používateľ je informovaný o každej novej správe prostredníctvom notifikácie~~
+    * ~~notifikácia sa vystavuje iba ak aplikácia nie je v stave "visible" (pozrite quasar docu App Visibility)~~
+    * ~~notifikácia obsahuje časť zo správy a odosielateľa~~
+    * ~~používateľ si môže nastaviť, aby mu chodili notifikácie iba pre správy, ktoré sú mu adresované~~
 9. používateľ si môže nastaviť stav (online, DND, offline)
     * stav sa zobrazuje používateľom
     * ak je nastavený DND stav, neprichádzajú notifikácie
     * ak je nastavený offline stav, neprichádzajú používateľovi správy, po prepnutí do online sú kanály automaticky aktualizované
 10. používateľ si môže pozrieť zoznam členov kanála (ak je tiež členom kanála) príkazom /list
-11. ak má používateľ aktívny niektorý z kanálov (nachádza sa v okne správ pre daný kanál) vidí v stavovej lište informáciu o tom, kto aktuálne píše správu (napr. Ed is typing)
-    * po kliknutí na nickName si môže pozrieť rozpísaný text v reálnom čase, predtým, ako ju odosielateľ odošle (každá zmena je viditeľná) :-)
+11. ~~ak má používateľ aktívny niektorý z kanálov (nachádza sa v okne správ pre daný kanál) vidí v stavovej lište informáciu o tom, kto aktuálne píše správu (napr. Ed is typing)~~
+    * ~~po kliknutí na nickName si môže pozrieť rozpísaný text v reálnom čase, predtým, ako ju odosielateľ odošle (každá zmena je viditeľná) :-)~~
 
 ## Notes
 
