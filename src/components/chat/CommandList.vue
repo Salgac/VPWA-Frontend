@@ -14,61 +14,63 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import CommandItem from "components/CommandItem.vue"
+import CommandItem from "components/chat/CommandItem.vue";
 
 export default defineComponent({
   name: "CommandList",
 
   components: {
-    CommandItem
+    CommandItem,
   },
 
   computed: {
     currentCommand: {
       get() {
-        return this.$store.state.commandSavedData.currentCommand
+        return this.$store.state.commandSavedData.currentCommand;
       },
       set(val: string) {
-        this.$store.commit('commandSavedData/setCommand', val)
-      }
+        this.$store.commit("commandSavedData/setCommand", val);
+      },
     },
 
     commands: {
       get() {
-        return this.$store.state.commandSavedData.commands
+        return this.$store.state.commandSavedData.commands;
       },
-      set() {
-
-      }
-    }
+      set() {},
+    },
   },
 
   methods: {
     enabledCommand(commandName: string): boolean {
       var res = false;
       let currentChannelObj = this.$store.state.channelSavedData.channels.find(
-        ch => ch.channelName === this.$store.state.channelSavedData.currentChannel
+        (ch) =>
+          ch.channelName === this.$store.state.channelSavedData.currentChannel
       );
       if (currentChannelObj == undefined) {
         return res;
       }
 
       if (currentChannelObj.owner == this.$store.state.userSavedData.username) {
-        if (currentChannelObj.permissions.owner.includes(commandName.charAt(0))) {
+        if (
+          currentChannelObj.permissions.owner.includes(commandName.charAt(0))
+        ) {
           res = true;
         } else {
           res = false;
         }
-      }
-      else {
-        if (currentChannelObj.permissions.user.includes(commandName.charAt(0))) {
+      } else {
+        if (
+          currentChannelObj.permissions.user.includes(commandName.charAt(0))
+        ) {
           res = true;
         } else {
           res = false;
         }
       }
       return res;
-    }
-  }
-})
+    },
+  },
+});
 </script>

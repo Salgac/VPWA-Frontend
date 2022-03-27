@@ -36,10 +36,10 @@
 
 <script lang="ts">
 import LeftDrawer from "components/LeftDrawer.vue";
-import MessageBox from "components/MessageBox.vue";
+import MessageBox from "src/components/chat/MessageBox.vue";
 import SignInForm from "components/SignInForm.vue";
-import CreateChannel from "src/components/CreateChannel.vue";
-import AccountSettings from "components/AccountSettings.vue";
+import CreateChannel from "src/components/popups/CreateChannel.vue";
+import AccountSettings from "src/components/popups/AccountSettings.vue";
 
 import { defineComponent } from "vue";
 

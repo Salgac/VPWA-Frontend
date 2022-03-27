@@ -6,24 +6,18 @@
     <q-item-section>
       <q-btn-toggle
         v-model="userStatus"
-        :options="statusOptions.map(op => ({ value: op.name, slot: op.name }))"
+        :options="
+          statusOptions.map((op) => ({ value: op.name, slot: op.name }))
+        "
       >
         <template
           v-for="statusOption in statusOptions"
           #[statusOption.name]
+          class="row items-center no-wrap"
+          v-bind:key="statusOption"
         >
-          <div
-            class="row items-center no-wrap"
-          >
-            <div>
-              {{ statusOption.label }}
-            </div>
-            <q-icon
-              right
-              :name="statusOption.icon"
-              :color="statusOption.color"
-            />
-          </div>
+          {{ statusOption.label }}
+          <q-icon right :name="statusOption.icon" :color="statusOption.color" />
         </template>
       </q-btn-toggle>
     </q-item-section>
@@ -36,7 +30,12 @@ import { defineComponent } from "vue";
 const statusOptions = [
   { name: "on", label: "Online", icon: "circle", color: "green" },
   { name: "off", label: "Offline", icon: "circle", color: "grey" },
-  { name: "dnd", label: "Do Not Disturb", icon: "do_not_disturb_on", color: "red" },
+  {
+    name: "dnd",
+    label: "Do Not Disturb",
+    icon: "do_not_disturb_on",
+    color: "red",
+  },
 ];
 
 export default defineComponent({
@@ -44,19 +43,19 @@ export default defineComponent({
 
   data() {
     return {
-      statusOptions
-    }
+      statusOptions,
+    };
   },
 
   computed: {
     userStatus: {
       get() {
-        return this.$store.state.userSavedData.userStatus
+        return this.$store.state.userSavedData.userStatus;
       },
       set(val: string) {
-        this.$store.commit('userSavedData/setUserStatus', val)
-      }
+        this.$store.commit("userSavedData/setUserStatus", val);
+      },
     },
-  }
+  },
 });
 </script>

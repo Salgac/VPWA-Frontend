@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import MessageField from "components/MessageField.vue";
+import MessageField from "src/components/chat/MessageField.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -18,12 +18,12 @@ export default defineComponent({
   computed: {
     signedIn: {
       get() {
-        return this.$store.state.userSavedData.signedIn
+        return this.$store.state.userSavedData.signedIn;
       },
       set(val) {
-        this.$store.commit('userSavedData/signInOut', val)
-      }
-    }
+        this.$store.commit("userSavedData/signInOut", val);
+      },
+    },
   },
 });
 </script>
