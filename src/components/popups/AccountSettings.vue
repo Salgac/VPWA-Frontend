@@ -9,6 +9,14 @@
     <q-card style="max-width: 80vw">
       <q-card-section class="row items-center q-pb-none">
         <div class="text-h6">Account</div>
+        <q-btn
+            v-if="!isValidPassword"
+            icon="help"
+            color="red-5"
+            flat
+            rounded
+            @click="showHint = !showHint"
+          />
         <q-space />
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
@@ -22,6 +30,7 @@
           </q-item-section>
           <q-item-section>
             <q-input
+              item-aligned
               class="q-mb-md"
               name="Username"
               rounded
@@ -52,6 +61,7 @@
           </q-item-section>
           <q-item-section>
             <q-input
+              item-aligned
               class="q-mb-md"
               name="Password"
               rounded
@@ -61,10 +71,10 @@
               no-error-icon
               :type="showPassword ? 'text' : 'password'"
               :error="!isValidPassword"
-              error-message="Min. 8 characters, at least 1 upper- and lowercase letter, number and special character"
+              error-message="Password required"
             >
               <template v-slot:prepend>
-                <q-icon name="person" />
+                <q-icon name="password" />
               </template>
               <template v-slot:append>
                 <q-icon
@@ -78,6 +88,18 @@
                   @click="showPassword = !showPassword"
                 />
               </template>
+              <q-tooltip
+                v-model="showHint"
+                anchor="center right"
+                self="center left"
+                :offset="[10, 10]
+              ">
+                Min. 8 characters<br/>
+                At least 1 uppercase letter<br/>
+                At least lowercase letter<br/>
+                At least 1 number<br/>
+                At least 1 special character
+              </q-tooltip>
             </q-input>
           </q-item-section>
         </q-item>
@@ -120,6 +142,7 @@ export default defineComponent({
       showPassword: false,
       usernameEditDisabled: true,
       passwordEditDisabled: true,
+      showHint: false,
       passwordRegex:
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
     };
@@ -182,6 +205,7 @@ export default defineComponent({
     resetPasswordEdit() {
       this.passwordEditDisabled = true;
       this.inputPassword = "";
+      this.showHint = false;
     },
 
     savePassword() {

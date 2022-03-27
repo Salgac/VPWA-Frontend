@@ -9,12 +9,24 @@
     <q-card>
       <q-form class="absolute-center">
         <div v-if="openAccountCreation">
+        <q-item>
           <q-btn
             class="q-mb-md"
             icon="arrow_back"
             rounded
-            @click="openAccountCreation = !openAccountCreation"
+            @click="openAccountCreation = !openAccountCreation, clearFields()"
           />
+          <q-space></q-space>
+          <q-btn
+            v-if="!isValidPassword"
+            class="q-mb-md"
+            icon="help"
+            color="red-5"
+            flat
+            rounded
+            @click="showHint = !showHint"
+          />
+          </q-item>
         </div>
         <div v-if="openAccountCreation">
           <q-input
@@ -81,19 +93,32 @@
             v-model="inputPassword"
             hint="Enter your password"
             :error="!isValidPassword"
-            error-message="Password is required"
+            error-message="Password required"
             no-error-icon
           >
             <template v-slot:prepend>
-              <q-icon name="password" />
+              <q-icon name="password"/>
             </template>
             <template v-slot:append>
               <q-icon
                 :name="showPassword ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
                 @click="showPassword = !showPassword"
+                class="cursor-pointer"
               />
             </template>
+            <q-tooltip
+              v-if="openAccountCreation"
+              v-model="showHint"
+              anchor="center right"
+              self="center left"
+              :offset="[10, 10]
+            ">
+              Min. 8 characters<br/>
+              At least 1 uppercase letter<br/>
+              At least lowercase letter<br/>
+              At least 1 number<br/>
+              At least 1 special character
+            </q-tooltip>
           </q-input>
         </div>
         <div v-if="!openAccountCreation">
@@ -158,6 +183,7 @@ export default defineComponent({
       inputPassword: "",
       showPassword: false,
       openAccountCreation: false,
+      showHint: false,
       passwordRegex:
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
       emailRegex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -252,6 +278,7 @@ export default defineComponent({
       this.inputUsername = "";
       this.inputPassword = "";
       this.showPassword = false;
+      this.showHint = false;
     },
   },
 });
