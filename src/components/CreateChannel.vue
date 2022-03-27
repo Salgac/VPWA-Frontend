@@ -44,19 +44,45 @@ export default defineComponent({
   },
 
   methods: {
-    createPrivate() {
-      this.$store.dispatch("channelSavedData/createChannel", {
-        name: this.channelName,
-        isPrivate: true,
+    notifyDuplicate() {
+      this.$q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "Channel name '" + this.channelName + "' is taken"
       });
+    },
+    createPrivate() {
+      if (
+        this.$store.state.channelSavedData.channels.some(
+          ch => ch.channelName === this.channelName
+        )
+      ) {
+        this.notifyDuplicate();
+      }
+      else {
+        this.$store.dispatch("channelSavedData/createChannel", {
+          name: this.channelName,
+          isPrivate: true,
+        });
+      }
       this.channelName = "";
     },
 
     createPublic() {
-      this.$store.dispatch("channelSavedData/createChannel", {
-        name: this.channelName,
-        isPrivate: false,
-      });
+      if (
+        this.$store.state.channelSavedData.channels.some(
+          ch => ch.channelName === this.channelName
+        )
+      ) {
+        this.notifyDuplicate();
+      }
+      else {
+        this.$store.dispatch("channelSavedData/createChannel", {
+          name: this.channelName,
+          isPrivate: false,
+        });
+      }
       this.channelName = "";
     },
   },
