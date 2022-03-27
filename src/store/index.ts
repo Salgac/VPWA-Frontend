@@ -10,8 +10,8 @@ import createPersistedState from 'vuex-persistedstate'
 import userSavedData from './userData'
 import { UserStateInterface } from './userData/state';
 
-import commandSavedData from './messageData'
-import { CommandStateInterface } from './messageData/state';
+import commandSavedData from './commandData'
+import { CommandStateInterface } from './commandData/state';
 
 import channelSavedData from './channelData'
 import { ChannelStateInterface } from './channelData/state';

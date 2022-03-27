@@ -35,14 +35,20 @@ export default defineComponent({
   },
 
   methods: {
-    addEmote() {
-      //TODO
+    notify(message: string, err: boolean) {
+      this.$q.notify({
+        color: err ? "red-5" : "green-4",
+        textColor: "white",
+        icon: err ? "warning" : "cloud_done",
+        message: message
+      });
     },
-    addFile() {
-      //TODO
+    removeWhitespaces(str: string) {
+      return str.replace(/\s+/g, " ").replace(/^\s|\s$/g, "")
     },
     sendMessage() {
       //TODO send data
+      this.message = this.removeWhitespaces(this.message);
       console.log(this.message);
 
       if (this.message.length > 0) {
@@ -54,6 +60,39 @@ export default defineComponent({
           };
         } else {
           // command execution
+          var commandParts = this.currentCommand.split(" ", 2);
+
+          if (commandParts.length == 1) {
+            if (commandParts[0] == "quit") {
+              this.notify('Channel deleted', false);
+            }
+            else if (commandParts[0] == "cancel") {
+              this.notify('Left channel', false);
+            }
+            else if (["join", "invite", "revoke", "kick"].includes(commandParts[0])) {
+              this.notify('Provide command argument: ' + commandParts[0], true);
+            }
+            else {
+              this.notify('Unknown command: ' + commandParts[0], true);
+            }
+          }
+          else {
+            if (commandParts[0] == "join") {
+              this.notify('Created: ' + commandParts[1], false);
+            }
+            else if (commandParts[0] == "invite") {
+              this.notify('Invited: ' + commandParts[1], false);
+            }
+            else if (commandParts[0] == "revoke") {
+              this.notify('Revoked: ' + commandParts[1], false);
+            }
+            else if (commandParts[0] == "kick") {
+              this.notify('Kicked: ' + commandParts[1], false);
+            }
+            else {
+              this.notify('Unknown command: ' + commandParts[0], true);
+            }
+          }
         }
       }
 
@@ -91,10 +130,11 @@ export default defineComponent({
 
   watch: {
     message(newMessage: string) {
+      newMessage = this.removeWhitespaces(newMessage)
       if (newMessage.indexOf("/") == 0) {
-        this.currentCommand = newMessage.slice(1);
+        this.currentCommand = newMessage.slice(1).replace(/^\s/g, "");
         if (
-          this.commands.some((i) => i.commandName.includes(this.currentCommand))
+          this.commands.some((i: {commandName: string, commandRole: string}) => i.commandName.includes(this.currentCommand))
         ) {
           this.openCommandList = true;
         } else {
