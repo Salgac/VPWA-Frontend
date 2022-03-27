@@ -27,6 +27,21 @@ const mutation: MutationTree<ChannelStateInterface> = {
   //removes channel from sidebar
   removeChannel(state, channelName: string) {
     state.channels = state.channels.filter((ch) => ch.channelName !== channelName)
+  },
+
+  deleteChannelUser(state, data: { channelName: string, username: string }) {
+    var obj = state.channels.find(
+      ch => ch.channelName === data.channelName
+    )
+    if (obj == undefined) {
+      return
+    }
+    var userIndex = obj.users.findIndex(
+      u => u.username === data.username
+    )
+    if (userIndex > -1) {
+      obj.users.splice(userIndex, 1)
+    }
   }
 };
 

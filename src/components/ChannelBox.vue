@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-item
+      v-if="show"
       :active="channelName == $store.state.channelSavedData.currentChannel"
       active-class="active-style"
     >
@@ -21,17 +22,28 @@
         <q-btn-dropdown v-if="signedIn" flat rounded dropdown-icon="more_vert">
           <q-list>
             <q-item
-              v-for="item in dropdown"
-              :key="item.label"
               clickable
               v-close-popup
-              v-on:click="handleDropdown(item.label, channelName)"
+              v-on:click="handleDropdown('Leave', channelName)"
             >
               <q-item-section side>
-                <q-icon :name="item.icon" />
+                <q-icon name="close" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>{{ item.label }}</q-item-label>
+                <q-item-label>Leave</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item
+              v-if="owner == $store.state.userSavedData.username"
+              clickable
+              v-close-popup
+              v-on:click="handleDropdown('Delete', channelName)"
+            >
+              <q-item-section side>
+                <q-icon name="delete" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Delete</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -44,11 +56,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
-type DropdownType = {
-  icon: string;
-  label: string;
-}[];
 
 export default defineComponent({
   name: "ChannelBox",
@@ -64,10 +71,15 @@ export default defineComponent({
       required: true,
     },
 
-    dropdown: {
-      type: Object as () => DropdownType,
+    owner: {
+      type: String,
       required: true,
     },
+
+    show: {
+      type: Boolean,
+      required: true,
+    }
   },
 
   computed: {
@@ -92,7 +104,13 @@ export default defineComponent({
     handleDropdown(label: string, channelName: string) {
       switch (label) {
         case "Leave":
-          this.$store.dispatch("channelSavedData/leaveChannel", channelName);
+          this.$store.dispatch(
+            "channelSavedData/leaveChannel",
+            {
+              channelName: channelName,
+              username: this.$store.state.userSavedData.username
+            }
+          );
           break;
         case "Delete":
           this.$store.dispatch("channelSavedData/deleteChannel", channelName);

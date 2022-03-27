@@ -9,53 +9,152 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
       {
         channelName: "chatting",
         isPrivate: false,
-        dropdown: [
-          { label: "Leave", icon: "close" },
-        ],
+        owner: "viktor",
         messages: [
           { author: "You", time: "12:43:08", text: "Hello world!" },
           { author: "Testy", time: "12:44:45", text: "I like turtles" },
+        ],
+        users: [
+          {
+            name: "Viktor",
+            surname: "Modroczký",
+            email: "viktor@email.com",
+            username: "viktor"
+          },
+          {
+            name: "Jožko",
+            surname: "Mrkvička",
+            email: "jozko@email.sk",
+            username: "jozko"
+          },
+          {
+            name: "Janko",
+            surname: "Ferko",
+            email: "janko@email.sk",
+            username: "janko"
+          },
         ],
       },
       {
         channelName: "memes",
         isPrivate: false,
-        dropdown: [
-          { label: "Leave", icon: "close" },
-        ],
+        owner: "viktor",
         messages: [
           { author: "You", time: "12:43:08", text: "Hello world!" },
           { author: "Testy", time: "12:44:45", text: "I like turtles" },
           { author: "You", time: "12:43:08", text: "Hello world!" },
           { author: "Testy", time: "12:44:45", text: "I like turtles" },
         ],
+        users: [
+          {
+            name: "Viktor",
+            surname: "Modroczký",
+            email: "viktor@email.com",
+            username: "viktor"
+          },
+          {
+            name: "Jožko2",
+            surname: "Mrkvička2",
+            email: "jozko2@email.sk",
+            username: "jozko2"
+          },
+          {
+            name: "Janko2",
+            surname: "Ferko2",
+            email: "janko2@email.sk",
+            username: "janko2"
+          },
+        ],
       },
       {
         channelName: "music",
         isPrivate: false,
-        dropdown: [
-          { label: "Leave", icon: "close" },
-          { label: "Delete", icon: "delete" },
-        ],
+        owner: "jano",
         messages: [],
+        users: [
+          {
+            name: "Viktor",
+            surname: "Modroczký",
+            email: "viktor@email.com",
+            username: "viktor"
+          },
+          {
+            name: "Jožko",
+            surname: "Mrkvička",
+            email: "jozko@email.sk",
+            username: "jozko"
+          },
+          {
+            name: "Jano",
+            surname: "Kováč",
+            email: "jano@email.sk",
+            username: "jano"
+          },
+          {
+            name: "Dominik",
+            surname: "Šalgovič",
+            email: "dominik@email.sk",
+            username: "dominik"
+          },
+        ],
       },
       {
         channelName: "games",
         isPrivate: true,
-        dropdown: [
-          { label: "Leave", icon: "close" },
-          { label: "Delete", icon: "delete" },
-        ],
+        owner: "dominik",
         messages: [],
+        users: [
+          {
+            name: "Jožko",
+            surname: "Mrkvička",
+            email: "jozko@email.sk",
+            username: "jozko"
+          },
+          {
+            name: "Jano",
+            surname: "Kováč",
+            email: "jano@email.sk",
+            username: "jano"
+          },
+          {
+            name: "Dominik",
+            surname: "Šalgovič",
+            email: "dominik@email.sk",
+            username: "dominik"
+          },
+        ],
       },
       {
         channelName: "coding",
         isPrivate: false,
-        dropdown: [
-          { label: "Leave", icon: "close" },
-          { label: "Delete", icon: "delete" },
-        ],
+        owner: "dominik",
         messages: [],
+        users: [
+          {
+            name: "Viktor",
+            surname: "Modroczký",
+            email: "viktor@email.com",
+            username: "viktor"
+          },
+          {
+            name: "Jožko",
+            surname: "Mrkvička",
+            email: "jozko@email.sk",
+            username: "jozko"
+          },
+          {
+            name: "Jano",
+            surname: "Kováč",
+            email: "jano@email.sk",
+            username: "jano"
+          },
+          {
+            name: "Dominik",
+            surname: "Šalgovič",
+            email: "dominik@email.sk",
+            username: "dominik"
+          },
+        ],
       }];
 
     commit('setChannels', data);
@@ -70,9 +169,14 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
     let channelObject = {
       channelName: data.name,
       isPrivate: data.isPrivate,
-      dropdown: [
-        { label: "Leave", icon: "close" },
-        { label: "Delete", icon: "delete" },
+      owner: this.state.userSavedData.username,
+      users: [
+        {
+          name: this.state.userSavedData.name,
+          surname: this.state.userSavedData.surname,
+          email: this.state.userSavedData.email,
+          username: this.state.userSavedData.username
+        }
       ],
       messages: [],
     }
@@ -81,8 +185,8 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
     commit('setCurrentChannel', data.name)
   },
 
-  leaveChannel({ commit }, channelName) {
-    commit('removeChannel', channelName);
+  leaveChannel({ commit }, data: { channelName: string, username: string }) {
+    commit('deleteChannelUser', data);
   },
 
   //delete channel call for admin

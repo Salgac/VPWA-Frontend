@@ -1,5 +1,7 @@
 export interface UserStateInterface {
   signedIn: boolean;
+  name: string;
+  surname: string;
   username: string;
   email: string;
   userStatus: string;
@@ -11,6 +13,8 @@ export interface UserStateInterface {
 function state(): UserStateInterface {
   return {
     signedIn: false,
+    name: "",
+    surname: "",
     username: "",
     email: "",
     userStatus: "",
