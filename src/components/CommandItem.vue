@@ -13,11 +13,6 @@
           <b>Command: </b>{{ commandName }}
         </q-item-label>
       </q-item-section>
-      <q-item-section>
-        <q-item-label>
-          <b>Role: </b>{{ commandRole }}
-        </q-item-label>
-      </q-item-section>
     </q-item>
   </div>
 </template>
@@ -28,11 +23,6 @@ import { defineComponent } from "vue";
 export default defineComponent({
   props: {
     commandName: {
-      type: String,
-      required: true
-    },
-
-    commandRole: {
       type: String,
       required: true
     },

@@ -6,10 +6,6 @@ const mutation: MutationTree<UserStateInterface> = {
     state.signedIn = val;
   },
 
-  openCloseSettings(state: UserStateInterface, val: boolean) {
-    state.openSettings = val;
-  },
-
   openCloseAccountSettings(state: UserStateInterface, val: boolean) {
     state.openAccountSettings = val;
   },
@@ -26,9 +22,9 @@ const mutation: MutationTree<UserStateInterface> = {
     state.email = val;
   },
 
-  setRole(state: UserStateInterface, val: string) {
-    state.role = val;
-  },
+  openCloseUserList(state: UserStateInterface, val: boolean) {
+    state.openUserList = val;
+  }
 };
 
 export default mutation;

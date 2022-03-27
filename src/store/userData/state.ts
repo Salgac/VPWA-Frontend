@@ -1,22 +1,24 @@
 export interface UserStateInterface {
   signedIn: boolean;
+  name: string;
+  surname: string;
   username: string;
   email: string;
   userStatus: string;
-  role: string;
-  openSettings: boolean;
-  openAccountSettings: boolean
+  openAccountSettings: boolean;
+  openUserList: boolean
 }
 
 function state(): UserStateInterface {
   return {
     signedIn: false,
+    name: "",
+    surname: "",
     username: "",
     email: "",
     userStatus: "",
-    role: "",
-    openSettings: false,
-    openAccountSettings: false
+    openAccountSettings: false,
+    openUserList: false
   };
 }
 

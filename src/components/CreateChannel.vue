@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="openSettings">
+  <q-dialog v-model="openChannelCreation">
     <q-card>
       <q-card-section class="row items-center q-pb-none">
         <div class="text-h6">Create new channel</div>
@@ -44,30 +44,56 @@ export default defineComponent({
   },
 
   methods: {
-    createPrivate() {
-      this.$store.dispatch("channelSavedData/createChannel", {
-        name: this.channelName,
-        isPrivate: true,
+    notifyDuplicate() {
+      this.$q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "Channel name '" + this.channelName + "' is taken"
       });
+    },
+    createPrivate() {
+      if (
+        this.$store.state.channelSavedData.channels.some(
+          ch => ch.channelName === this.channelName
+        )
+      ) {
+        this.notifyDuplicate();
+      }
+      else {
+        this.$store.dispatch("channelSavedData/createChannel", {
+          name: this.channelName,
+          isPrivate: true,
+        });
+      }
       this.channelName = "";
     },
 
     createPublic() {
-      this.$store.dispatch("channelSavedData/createChannel", {
-        name: this.channelName,
-        isPrivate: false,
-      });
+      if (
+        this.$store.state.channelSavedData.channels.some(
+          ch => ch.channelName === this.channelName
+        )
+      ) {
+        this.notifyDuplicate();
+      }
+      else {
+        this.$store.dispatch("channelSavedData/createChannel", {
+          name: this.channelName,
+          isPrivate: false,
+        });
+      }
       this.channelName = "";
     },
   },
 
   computed: {
-    openSettings: {
+    openChannelCreation: {
       get() {
-        return this.$store.state.userSavedData.openSettings;
+        return this.$store.state.channelSavedData.openChannelCreation;
       },
       set(val: boolean) {
-        this.$store.commit("userSavedData/openCloseSettings", val);
+        this.$store.commit("channelSavedData/openCloseChannelCreation", val);
       },
     },
   },

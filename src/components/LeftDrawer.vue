@@ -12,9 +12,12 @@
       <ChannelBox
         v-for="channel in channels"
         :key="channel.channelName"
+        :show="channel.users.some(u => u.username === $store.state.userSavedData.username)"
         v-bind="channel"
       />
+      <!--
       <q-item v-if="!channels.length">No channels. Create or join one.</q-item>
+      -->
       <q-item>
         <q-btn
           v-if="signedIn"
@@ -22,7 +25,7 @@
           flat
           no-caps
           style="width: 100%"
-          @click="openSettings = !openSettings"
+          @click="openChannelCreation = !openChannelCreation"
         />
       </q-item>
     </q-list>
@@ -67,12 +70,12 @@ export default defineComponent({
       },
     },
 
-    openSettings: {
+    openChannelCreation: {
       get() {
-        return this.$store.state.userSavedData.openSettings;
+        return this.$store.state.channelSavedData.openChannelCreation;
       },
       set(val: boolean) {
-        this.$store.commit("userSavedData/openCloseSettings", val);
+        this.$store.commit("channelSavedData/openCloseChannelCreation", val);
       },
     },
 

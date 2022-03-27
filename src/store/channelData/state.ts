@@ -1,24 +1,43 @@
 export interface ChannelStateInterface {
+  openChannelCreation: boolean;
   currentChannel: string;
   channels: {
     channelName: string,
     isPrivate: boolean,
-    dropdown: {
-      label: string,
-      icon: string
-    }[],
+    owner: string,
+    permissions: {
+      owner: string,
+      user: string
+    },
     messages: {
-      author: string, time: string, text: string
+      author: string,
+      time: string,
+      text: string
     }[],
+    users: {
+      name: string,
+      surname: string,
+      email: string,
+      username: string
+    }[]
   }[];
-  newMessage: { author: string, time: string, text: string }
+  newMessage: {
+    author: string,
+    time: string,
+    text: string
+  }
 }
 
 function state(): ChannelStateInterface {
   return {
+    openChannelCreation: false,
     currentChannel: "",
     channels: [],
-    newMessage: { author: "", time: "", text: "" }
+    newMessage: {
+      author: "",
+      time: "",
+      text: ""
+    }
   };
 }
 
