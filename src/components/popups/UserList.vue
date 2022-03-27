@@ -18,7 +18,7 @@
       </q-card-section>
       <q-card-section style="max-height: 50vh" class="scroll">
         <q-list>
-          <q-item v-for="user in getUsers()" v-bind:key="user">
+          <q-item v-for="user in getUsers()" v-bind:key="user.username">
             <q-item-section>
               {{ user.username }}
             </q-item-section>

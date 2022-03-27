@@ -14,7 +14,7 @@
           v-for="statusOption in statusOptions"
           #[statusOption.name]
           class="row items-center no-wrap"
-          v-bind:key="statusOption"
+          v-bind:key="statusOption.name"
         >
           {{ statusOption.label }}
           <q-icon right :name="statusOption.icon" :color="statusOption.color" />
