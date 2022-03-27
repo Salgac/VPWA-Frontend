@@ -1,4 +1,5 @@
 export interface ChannelStateInterface {
+  openChannelCreation: boolean;
   currentChannel: string;
   channels: {
     channelName: string,
@@ -25,6 +26,7 @@ export interface ChannelStateInterface {
 
 function state(): ChannelStateInterface {
   return {
+    openChannelCreation: false,
     currentChannel: "",
     channels: [],
     newMessage: {

@@ -6,7 +6,6 @@ export interface UserStateInterface {
   email: string;
   userStatus: string;
   role: string;
-  openSettings: boolean;
   openAccountSettings: boolean
 }
 
@@ -19,7 +18,6 @@ function state(): UserStateInterface {
     email: "",
     userStatus: "",
     role: "",
-    openSettings: false,
     openAccountSettings: false
   };
 }

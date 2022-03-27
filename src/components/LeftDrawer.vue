@@ -25,7 +25,7 @@
           flat
           no-caps
           style="width: 100%"
-          @click="openSettings = !openSettings"
+          @click="openChannelCreation = !openChannelCreation"
         />
       </q-item>
     </q-list>
@@ -70,12 +70,12 @@ export default defineComponent({
       },
     },
 
-    openSettings: {
+    openChannelCreation: {
       get() {
-        return this.$store.state.userSavedData.openSettings;
+        return this.$store.state.channelSavedData.openChannelCreation;
       },
       set(val: boolean) {
-        this.$store.commit("userSavedData/openCloseSettings", val);
+        this.$store.commit("channelSavedData/openCloseChannelCreation", val);
       },
     },
 

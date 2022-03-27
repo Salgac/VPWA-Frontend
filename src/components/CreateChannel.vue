@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="openSettings">
+  <q-dialog v-model="openChannelCreation">
     <q-card>
       <q-card-section class="row items-center q-pb-none">
         <div class="text-h6">Create new channel</div>
@@ -62,12 +62,12 @@ export default defineComponent({
   },
 
   computed: {
-    openSettings: {
+    openChannelCreation: {
       get() {
-        return this.$store.state.userSavedData.openSettings;
+        return this.$store.state.channelSavedData.openChannelCreation;
       },
       set(val: boolean) {
-        this.$store.commit("userSavedData/openCloseSettings", val);
+        this.$store.commit("channelSavedData/openCloseChannelCreation", val);
       },
     },
   },

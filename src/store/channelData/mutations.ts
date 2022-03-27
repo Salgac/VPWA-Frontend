@@ -2,6 +2,10 @@ import { MutationTree } from 'vuex';
 import { ChannelStateInterface } from './state';
 
 const mutation: MutationTree<ChannelStateInterface> = {
+  openCloseChannelCreation(state, val: boolean) {
+    state.openChannelCreation = val;
+  },
+
   //sets current channel
   setCurrentChannel(state, newChannelName: string) {
     state.currentChannel = newChannelName;
