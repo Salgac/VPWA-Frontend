@@ -5,7 +5,6 @@ export interface UserStateInterface {
   username: string;
   email: string;
   userStatus: string;
-  role: string;
   openAccountSettings: boolean
 }
 
@@ -17,7 +16,6 @@ function state(): UserStateInterface {
     username: "",
     email: "",
     userStatus: "",
-    role: "",
     openAccountSettings: false
   };
 }

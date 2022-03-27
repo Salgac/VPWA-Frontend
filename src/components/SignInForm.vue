@@ -222,16 +222,7 @@ export default defineComponent({
       set(val: string) {
         this.$store.commit("userSavedData/setEmail", val);
       },
-    },
-
-    role: {
-      get() {
-        return this.$store.state.userSavedData.role;
-      },
-      set(val: string) {
-        this.$store.commit("userSavedData/setRole", val);
-      },
-    },
+    }
   },
 
   methods: {
@@ -240,7 +231,6 @@ export default defineComponent({
       this.userStatus = "on";
       this.username = this.inputUsername;
       this.email = "example@email.com";
-      this.role = "chatter";
     },
 
     register() {
@@ -249,7 +239,6 @@ export default defineComponent({
       this.userStatus = "on";
       this.username = this.inputUsername;
       this.email = this.inputEmail;
-      this.role = "chatter";
     },
 
     openRegistration() {

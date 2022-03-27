@@ -3,12 +3,10 @@
     <q-list padding>
       <CommandItem
         v-for="command in commands"
-
         :key="command.commandName"
         :commandName="command.commandName"
-        :commandRole="command.commandRole"
         :show="command.commandName.includes(currentCommand)"
-        :disable="command.commandRole != currentUserRole"
+        :disable="!enabledCommand(command.commandName)"
       />
     </q-list>
   </div>
@@ -35,15 +33,6 @@ export default defineComponent({
       }
     },
 
-    currentUserRole: {
-      get() {
-        return this.$store.state.userSavedData.role
-      },
-      set() {
-
-      }
-    },
-
     commands: {
       get() {
         return this.$store.state.commandSavedData.commands
@@ -53,5 +42,33 @@ export default defineComponent({
       }
     }
   },
+
+  methods: {
+    enabledCommand(commandName: string): boolean {
+      var res = false;
+      let currentChannelObj = this.$store.state.channelSavedData.channels.find(
+        ch => ch.channelName === this.$store.state.channelSavedData.currentChannel
+      );
+      if (currentChannelObj == undefined) {
+        return res;
+      }
+
+      if (currentChannelObj.owner == this.$store.state.userSavedData.username) {
+        if (currentChannelObj.permissions.owner.includes(commandName.charAt(0))) {
+          res = true;
+        } else {
+          res = false;
+        }
+      }
+      else {
+        if (currentChannelObj.permissions.user.includes(commandName.charAt(0))) {
+          res = true;
+        } else {
+          res = false;
+        }
+      }
+      return res;
+    }
+  }
 })
 </script>

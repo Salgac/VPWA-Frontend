@@ -60,14 +60,14 @@ export default defineComponent({
           };
         } else {
           // command execution
-          var commandParts = this.currentCommand.split(" ", 2);
+          var commandParts = this.currentCommand.split(" ", 3);
 
           if (commandParts.length == 1) {
             if (commandParts[0] == "quit") {
               this.notify('Channel deleted', false);
             }
             else if (commandParts[0] == "cancel") {
-              this.notify('Left channel', false);
+              this.removeChannelUser(this.$store.state.userSavedData.username, 'Left channel');
             }
             else if (["join", "invite", "revoke", "kick"].includes(commandParts[0])) {
               this.notify('Provide command argument: ' + commandParts[0], true);
@@ -76,21 +76,26 @@ export default defineComponent({
               this.notify('Unknown command: ' + commandParts[0], true);
             }
           }
-          else {
+          else if (commandParts.length == 2) {
             if (commandParts[0] == "join") {
-              this.notify('Created: ' + commandParts[1], false);
+              this.createPublic(commandParts[1]);
             }
             else if (commandParts[0] == "invite") {
               this.notify('Invited: ' + commandParts[1], false);
             }
             else if (commandParts[0] == "revoke") {
-              this.notify('Revoked: ' + commandParts[1], false);
+              this.removeChannelUser(commandParts[1], 'Revoked: ' + commandParts[1]);
             }
             else if (commandParts[0] == "kick") {
-              this.notify('Kicked: ' + commandParts[1], false);
+              this.removeChannelUser(commandParts[1], 'Kicked: ' + commandParts[1]);
             }
             else {
               this.notify('Unknown command: ' + commandParts[0], true);
+            }
+          }
+          else {
+            if (commandParts[0] == "join" || commandParts[2] == "private") {
+              this.createPrivate(commandParts[1]);
             }
           }
         }
@@ -98,6 +103,51 @@ export default defineComponent({
 
       //clear input
       this.message = "";
+    },
+
+    createPrivate(channelName: string) {
+      if (
+        this.$store.state.channelSavedData.channels.some(
+          ch => ch.channelName === channelName
+        )
+      ) {
+        this.notify("Channel name '" + channelName + "' is taken", true);
+      }
+      else {
+        this.$store.dispatch("channelSavedData/createChannel", {
+          name: channelName,
+          isPrivate: true,
+        });
+        this.notify('Created private: ' + channelName, false);
+      }
+    },
+
+    createPublic(channelName: string) {
+      if (
+        this.$store.state.channelSavedData.channels.some(
+          ch => ch.channelName === channelName
+        )
+      ) {
+        this.notify("Channel name '" + channelName + "' is taken", true);
+      }
+      else {
+        this.$store.dispatch("channelSavedData/createChannel", {
+          name: channelName,
+          isPrivate: false,
+        });
+        this.notify('Created public: ' + channelName, false);
+      }
+    },
+
+    removeChannelUser(username: string, message: string) {
+      this.$store.dispatch(
+        "channelSavedData/leaveChannel",
+        {
+          channelName: this.$store.state.channelSavedData.currentChannel,
+          username: username
+        }
+      );
+      this.notify(message, false);
     },
   },
 
@@ -134,7 +184,7 @@ export default defineComponent({
       if (newMessage.indexOf("/") == 0) {
         this.currentCommand = newMessage.slice(1).replace(/^\s/g, "");
         if (
-          this.commands.some((i: {commandName: string, commandRole: string}) => i.commandName.includes(this.currentCommand))
+          this.commands.some((i: {commandName: string}) => i.commandName.includes(this.currentCommand))
         ) {
           this.openCommandList = true;
         } else {
@@ -148,6 +198,6 @@ export default defineComponent({
     currentCommand(newCommand: string) {
       this.message = "/".concat(newCommand);
     },
-  },
+  }
 });
 </script>
