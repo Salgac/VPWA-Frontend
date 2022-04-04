@@ -2,7 +2,7 @@
   <div>
     <q-img
       class="absolute-top"
-      :src="bannerPhoto"
+      src="https://cdn.quasar.dev/img/material.png"
       style="height: 150px"
     >
       <div class="absolute-bottom bg-transparent" style="width: 100%;">
@@ -15,7 +15,7 @@
               class="q-mb-sm"
               v-if="signedIn"
             >
-              <img :src="profilePhoto">
+              <img :src="getPfp">
             </q-avatar>
             <q-skeleton
               type="QAvatar"
@@ -87,16 +87,6 @@ export default defineComponent({
     userStatus: {
       type: String,
       required: true
-    },
-
-    profilePhoto: {
-      type: String,
-      default: 'https://cdn.quasar.dev/img/boy-avatar.png'
-    },
-
-    bannerPhoto: {
-      type: String,
-      default: 'https://cdn.quasar.dev/img/material.png'
     }
   },
 
@@ -117,6 +107,9 @@ export default defineComponent({
       set(val: boolean) {
         this.$store.commit('userSavedData/openCloseAccountSettings', val)
       }
+    },
+    getPfp(): string {
+      return this.$store.getters["userSavedData/getPfp"];
     }
   },
 })
