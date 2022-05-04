@@ -9,23 +9,25 @@
     <q-card>
       <q-form class="absolute-center">
         <div v-if="openAccountCreation">
-        <q-item>
-          <q-btn
-            class="q-mb-md"
-            icon="arrow_back"
-            rounded
-            @click="openAccountCreation = !openAccountCreation, clearFields()"
-          />
-          <q-space></q-space>
-          <q-btn
-            v-if="!isValidPassword"
-            class="q-mb-md"
-            icon="help"
-            color="red-5"
-            flat
-            rounded
-            @click="showHint = !showHint"
-          />
+          <q-item>
+            <q-btn
+              class="q-mb-md"
+              icon="arrow_back"
+              rounded
+              @click="
+                (openAccountCreation = !openAccountCreation), clearFields()
+              "
+            />
+            <q-space></q-space>
+            <q-btn
+              v-if="!isValidPassword"
+              class="q-mb-md"
+              icon="help"
+              color="red-5"
+              flat
+              rounded
+              @click="showHint = !showHint"
+            />
           </q-item>
         </div>
         <div v-if="openAccountCreation">
@@ -97,7 +99,7 @@
             no-error-icon
           >
             <template v-slot:prepend>
-              <q-icon name="password"/>
+              <q-icon name="password" />
             </template>
             <template v-slot:append>
               <q-icon
@@ -111,12 +113,12 @@
               v-model="showHint"
               anchor="center right"
               self="center left"
-              :offset="[10, 10]
-            ">
-              Min. 8 characters<br/>
-              At least 1 uppercase letter<br/>
-              At least lowercase letter<br/>
-              At least 1 number<br/>
+              :offset="[10, 10]"
+            >
+              Min. 8 characters<br />
+              At least 1 uppercase letter<br />
+              At least lowercase letter<br />
+              At least 1 number<br />
               At least 1 special character
             </q-tooltip>
           </q-input>
@@ -171,6 +173,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
+import HttpRequest from "../services/request";
 
 export default defineComponent({
   name: "SignInDialog",
@@ -248,23 +252,55 @@ export default defineComponent({
       set(val: string) {
         this.$store.commit("userSavedData/setEmail", val);
       },
-    }
+    },
   },
 
   methods: {
-    signIn() {
-      this.signedIn = !this.signedIn;
-      this.userStatus = "on";
-      this.username = this.inputUsername;
-      this.email = "example@email.com";
+    async signIn() {
+      //send api call
+      const response = await HttpRequest.post("login", {
+        username: this.inputUsername,
+        password: this.inputPassword,
+      });
+
+      //test for errors
+      if (response.hasOwnProperty("errors")) {
+        switch (response.errors[0].message) {
+          case "E_INVALID_AUTH_UID: User not found":
+          case "E_INVALID_AUTH_PASSWORD: Password mis-match":
+            //TODO maybe change this into component
+            alert("Invalid username or password!");
+        }
+      } else {
+        this.setLogin(response);
+      }
     },
 
-    register() {
-      this.openAccountCreation = !this.openAccountCreation;
+    async register() {
+      //send api call
+      const response = await HttpRequest.post("users", {
+        username: this.inputUsername,
+        name: this.inputName,
+        surname: "", //?
+        email: this.inputEmail,
+        password: this.inputPassword,
+      });
+
+      //test for errors
+      if (response.hasOwnProperty("errors")) {
+        //TODO
+      } else {
+        this.openAccountCreation = !this.openAccountCreation;
+        this.setLogin(response);
+      }
+    },
+
+    setLogin(response: any) {
       this.signedIn = !this.signedIn;
       this.userStatus = "on";
-      this.username = this.inputUsername;
-      this.email = this.inputEmail;
+      this.username = response.user.username;
+      this.email = response.user.email;
+      //TODO token
     },
 
     openRegistration() {
