@@ -44,8 +44,20 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
   },
 
   //delete channel call for admin
-  deleteChannel({ commit }, channelName) {
-    commit('removeChannel', channelName);
+  async deleteChannel({ commit }, channelName) {
+    const response = await HttpRequest.delete(
+      "channel", {
+      channelName: channelName,
+    },
+      this.state.userSavedData.token
+    );
+
+    if (response.hasOwnProperty("errors")) {
+      alert("Channel deletion error!");
+    } else {
+      //remove from store
+      commit('removeChannel', channelName);
+    }
   }
 };
 
