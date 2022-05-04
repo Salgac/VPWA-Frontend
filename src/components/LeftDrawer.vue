@@ -12,7 +12,11 @@
       <ChannelBox
         v-for="channel in channels"
         :key="channel.channelName"
-        :show="channel.users.some(u => u.username === $store.state.userSavedData.username)"
+        :show="
+          channel.users.some(
+            (u) => u.username === $store.state.userSavedData.username
+          )
+        "
         v-bind="channel"
       />
       <!--
@@ -52,6 +56,11 @@ export default defineComponent({
     ChannelBox,
     AccountBanner,
     SignInForm,
+  },
+
+  async mounted() {
+    //get channels
+    this.$store.dispatch("channelSavedData/loadChannels");
   },
 
   methods: {

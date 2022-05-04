@@ -77,8 +77,7 @@ export default defineComponent({
     },
   },
   beforeMount() {
-    //load channels
-    this.$store.dispatch("channelSavedData/loadChannels");
+    //
   },
 });
 </script>
