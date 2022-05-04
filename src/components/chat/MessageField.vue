@@ -19,7 +19,7 @@
             :name="item.author"
             avatar="https://cdn.quasar.dev/img/avatar4.jpg"
             :text="[item.text]"
-            :sent="item.author == 'You' ? true : false"
+            :sent="item.author == $store.state.userSavedData.username"
             :stamp="item.time"
           />
         </div>
