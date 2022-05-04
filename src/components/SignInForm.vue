@@ -174,7 +174,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import HttpRequest from "../services/request";
+import HttpRequest from "src/services/request";
 
 export default defineComponent({
   name: "SignInDialog",
