@@ -253,6 +253,13 @@ export default defineComponent({
         this.$store.commit("userSavedData/setEmail", val);
       },
     },
+
+    token: {
+      get() {},
+      set(val: string) {
+        this.$store.commit("userSavedData/setToken", val);
+      },
+    },
   },
 
   methods: {
@@ -300,7 +307,7 @@ export default defineComponent({
       this.userStatus = "on";
       this.username = response.user.username;
       this.email = response.user.email;
-      //TODO token
+      this.token = response.token.token;
     },
 
     openRegistration() {
