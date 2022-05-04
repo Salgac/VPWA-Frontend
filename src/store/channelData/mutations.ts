@@ -1,3 +1,5 @@
+import SocketIO from 'src/services/ws';
+import socket from 'src/services/ws';
 import { MutationTree } from 'vuex';
 import { ChannelStateInterface } from './state';
 
@@ -16,12 +18,24 @@ const mutation: MutationTree<ChannelStateInterface> = {
     state.channels = channelList;
   },
 
-  addMessage(state, val: { author: string, time: string, text: string }) {
+  addMessage(state, val: { author: string, time: string, text: string, token: string }) {
     const channels = state.channels;
     const currentChannel = state.currentChannel;
 
     var obj = channels.find((ch) => ch.channelName === currentChannel);
-    obj?.messages.push(val);
+    obj?.messages.push({
+      author: val.author,
+      time: val.time,
+      text: val.text
+    });
+    new SocketIO(val.token).socket.emit(
+      'addMessage',
+      {
+        userName: val.author,
+        channelName: currentChannel,
+        text: val.text
+      }
+    )
   },
 
   addChannel(state, channel) {

@@ -18,6 +18,7 @@ export interface ChannelStateInterface {
     }[]
   }[];
   newMessage: {
+    token: string,
     author: string,
     time: string,
     text: string
@@ -30,6 +31,7 @@ function state(): ChannelStateInterface {
     currentChannel: "",
     channels: [],
     newMessage: {
+      token: "",
       author: "",
       time: "",
       text: ""
