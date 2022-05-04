@@ -4,6 +4,7 @@
     <CommandList v-if="openCommandList" />
     <q-toolbar class="bg-grey-2 text-black row">
       <q-input
+        :disable="$store.state.channelSavedData.currentChannel == ''"
         outlined
         dense
         class="WAL__field col-grow q-mr-sm"
@@ -12,7 +13,12 @@
         placeholder="Type a message"
         v-on:keyup.enter="sendMessage"
       />
-      <q-btn flat icon="send" v-on:click="sendMessage" />
+      <q-btn
+        :disable="$store.state.channelSavedData.currentChannel == ''"
+        flat
+        icon="send"
+        v-on:click="sendMessage"
+      />
     </q-toolbar>
   </div>
 </template>
