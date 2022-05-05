@@ -15,7 +15,8 @@ interface NewMessage {
   channelName: string
 }
 
-const socket = io("http://127.0.0.1:3333")
+const socket = io(`${process.env.API_HOST}`);
+
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 export default boot(async ({ store }/* { app, router, ... } */) => {
