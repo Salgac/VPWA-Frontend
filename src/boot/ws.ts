@@ -11,7 +11,8 @@ interface MessageData {
 interface NewMessage {
   author: string,
   time: string,
-  text: string
+  text: string,
+  channelName: string
 }
 
 const socket = io("http://127.0.0.1:3333")
@@ -24,7 +25,8 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
     const newMessage: NewMessage = {
       author: messageData.userName,
       time: messageData.time,
-      text: messageData.text
+      text: messageData.text,
+      channelName: messageData.channelName
     }
 
     store.commit("channelSavedData/addMessage", newMessage)
