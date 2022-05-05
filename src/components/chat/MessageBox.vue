@@ -79,7 +79,7 @@ export default defineComponent({
               this.deleteChannel();
             } else if (commandParts[0] == "cancel") {
               this.removeChannelUser(
-                this.$store.state.userSavedData.username,
+                this.$store.state.channelSavedData.currentChannel,
                 "Left channel"
               );
             } else if (
@@ -151,11 +151,8 @@ export default defineComponent({
       }
     },
 
-    removeChannelUser(username: string, message: string) {
-      this.$store.dispatch("channelSavedData/leaveChannel", {
-        channelName: this.$store.state.channelSavedData.currentChannel,
-        username: username,
-      });
+    removeChannelUser(channelName: string, message: string) {
+      this.$store.dispatch("channelSavedData/deleteChannel", channelName);
       this.notify(message, false);
     },
 

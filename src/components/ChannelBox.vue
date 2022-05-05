@@ -24,7 +24,7 @@
             <q-item
               clickable
               v-close-popup
-              v-on:click="handleDropdown('Leave', channelName)"
+              v-on:click="removeChannel(channelName)"
             >
               <q-item-section side>
                 <q-icon name="close" />
@@ -37,7 +37,7 @@
               v-if="owner == $store.state.userSavedData.username"
               clickable
               v-close-popup
-              v-on:click="handleDropdown('Delete', channelName)"
+              v-on:click="removeChannel(channelName)"
             >
               <q-item-section side>
                 <q-icon name="delete" />
@@ -79,7 +79,7 @@ export default defineComponent({
     show: {
       type: Boolean,
       required: true,
-    }
+    },
   },
 
   computed: {
@@ -101,21 +101,8 @@ export default defineComponent({
       );
     },
 
-    handleDropdown(label: string, channelName: string) {
-      switch (label) {
-        case "Leave":
-          this.$store.dispatch(
-            "channelSavedData/leaveChannel",
-            {
-              channelName: channelName,
-              username: this.$store.state.userSavedData.username
-            }
-          );
-          break;
-        case "Delete":
-          this.$store.dispatch("channelSavedData/deleteChannel", channelName);
-          break;
-      }
+    removeChannel(channelName: string) {
+      this.$store.dispatch("channelSavedData/deleteChannel", channelName);
     },
   },
 });
