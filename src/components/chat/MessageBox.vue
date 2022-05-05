@@ -11,13 +11,13 @@
         bg-color="white"
         v-model="message"
         placeholder="Type a message"
-        v-on:keyup.enter="sendMessage"
+        v-on:keyup.enter="onMessageSend"
       />
       <q-btn
         :disable="$store.state.channelSavedData.currentChannel == ''"
         flat
         icon="send"
-        v-on:click="sendMessage"
+        v-on:click="onMessageSend"
       />
     </q-toolbar>
   </div>
@@ -27,7 +27,7 @@
 import { defineComponent } from "vue";
 import CommandList from "src/components/chat/CommandList.vue";
 import UserList from "src/components/popups/UserList.vue";
-import { socket } from 'src/boot/ws'
+import { socket } from "src/boot/ws";
 
 export default defineComponent({
   name: "MessageBox",
@@ -57,77 +57,76 @@ export default defineComponent({
       return str.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
     },
     sendMessage() {
-      //TODO send data
+      this.newMessage = {
+        author: this.$store.state.userSavedData.username,
+        channelName: this.$store.state.channelSavedData.currentChannel,
+        time: new Date().toISOString(),
+        text: this.message,
+      };
+      socket.emit("addMessage", {
+        token: this.$store.state.userSavedData.token,
+        userName: this.$store.state.userSavedData.username,
+        channelName: this.$store.state.channelSavedData.currentChannel,
+        time: new Date().toISOString(),
+        text: this.message,
+      });
+    },
+    onMessageSend() {
       this.message = this.removeWhitespaces(this.message);
-      console.log(this.message);
 
+      //parse message
       if (this.message.length > 0) {
         if (this.message.charAt(0) != "/") {
-          this.newMessage = {
-            author: this.$store.state.userSavedData.username,
-            channelName: this.$store.state.channelSavedData.currentChannel,
-            time: new Date().toISOString(),
-            text: this.message,
-          };
-          socket.emit(
-            'addMessage',
-            {
-              token: this.$store.state.userSavedData.token,
-              userName: this.$store.state.userSavedData.username,
-              channelName: this.$store.state.channelSavedData.currentChannel,
-              time: new Date().toLocaleTimeString(),
-              text: this.message
-            }
-          )
+          this.sendMessage();
         } else {
-          // command execution
-          var commandParts = this.currentCommand.split(" ", 3);
-
-          if (commandParts.length == 1) {
-            if (commandParts[0] == "list") {
-              this.openUserList = true;
-            } else if (commandParts[0] == "quit") {
-              this.deleteChannel();
-            } else if (commandParts[0] == "cancel") {
-              this.removeChannelUser(
-                this.$store.state.channelSavedData.currentChannel,
-                "Left channel"
-              );
-            } else if (
-              ["join", "invite", "revoke", "kick"].includes(commandParts[0])
-            ) {
-              this.notify("Provide command argument: " + commandParts[0], true);
-            } else {
-              this.notify("Unknown command: " + commandParts[0], true);
-            }
-          } else if (commandParts.length == 2) {
-            if (commandParts[0] == "join") {
-              this.createPublic(commandParts[1]);
-            } else if (commandParts[0] == "invite") {
-              this.notify("Invited: " + commandParts[1], false);
-            } else if (commandParts[0] == "revoke") {
-              this.removeChannelUser(
-                commandParts[1],
-                "Revoked: " + commandParts[1]
-              );
-            } else if (commandParts[0] == "kick") {
-              this.removeChannelUser(
-                commandParts[1],
-                "Kicked: " + commandParts[1]
-              );
-            } else {
-              this.notify("Unknown command: " + commandParts[0], true);
-            }
-          } else {
-            if (commandParts[0] == "join" || commandParts[2] == "private") {
-              this.createPrivate(commandParts[1]);
-            }
-          }
+          this.executeCommand();
         }
       }
 
       //clear input
       this.message = "";
+    },
+    executeCommand() {
+      // command execution
+      var commandParts = this.currentCommand.split(" ", 3);
+
+      if (commandParts.length == 1) {
+        if (commandParts[0] == "list") {
+          this.openUserList = true;
+        } else if (commandParts[0] == "quit") {
+          this.deleteChannel();
+        } else if (commandParts[0] == "cancel") {
+          this.removeChannelUser(
+            this.$store.state.channelSavedData.currentChannel,
+            "Left channel"
+          );
+        } else if (
+          ["join", "invite", "revoke", "kick"].includes(commandParts[0])
+        ) {
+          this.notify("Provide command argument: " + commandParts[0], true);
+        } else {
+          this.notify("Unknown command: " + commandParts[0], true);
+        }
+      } else if (commandParts.length == 2) {
+        if (commandParts[0] == "join") {
+          this.createPublic(commandParts[1]);
+        } else if (commandParts[0] == "invite") {
+          this.notify("Invited: " + commandParts[1], false);
+        } else if (commandParts[0] == "revoke") {
+          this.removeChannelUser(
+            commandParts[1],
+            "Revoked: " + commandParts[1]
+          );
+        } else if (commandParts[0] == "kick") {
+          this.removeChannelUser(commandParts[1], "Kicked: " + commandParts[1]);
+        } else {
+          this.notify("Unknown command: " + commandParts[0], true);
+        }
+      } else {
+        if (commandParts[0] == "join" || commandParts[2] == "private") {
+          this.createPrivate(commandParts[1]);
+        }
+      }
     },
 
     createPrivate(channelName: string) {
@@ -190,7 +189,12 @@ export default defineComponent({
       get() {
         return this.$store.state.channelSavedData.newMessage;
       },
-      set(val: { author: string; time: string; text: string, channelName: string }) {
+      set(val: {
+        author: string;
+        time: string;
+        text: string;
+        channelName: string;
+      }) {
         this.$store.commit("channelSavedData/addMessage", val);
       },
     },
