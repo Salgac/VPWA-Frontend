@@ -10,12 +10,6 @@ export interface ChannelStateInterface {
       time: string,
       text: string
     }[],
-    users: {
-      name: string,
-      surname: string,
-      email: string,
-      username: string
-    }[]
   }[];
   newMessage: {
     token: string,

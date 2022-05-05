@@ -47,7 +47,7 @@ const mutation: MutationTree<ChannelStateInterface> = {
     state.channels = state.channels.filter((ch) => ch.channelName !== channelName)
   },
 
-  deleteChannelUser(state, data: { channelName: string, username: string }) {
+  /*deleteChannelUser(state, data: { channelName: string, username: string }) {
     var obj = state.channels.find(
       ch => ch.channelName === data.channelName
     )
@@ -60,7 +60,7 @@ const mutation: MutationTree<ChannelStateInterface> = {
     if (userIndex > -1) {
       obj.users.splice(userIndex, 1)
     }
-  }
+  }*/
 };
 
 export default mutation;
