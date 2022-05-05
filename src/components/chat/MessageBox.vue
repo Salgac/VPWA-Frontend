@@ -27,6 +27,7 @@
 import { defineComponent } from "vue";
 import CommandList from "src/components/chat/CommandList.vue";
 import UserList from "src/components/popups/UserList.vue";
+import { socket } from 'src/boot/ws'
 
 export default defineComponent({
   name: "MessageBox",
@@ -63,11 +64,20 @@ export default defineComponent({
       if (this.message.length > 0) {
         if (this.message.charAt(0) != "/") {
           this.newMessage = {
-            token: this.$store.state.userSavedData.token,
             author: this.$store.state.userSavedData.username,
             time: new Date().toISOString(),
             text: this.message,
           };
+          socket.emit(
+            'addMessage',
+            {
+              token: this.$store.state.userSavedData.token,
+              userName: this.$store.state.userSavedData.username,
+              channelName: this.$store.state.channelSavedData.currentChannel,
+              time: new Date().toLocaleTimeString(),
+              text: this.message
+            }
+          )
         } else {
           // command execution
           var commandParts = this.currentCommand.split(" ", 3);
@@ -179,7 +189,7 @@ export default defineComponent({
       get() {
         return this.$store.state.channelSavedData.newMessage;
       },
-      set(val: { author: string; time: string; text: string; token: string }) {
+      set(val: { author: string; time: string; text: string }) {
         this.$store.commit("channelSavedData/addMessage", val);
       },
     },
