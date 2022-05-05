@@ -38,6 +38,19 @@ const mutation: MutationTree<ChannelStateInterface> = {
 
   setScroll(state, value: string) {
     state.setScroll = value;
+  },
+
+  //reset state values to default
+  reset(state) {
+    state.currentChannel = "";
+    state.setScroll = "";
+    state.channels = [];
+    state.newMessage = {
+      author: "",
+      time: "",
+      text: "",
+      channelName: "",
+    };
   }
 };
 

@@ -62,6 +62,10 @@ export default defineComponent({
   methods: {
     signOut() {
       this.signedIn = !this.signedIn;
+
+      //remove data from store
+      this.$store.commit("channelSavedData/reset");
+      this.$store.commit("userSavedData/reset");
     },
   },
 
