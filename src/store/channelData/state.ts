@@ -14,7 +14,8 @@ export interface ChannelStateInterface {
   newMessage: {
     author: string,
     time: string,
-    text: string
+    text: string,
+    channelName: string
   }
 }
 
@@ -26,7 +27,8 @@ function state(): ChannelStateInterface {
     newMessage: {
       author: "",
       time: "",
-      text: ""
+      text: "",
+      channelName: ""
     }
   };
 }

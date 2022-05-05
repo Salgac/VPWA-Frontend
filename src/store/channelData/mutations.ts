@@ -16,11 +16,10 @@ const mutation: MutationTree<ChannelStateInterface> = {
     state.channels = channelList;
   },
 
-  addMessage(state, val: { author: string, time: string, text: string }) {
+  addMessage(state, val: { author: string, time: string, text: string, channelName: string }) {
     const channels = state.channels;
-    const currentChannel = state.currentChannel;
 
-    var obj = channels.find((ch) => ch.channelName === currentChannel);
+    var obj = channels.find((ch) => ch.channelName === val.channelName);
     obj?.messages.push({
       author: val.author,
       time: val.time,

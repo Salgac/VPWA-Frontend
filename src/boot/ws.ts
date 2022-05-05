@@ -26,10 +26,9 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
       time: messageData.time,
       text: messageData.text
     }
-    if (messageData.channelName == store.state.channelSavedData.currentChannel) {
-      store.commit("channelSavedData/addMessage", newMessage)
-      console.log('sent to ' + messageData.channelName)
-    }
+
+    store.commit("channelSavedData/addMessage", newMessage)
+    console.log('sent to ' + messageData.channelName)
   })
 })
 
