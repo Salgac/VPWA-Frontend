@@ -23,7 +23,7 @@
             :avatar="getPFP(item.author)"
             :text="[item.text]"
             :sent="item.author == $store.state.userSavedData.username"
-            :stamp="item.time"
+            :stamp="formatTime(item.time)"
           />
         </div>
       </div>
@@ -44,6 +44,9 @@ export default defineComponent({
     },
     getPFP(author: string) {
       return `https://avatars.dicebear.com/api/bottts/${author}.svg`;
+    },
+    formatTime(time: string) {
+      return new Date(time).toLocaleString("sk-SK");
     },
   },
 

@@ -65,7 +65,7 @@ export default defineComponent({
           this.newMessage = {
             token: this.$store.state.userSavedData.token,
             author: this.$store.state.userSavedData.username,
-            time: new Date().toLocaleTimeString(),
+            time: new Date().toISOString(),
             text: this.message,
           };
         } else {
@@ -182,7 +182,7 @@ export default defineComponent({
       get() {
         return this.$store.state.channelSavedData.newMessage;
       },
-      set(val: { author: string; time: string; text: string, token: string }) {
+      set(val: { author: string; time: string; text: string; token: string }) {
         this.$store.commit("channelSavedData/addMessage", val);
       },
     },
