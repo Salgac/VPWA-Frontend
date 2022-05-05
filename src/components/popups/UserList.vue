@@ -18,7 +18,7 @@
       </q-card-section>
       <q-card-section style="max-height: 50vh" class="scroll">
         <q-list>
-          <q-item v-for="user in getUsers()" v-bind:key="user.username">
+          <q-item v-for="user in users" v-bind:key="user.username">
             <q-item-section>
               {{ user.username }}
             </q-item-section>
@@ -35,21 +35,30 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import HttpRequest from "src/services/request";
+
 export default defineComponent({
   name: "UserList",
-
-  methods: {
-    getUsers() {
-      /*
-      let obj = this.$store.state.channelSavedData.channels.find(
-        (ch) =>
-          ch.channelName === this.$store.state.channelSavedData.currentChannel
-      );
-      return obj?.users;*/
-      return []; //TODO add api call
+  data() {
+    return {
+      users: [],
+    };
+  },
+  watch: {
+    openUserList: async function () {
+      if (this.openUserList) {
+        const response = await HttpRequest.get(
+          "users",
+          this.$store.state.userSavedData.token,
+          {
+            channelName: this.$store.state.channelSavedData.currentChannel,
+          }
+        );
+        console.log(response.users);
+        this.users = response.users;
+      }
     },
   },
-
   computed: {
     openUserList: {
       get() {
