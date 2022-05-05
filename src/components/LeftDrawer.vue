@@ -12,16 +12,12 @@
       <ChannelBox
         v-for="channel in channels"
         :key="channel.channelName"
-        :show="
-          channel.users.some(
-            (u) => u.username === $store.state.userSavedData.username
-          )
-        "
+        :show="true"
         v-bind="channel"
       />
-      <!--
+
       <q-item v-if="!channels.length">No channels. Create or join one.</q-item>
-      -->
+
       <q-item>
         <q-btn
           v-if="signedIn"
