@@ -6,19 +6,12 @@
         <q-space />
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
-      <q-card-section>
-        <q-item>
-          <q-item-section>
-            <div class="text-subtitle2">Username</div>
-          </q-item-section>
-          <q-item-section>
-            <div class="text-subtitle2">User email</div>
-          </q-item-section>
-        </q-item>
-      </q-card-section>
       <q-card-section style="max-height: 50vh" class="scroll">
         <q-list>
           <q-item v-for="user in users" v-bind:key="user.username">
+            <q-avatar class="q-mb-sm">
+              <img :src="getPFP(user.username)" />
+            </q-avatar>
             <q-item-section>
               {{ user.username }}
             </q-item-section>
@@ -44,6 +37,11 @@ export default defineComponent({
       users: [],
     };
   },
+  methods: {
+    getPFP(author: string) {
+      return `https://avatars.dicebear.com/api/bottts/${author}.svg`;
+    },
+  },
   watch: {
     openUserList: async function () {
       if (this.openUserList) {
@@ -54,7 +52,6 @@ export default defineComponent({
             channelName: this.$store.state.channelSavedData.currentChannel,
           }
         );
-        console.log(response.users);
         this.users = response.users;
       }
     },
