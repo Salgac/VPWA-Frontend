@@ -1,12 +1,10 @@
 <template>
   <div v-if="signedIn" class="q-mr-sm" style="width: 100%">
-    <q-infinite-scroll @load="onLoad" reverse>
-      <template v-slot:loading>
-        <div class="q-my-md absolute-center">
-          <q-spinner color="primary" name="dots" size="40px" />
-        </div>
-      </template>
-
+    <q-scroll-area
+      style="height: 90vh; max-width: 100%; min-height: 90vh"
+      :delay="500"
+      ref="scrollRef"
+    >
       <div class="q-pa-md row justify-center">
         <div v-if="$store.state.channelSavedData.currentChannel == ''">
           No channel open
@@ -27,26 +25,40 @@
           />
         </div>
       </div>
-    </q-infinite-scroll>
+    </q-scroll-area>
   </div>
 </template>
 
 <script lang="ts">
+import { QScrollArea } from "quasar";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "MessageField",
 
   methods: {
-    onLoad(index: Number, done: Function) {
-      //TODO implement this
-      done();
-    },
     getPFP(author: string) {
       return `https://avatars.dicebear.com/api/bottts/${author}.svg`;
     },
     formatTime(time: string) {
       return new Date(time).toLocaleString("sk-SK");
+    },
+    setScroll() {
+      const scroll = this.$refs["scrollRef"] as QScrollArea;
+      if (scroll) {
+        const scrollTarget = scroll.getScrollTarget();
+        const offset = scrollTarget.scrollHeight;
+        scroll.setScrollPosition("vertical", offset, 250);
+      }
+    },
+  },
+  watch: {
+    "$store.state.channelSavedData.setScroll": function (val) {
+      //set scroll after message was sent
+      if (val) {
+        this.setScroll();
+        this.$store.commit("channelSavedData/setScroll", false);
+      }
     },
   },
 
@@ -64,6 +76,11 @@ export default defineComponent({
       get() {
         var channels = this.$store.state.channelSavedData.channels;
         var currentChannel = this.$store.state.channelSavedData.currentChannel;
+
+        //set scroll - note: timeout is needed because I dont know why - WILL NOT WORK WITHOUT IT
+        setTimeout(() => {
+          this.setScroll();
+        }, 1);
 
         var obj = channels.find((ch) => ch.channelName === currentChannel);
         return obj?.messages ? obj.messages : [];

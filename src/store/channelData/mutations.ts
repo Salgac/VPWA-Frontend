@@ -35,6 +35,10 @@ const mutation: MutationTree<ChannelStateInterface> = {
   removeChannel(state, channelName: string) {
     state.channels = state.channels.filter((ch) => ch.channelName !== channelName)
   },
+
+  setScroll(state, value: boolean) {
+    state.setScroll = value;
+  }
 };
 
 export default mutation;
