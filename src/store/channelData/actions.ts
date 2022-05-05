@@ -15,7 +15,9 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
 
     //add to store
     commit('setChannels', channels);
-    //commit('setCurrentChannel', channels[0].channelName)
+    if (channels.length != 0) {
+      commit('setCurrentChannel', channels[0].channelName)
+    }
   },
 
   async createChannel({ commit }, data) {
@@ -30,17 +32,13 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
 
     //test for errors
     if (response.hasOwnProperty("errors")) {
-      alert("Channel creation error!");
+      alert(response.errors);
     } else {
       //add to store
       const channel = response.channel;
       commit('addChannel', channel);
       commit('setCurrentChannel', data.name)
     }
-  },
-
-  leaveChannel({ commit }, data: { channelName: string, username: string }) {
-    commit('deleteChannelUser', data);
   },
 
   //delete channel call for admin

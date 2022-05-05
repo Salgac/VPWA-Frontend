@@ -285,7 +285,7 @@ export default defineComponent({
 
     async register() {
       //send api call
-      const response = await HttpRequest.post("users", {
+      const response = await HttpRequest.post("register", {
         username: this.inputUsername,
         name: this.inputName,
         surname: "", //?
