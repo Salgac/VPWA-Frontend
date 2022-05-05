@@ -15,7 +15,9 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
 
     //add to store
     commit('setChannels', channels);
-    //commit('setCurrentChannel', channels[0].channelName)
+    if (channels.length != 0) {
+      commit('setCurrentChannel', channels[0].channelName)
+    }
   },
 
   async createChannel({ commit }, data) {
