@@ -7,8 +7,8 @@ const mutation: MutationTree<ChannelStateInterface> = {
   },
 
   //sets current channel
-  setCurrentChannel(state, newChannelName: string) {
-    state.currentChannel = newChannelName;
+  setCurrentChannel(state, newChannel) {
+    state.currentChannel = newChannel;
   },
 
   //used for loading channel list
@@ -35,6 +35,10 @@ const mutation: MutationTree<ChannelStateInterface> = {
   removeChannel(state, channelName: string) {
     state.channels = state.channels.filter((ch) => ch.channelName !== channelName)
   },
+
+  setTopChannel(state, val: string) {
+    state.topChannelName = val
+  }
 };
 
 export default mutation;

@@ -65,7 +65,7 @@ export default defineComponent({
         if (this.message.charAt(0) != "/") {
           this.newMessage = {
             author: this.$store.state.userSavedData.username,
-            channelName: this.$store.state.channelSavedData.currentChannel,
+            channelName: this.$store.state.channelSavedData.currentChannel.name,
             time: new Date().toISOString(),
             text: this.message,
           };
@@ -74,7 +74,7 @@ export default defineComponent({
             {
               token: this.$store.state.userSavedData.token,
               userName: this.$store.state.userSavedData.username,
-              channelName: this.$store.state.channelSavedData.currentChannel,
+              channelName: this.$store.state.channelSavedData.currentChannel.name,
               time: new Date().toLocaleTimeString(),
               text: this.message
             }
@@ -90,7 +90,7 @@ export default defineComponent({
               this.deleteChannel();
             } else if (commandParts[0] == "cancel") {
               this.removeChannelUser(
-                this.$store.state.channelSavedData.currentChannel,
+                this.$store.state.channelSavedData.currentChannel.name,
                 "Left channel"
               );
             } else if (
@@ -104,7 +104,19 @@ export default defineComponent({
             if (commandParts[0] == "join") {
               this.createPublic(commandParts[1]);
             } else if (commandParts[0] == "invite") {
-              this.notify("Invited: " + commandParts[1], false);
+              this.errorBool = false
+              this.commandMessage = "Invited: " + commandParts[1]
+              socket.emit(
+                'invite',
+                {
+                  token: this.$store.state.userSavedData.token,
+                  fromUser: this.$store.state.userSavedData.username,
+                  toUser: commandParts[1],
+                  channel: this.$store.state.channelSavedData.currentChannel.name,
+
+                }
+              )
+              this.notify(this.commandMessage, this.errorBool);
             } else if (commandParts[0] == "revoke") {
               this.removeChannelUser(
                 commandParts[1],
@@ -210,6 +222,24 @@ export default defineComponent({
         this.$store.commit("userSavedData/openCloseUserList", val);
       },
     },
+
+    commandMessage: {
+      get() {
+        return this.$store.state.commandSavedData.commandMessage
+      },
+      set(val: string) {
+        this.$store.commit("commandSavedData/setMessage", val);
+      }
+    },
+
+    errorBool: {
+      get() {
+        return this.$store.state.commandSavedData.errorBool
+      },
+      set(val: boolean) {
+        this.$store.commit("commandSavedData/setErrorBool", val);
+      }
+    }
   },
 
   watch: {

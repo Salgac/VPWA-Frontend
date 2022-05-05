@@ -1,6 +1,10 @@
 export interface ChannelStateInterface {
   openChannelCreation: boolean;
-  currentChannel: string;
+  currentChannel: {
+    name: string,
+    isPrivate: boolean,
+    owner: string
+  };
   channels: {
     channelName: string,
     isPrivate: boolean,
@@ -16,20 +20,26 @@ export interface ChannelStateInterface {
     time: string,
     text: string,
     channelName: string
-  }
+  },
+  topChannelName: string
 }
 
 function state(): ChannelStateInterface {
   return {
     openChannelCreation: false,
-    currentChannel: "",
+    currentChannel: {
+      name: "",
+      isPrivate: false,
+      owner: ""
+    },
     channels: [],
     newMessage: {
       author: "",
       time: "",
       text: "",
       channelName: ""
-    }
+    },
+    topChannelName: ""
   };
 }
 

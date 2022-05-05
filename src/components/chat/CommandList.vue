@@ -49,7 +49,7 @@ export default defineComponent({
       var res = false;
       let currentChannelObj = this.$store.state.channelSavedData.channels.find(
         (ch) =>
-          ch.channelName === this.$store.state.channelSavedData.currentChannel
+          ch.channelName === this.$store.state.channelSavedData.currentChannel.name
       );
       if (currentChannelObj == undefined) {
         return res;

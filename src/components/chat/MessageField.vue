@@ -65,7 +65,7 @@ export default defineComponent({
         var channels = this.$store.state.channelSavedData.channels;
         var currentChannel = this.$store.state.channelSavedData.currentChannel;
 
-        var obj = channels.find((ch) => ch.channelName === currentChannel);
+        var obj = channels.find((ch) => ch.channelName === currentChannel.name);
         return obj?.messages ? obj.messages : [];
       },
       set() {},
