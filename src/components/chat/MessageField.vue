@@ -8,7 +8,9 @@
       </template>
 
       <div class="q-pa-md row justify-center">
-        <div v-if="$store.state.channelSavedData.currentChannel == ''">No channel open</div>
+        <div v-if="$store.state.channelSavedData.currentChannel == ''">
+          No channel open
+        </div>
         <div v-else-if="!messages.length">Channel is empty.</div>
         <div
           style="width: 100%"
@@ -18,7 +20,7 @@
           <q-chat-message
             :key="index"
             :name="item.author"
-            avatar="https://cdn.quasar.dev/img/avatar4.jpg"
+            :avatar="getPFP(item.author)"
             :text="[item.text]"
             :sent="item.author == $store.state.userSavedData.username"
             :stamp="item.time"
@@ -39,6 +41,9 @@ export default defineComponent({
     onLoad(index: Number, done: Function) {
       //TODO implement this
       done();
+    },
+    getPFP(author: string) {
+      return `https://avatars.dicebear.com/api/bottts/${author}.svg`;
     },
   },
 

@@ -40,11 +40,13 @@ export default defineComponent({
 
   methods: {
     getUsers() {
+      /*
       let obj = this.$store.state.channelSavedData.channels.find(
         (ch) =>
           ch.channelName === this.$store.state.channelSavedData.currentChannel
       );
-      return obj?.users;
+      return obj?.users;*/
+      return []; //TODO add api call
     },
   },
 
