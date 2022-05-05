@@ -43,21 +43,27 @@ export default defineComponent({
     formatTime(time: string) {
       return new Date(time).toLocaleString("sk-SK");
     },
-    setScroll() {
+    setScroll(source: string) {
       const scroll = this.$refs["scrollRef"] as QScrollArea;
       if (scroll) {
         const scrollTarget = scroll.getScrollTarget();
         const offset = scrollTarget.scrollHeight;
-        scroll.setScrollPosition("vertical", offset, 250);
+        const size = scroll.getScroll().verticalContainerSize;
+
+        if (source == "auto" || source == "messageSent") {
+          scroll.setScrollPosition("vertical", offset, 250);
+        } else if (scroll.getScrollPosition().top >= offset - size - 100) {
+          scroll.setScrollPosition("vertical", offset, 250);
+        }
       }
     },
   },
   watch: {
     "$store.state.channelSavedData.setScroll": function (val) {
       //set scroll after message was sent
-      if (val) {
-        this.setScroll();
-        this.$store.commit("channelSavedData/setScroll", false);
+      if (val != "") {
+        this.setScroll(val);
+        this.$store.commit("channelSavedData/setScroll", "");
       }
     },
   },
@@ -79,7 +85,7 @@ export default defineComponent({
 
         //set scroll - note: timeout is needed because I dont know why - WILL NOT WORK WITHOUT IT
         setTimeout(() => {
-          this.setScroll();
+          this.setScroll("auto");
         }, 1);
 
         var obj = channels.find((ch) => ch.channelName === currentChannel);

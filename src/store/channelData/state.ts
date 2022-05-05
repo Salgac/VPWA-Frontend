@@ -1,7 +1,7 @@
 export interface ChannelStateInterface {
   openChannelCreation: boolean;
   currentChannel: string;
-  setScroll: boolean;
+  setScroll: string;
   channels: {
     channelName: string,
     isPrivate: boolean,
@@ -24,7 +24,7 @@ function state(): ChannelStateInterface {
   return {
     openChannelCreation: false,
     currentChannel: "",
-    setScroll: false,
+    setScroll: "",
     channels: [],
     newMessage: {
       author: "",

@@ -83,7 +83,7 @@ export default defineComponent({
         }
       }
       //set scroll
-      this.$store.commit("channelSavedData/setScroll", true);
+      this.$store.commit("channelSavedData/setScroll", "messageSent");
 
       //clear input
       this.message = "";

@@ -36,7 +36,7 @@ const mutation: MutationTree<ChannelStateInterface> = {
     state.channels = state.channels.filter((ch) => ch.channelName !== channelName)
   },
 
-  setScroll(state, value: boolean) {
+  setScroll(state, value: string) {
     state.setScroll = value;
   }
 };
