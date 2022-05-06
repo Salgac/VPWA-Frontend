@@ -38,7 +38,7 @@ export default defineComponent({
   name: "MessageField",
   data() {
     return {
-      isLoading: false,
+      isLoading: true,
     };
   },
   methods: {
@@ -50,10 +50,12 @@ export default defineComponent({
       //TODO make scroll to stay at position after load
     },
     async loadMessages() {
-      this.$store.dispatch("channelSavedData/loadMoreMessages");
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 5000);
+      await this.$store.dispatch("channelSavedData/loadMoreMessages");
+
+      //scroll to old position
+      this.setScroll("load");
+
+      this.isLoading = false;
     },
     getPFP(author: string) {
       return `https://avatars.dicebear.com/api/bottts/${author}.svg`;
@@ -68,14 +70,25 @@ export default defineComponent({
         const offset = scrollTarget.scrollHeight;
         const size = scroll.getScroll().verticalContainerSize;
 
-        if (source == "auto" || source == "messageSent") {
-          scroll.setScrollPosition("vertical", offset, 250);
-        } else if (scroll.getScrollPosition().top >= offset - size - 100) {
-          scroll.setScrollPosition("vertical", offset, 250);
+        switch (source) {
+          case "auto":
+            scroll.setScrollPosition("vertical", offset, 0);
+            break;
+          case "messageSent":
+            scroll.setScrollPosition("vertical", offset, 250);
+            break;
+          case "load":
+            scroll.setScrollPosition("vertical", 1630, 0);
+          default:
+            if (scroll.getScrollPosition().top >= offset - size - 100) {
+              scroll.setScrollPosition("vertical", offset, 250);
+            }
+            break;
         }
       }
     },
   },
+
   watch: {
     "$store.state.channelSavedData.setScroll": function (val) {
       //set scroll after message was sent
@@ -98,15 +111,18 @@ export default defineComponent({
 
     messages: {
       get() {
+        this.isLoading = true;
+
         var channels = this.$store.state.channelSavedData.channels;
         var currentChannel = this.$store.state.channelSavedData.currentChannel;
-
-        this.isLoading = false;
 
         //set scroll - note: timeout is needed because I dont know why - WILL NOT WORK WITHOUT IT
         setTimeout(() => {
           this.setScroll("auto");
-        }, 1);
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 100);
+        }, 0);
 
         var obj = channels.find((ch) => ch.channelName === currentChannel.name);
 
