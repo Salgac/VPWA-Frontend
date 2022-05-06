@@ -119,7 +119,7 @@ export default defineComponent({
             this.errorBool = false
             this.commandMessage = ""
             socket.emit(
-               'invite',
+              'invite',
                 {
                   token: this.$store.state.userSavedData.token,
                   fromUser: this.$store.state.userSavedData.username,

@@ -6,6 +6,7 @@ interface Channel {
   isPrivate: boolean,
   owner: string,
   messages: {
+    id: number,
     author: string,
     time: string,
     text: string
@@ -49,7 +50,6 @@ const mutation: MutationTree<ChannelStateInterface> = {
     } else {
       state.channels.push(val.channel);
     }
-
   },
 
   //removes channel from sidebar
@@ -64,7 +64,11 @@ const mutation: MutationTree<ChannelStateInterface> = {
 
   //reset state values to default
   reset(state) {
-    state.currentChannel = "";
+    state.currentChannel = {
+      name: "",
+      isPrivate: false,
+      owner: ""
+    };
     state.setScroll = "";
     state.channels = [];
     state.newMessage = {
@@ -73,6 +77,7 @@ const mutation: MutationTree<ChannelStateInterface> = {
       text: "",
       channelName: "",
     };
+  },
 
   setTopChannel(state, val: string) {
     state.topChannelName = val

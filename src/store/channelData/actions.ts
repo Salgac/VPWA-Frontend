@@ -59,8 +59,8 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
   },
 
   async loadMoreMessages({ commit, state }) {
-    const currentChannelName = state.currentChannel;
-    if (state.currentChannel == "") {
+    const currentChannelName = state.currentChannel.name;
+    if (state.currentChannel.name == "") {
       return;
     }
     const lastId = state.channels.find(ch => ch.channelName == currentChannelName)!.messages[0].id;
