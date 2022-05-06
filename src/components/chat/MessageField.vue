@@ -8,7 +8,7 @@
       </template>
 
       <div class="q-pa-md row justify-center">
-        <div v-if="$store.state.channelSavedData.currentChannel == ''">
+        <div v-if="$store.state.channelSavedData.currentChannel.name == ''">
           No channel open
         </div>
         <div v-else-if="!messages.length">Channel is empty.</div>

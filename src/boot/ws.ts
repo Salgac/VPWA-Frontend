@@ -20,9 +20,11 @@ interface InviteData {
   token: string,
   fromUser: string,
   toUser: string,
-  channel: string,
-  isPrivate: boolean,
-  owner: string
+  channel: {
+    name: string,
+    isPrivate: boolean,
+    owner: string
+  }
 }
 
 const socket = io(`${process.env.API_HOST}`);
@@ -47,12 +49,12 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
     const inviteData = data as InviteData
     if (inviteData.toUser == store.state.userSavedData.username) {
       store.commit("channelSavedData/addChannel", {
-        channelName: inviteData.channel,
-        isPrivate: inviteData.isPrivate,
-        owner: inviteData.owner,
+        channelName: inviteData.channel.name,
+        isPrivate: inviteData.channel.isPrivate,
+        owner: inviteData.channel.owner,
         messages: []
       })
-      store.commit("channelSavedData/setTopChannel", inviteData.channel)
+      store.commit("channelSavedData/setTopChannel", inviteData.channel.name)
     }
   })
   socket.on('inviteError', (data: { message: string, user: string }) => {

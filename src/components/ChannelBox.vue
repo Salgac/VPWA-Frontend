@@ -2,7 +2,7 @@
   <div>
     <q-item
       v-if="show"
-      :active="channelName == $store.state.channelSavedData.currentChannel"
+      :active="channelName == $store.state.channelSavedData.currentChannel.name"
       active-class="active-style"
     >
       <q-item-section>

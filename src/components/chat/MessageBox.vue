@@ -4,7 +4,7 @@
     <CommandList v-if="openCommandList" />
     <q-toolbar class="bg-grey-2 text-black row">
       <q-input
-        :disable="$store.state.channelSavedData.currentChannel == ''"
+        :disable="$store.state.channelSavedData.currentChannel.name == ''"
         outlined
         dense
         class="WAL__field col-grow q-mr-sm"
@@ -14,7 +14,7 @@
         v-on:keyup.enter="sendMessage"
       />
       <q-btn
-        :disable="$store.state.channelSavedData.currentChannel == ''"
+        :disable="$store.state.channelSavedData.currentChannel.name == ''"
         flat
         icon="send"
         v-on:click="sendMessage"
@@ -112,8 +112,7 @@ export default defineComponent({
                   token: this.$store.state.userSavedData.token,
                   fromUser: this.$store.state.userSavedData.username,
                   toUser: commandParts[1],
-                  channel: this.$store.state.channelSavedData.currentChannel.name,
-
+                  channel: this.$store.state.channelSavedData.currentChannel
                 }
               )
               this.notify(this.commandMessage, this.errorBool);
@@ -182,7 +181,7 @@ export default defineComponent({
     deleteChannel() {
       this.$store.dispatch(
         "channelSavedData/deleteChannel",
-        this.$store.state.channelSavedData.currentChannel
+        this.$store.state.channelSavedData.currentChannel.name
       );
       this.notify("Channel deleted", false);
     },
