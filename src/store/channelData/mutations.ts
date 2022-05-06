@@ -21,10 +21,15 @@ const mutation: MutationTree<ChannelStateInterface> = {
 
     var obj = channels.find((ch) => ch.channelName === val.channelName);
     obj?.messages.push({
+      id: Infinity,
       author: val.author,
       time: val.time,
       text: val.text
     });
+  },
+
+  addOldMessages(state, obj) {
+    state.channels.find(ch => ch.channelName == obj.channel)!.messages.unshift(...obj.messages);
   },
 
   addChannel(state, channel) {

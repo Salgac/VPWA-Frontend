@@ -7,6 +7,7 @@ export interface ChannelStateInterface {
     isPrivate: boolean,
     owner: string,
     messages: {
+      id: number,
       author: string,
       time: string,
       text: string

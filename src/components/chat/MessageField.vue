@@ -4,6 +4,7 @@
       style="height: 90vh; max-width: 100%; min-height: 90vh"
       :delay="500"
       ref="scrollRef"
+      @scroll="onScroll"
     >
       <div class="q-pa-md row justify-center">
         <div v-if="$store.state.channelSavedData.currentChannel == ''">
@@ -35,8 +36,25 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "MessageField",
-
+  data() {
+    return {
+      isLoading: false,
+    };
+  },
   methods: {
+    async onScroll(info: any) {
+      if (info.verticalPosition < 100 && !this.isLoading) {
+        this.isLoading = true;
+        await this.loadMessages();
+      }
+      //TODO make scroll to stay at position after load
+    },
+    async loadMessages() {
+      this.$store.dispatch("channelSavedData/loadMoreMessages");
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 5000);
+    },
     getPFP(author: string) {
       return `https://avatars.dicebear.com/api/bottts/${author}.svg`;
     },
@@ -82,6 +100,8 @@ export default defineComponent({
       get() {
         var channels = this.$store.state.channelSavedData.channels;
         var currentChannel = this.$store.state.channelSavedData.currentChannel;
+
+        this.isLoading = false;
 
         //set scroll - note: timeout is needed because I dont know why - WILL NOT WORK WITHOUT IT
         setTimeout(() => {

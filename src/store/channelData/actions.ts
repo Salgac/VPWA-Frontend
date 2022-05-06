@@ -56,6 +56,27 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
       //remove from store
       commit('removeChannel', channelName);
     }
+  },
+
+  async loadMoreMessages({ commit, state }) {
+    const currentChannelName = state.currentChannel;
+    if (state.currentChannel == "") {
+      return;
+    }
+    const lastId = state.channels.find(ch => ch.channelName == currentChannelName)!.messages[0].id;
+
+    //load from server
+    const response = await HttpRequest.get(
+      "messages",
+      this.state.userSavedData.token,
+      {
+        channelName: currentChannelName,
+        last: lastId,
+      }
+    );
+
+    //insert into channel messages
+    commit('addOldMessages', response);
   }
 };
 
