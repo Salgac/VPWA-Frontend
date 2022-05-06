@@ -1,10 +1,25 @@
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
 import { UserStateInterface } from './state';
+import HttpRequest from "src/services/request";
 
 const actions: ActionTree<UserStateInterface, StateInterface> = {
-  someAction (/* context */) {
-    // your code
+  async saveStatus({ commit }, status: string) {
+    const response = await HttpRequest.post(
+      "status",
+      {
+        username: this.state.userSavedData.username,
+        status: status
+      },
+      this.state.userSavedData.token
+    );
+
+    if (response.hasOwnProperty("error")) {
+      alert(response.error);
+      return;
+    }
+
+    commit('setUserStatus', status);
   }
 };
 

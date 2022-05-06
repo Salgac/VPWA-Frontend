@@ -23,14 +23,14 @@
             />
             <div v-if="signedIn">
               <q-icon
-                v-if="userStatus == 'on'"
+                v-if="userStatus == 'online'"
                 left
                 name="circle"
                 color="green"
                 size="xs"
               />
               <q-icon
-                v-else-if="userStatus == 'off'"
+                v-else-if="userStatus == 'offline'"
                 left
                 name="circle"
                 color="grey"
