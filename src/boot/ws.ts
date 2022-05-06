@@ -38,8 +38,22 @@ const socket = io(`${process.env.API_HOST}`);
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 export default boot(async ({ store }/* { app, router, ... } */) => {
-  // something to do
+  socket.on('connect', () => {
+    if (store.state.userSavedData.username != "") {
+      store.dispatch("userSavedData/saveStatus", 'online');
+    }
+  })
+
+  socket.on('disconnect', () => {
+    if (store.state.userSavedData.username != "") {
+      store.dispatch("userSavedData/saveStatus", 'offline');
+    }
+  })
+
   socket.on('newMessage', (data) => {
+    if (store.state.userSavedData.userStatus != 'online') {
+      return
+    }
     const messageData = data as MessageData
     const newMessage: NewMessage = {
       author: messageData.userName,

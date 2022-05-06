@@ -5,7 +5,7 @@ import { ChannelStateInterface } from './state';
 import HttpRequest from "src/services/request";
 
 const actions: ActionTree<ChannelStateInterface, StateInterface> = {
-  async loadChannels({ commit }) {
+  async loadChannels({ commit, state }) {
     //load from server
     const response = await HttpRequest.get(
       "channels",
@@ -15,7 +15,7 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
 
     //add to store
     commit('setChannels', channels);
-    if (channels.length != 0) {
+    if (channels.length != 0 && state.currentChannel.name == "") {
       commit('setCurrentChannel', channels[0].channelName)
     }
   },

@@ -28,8 +28,8 @@
 import { defineComponent } from "vue";
 
 const statusOptions = [
-  { name: "on", label: "Online", icon: "circle", color: "green" },
-  { name: "off", label: "Offline", icon: "circle", color: "grey" },
+  { name: "online", label: "Online", icon: "circle", color: "green" },
+  { name: "offline", label: "Offline", icon: "circle", color: "grey" },
   {
     name: "dnd",
     label: "Do Not Disturb",
@@ -53,7 +53,10 @@ export default defineComponent({
         return this.$store.state.userSavedData.userStatus;
       },
       set(val: string) {
-        this.$store.commit("userSavedData/setUserStatus", val);
+        this.$store.dispatch("userSavedData/saveStatus", val);
+        if (val == 'online') {
+          this.$store.dispatch("channelSavedData/loadChannels");
+        }
       },
     },
   },

@@ -304,7 +304,7 @@ export default defineComponent({
 
     setLogin(response: any) {
       this.signedIn = !this.signedIn;
-      this.userStatus = "on";
+      this.userStatus = "online";
       this.username = response.user.username;
       this.email = response.user.email;
       this.token = response.token.token;
