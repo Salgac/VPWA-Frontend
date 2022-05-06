@@ -36,7 +36,7 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
     } else {
       //add to store
       const channel = response.channel;
-      commit('addChannel', channel);
+      commit('addChannel', { channel: channel, top: false });
       commit('setCurrentChannel', data.name)
     }
   },

@@ -49,10 +49,13 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
     const inviteData = data as InviteData
     if (inviteData.toUser == store.state.userSavedData.username) {
       store.commit("channelSavedData/addChannel", {
-        channelName: inviteData.channel.name,
-        isPrivate: inviteData.channel.isPrivate,
-        owner: inviteData.channel.owner,
-        messages: []
+        channel: {
+          channelName: inviteData.channel.name,
+          isPrivate: inviteData.channel.isPrivate,
+          owner: inviteData.channel.owner,
+          messages: []
+        },
+        top: true
       })
       store.commit("channelSavedData/setTopChannel", inviteData.channel.name)
     }

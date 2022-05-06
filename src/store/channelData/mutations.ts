@@ -1,6 +1,17 @@
 import { MutationTree } from 'vuex';
 import { ChannelStateInterface } from './state';
 
+interface Channel {
+  channelName: string,
+  isPrivate: boolean,
+  owner: string,
+  messages: {
+    author: string,
+    time: string,
+    text: string
+  }[],
+}
+
 const mutation: MutationTree<ChannelStateInterface> = {
   openCloseChannelCreation(state, val: boolean) {
     state.openChannelCreation = val;
@@ -27,8 +38,12 @@ const mutation: MutationTree<ChannelStateInterface> = {
     });
   },
 
-  addChannel(state, channel) {
-    state.channels.push(channel);
+  addChannel(state, val: { channel: Channel, top: boolean }) {
+    if (val.top) {
+      state.channels.unshift(val.channel);
+    } else {
+      state.channels.push(val.channel);
+    }
   },
 
   //removes channel from sidebar
