@@ -23,7 +23,8 @@ interface InviteData {
   channel: {
     name: string,
     isPrivate: boolean,
-    owner: string
+    owner: string,
+    messages: any[],
   }
 }
 
@@ -64,7 +65,7 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
           channelName: inviteData.channel.name,
           isPrivate: inviteData.channel.isPrivate,
           owner: inviteData.channel.owner,
-          messages: []
+          messages: inviteData.channel.messages,
         },
         top: true
       })
