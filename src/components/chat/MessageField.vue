@@ -1,12 +1,11 @@
 <template>
   <div v-if="signedIn" class="q-mr-sm" style="width: 100%">
-    <q-infinite-scroll @load="onLoad" reverse>
-      <template v-slot:loading>
-        <div class="q-my-md absolute-center">
-          <q-spinner color="primary" name="dots" size="40px" />
-        </div>
-      </template>
-
+    <q-scroll-area
+      style="height: 90vh; max-width: 100%; min-height: 90vh"
+      :delay="500"
+      ref="scrollRef"
+      @scroll="onScroll"
+    >
       <div class="q-pa-md row justify-center">
         <div v-if="$store.state.channelSavedData.currentChannel.name == ''">
           No channel open
@@ -27,26 +26,63 @@
           />
         </div>
       </div>
-    </q-infinite-scroll>
+    </q-scroll-area>
   </div>
 </template>
 
 <script lang="ts">
+import { QScrollArea } from "quasar";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "MessageField",
-
+  data() {
+    return {
+      isLoading: false,
+    };
+  },
   methods: {
-    onLoad(index: Number, done: Function) {
-      //TODO implement this
-      done();
+    async onScroll(info: any) {
+      if (info.verticalPosition < 100 && !this.isLoading) {
+        this.isLoading = true;
+        await this.loadMessages();
+      }
+      //TODO make scroll to stay at position after load
+    },
+    async loadMessages() {
+      this.$store.dispatch("channelSavedData/loadMoreMessages");
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 5000);
     },
     getPFP(author: string) {
       return `https://avatars.dicebear.com/api/bottts/${author}.svg`;
     },
     formatTime(time: string) {
       return new Date(time).toLocaleString("sk-SK");
+    },
+    setScroll(source: string) {
+      const scroll = this.$refs["scrollRef"] as QScrollArea;
+      if (scroll) {
+        const scrollTarget = scroll.getScrollTarget();
+        const offset = scrollTarget.scrollHeight;
+        const size = scroll.getScroll().verticalContainerSize;
+
+        if (source == "auto" || source == "messageSent") {
+          scroll.setScrollPosition("vertical", offset, 250);
+        } else if (scroll.getScrollPosition().top >= offset - size - 100) {
+          scroll.setScrollPosition("vertical", offset, 250);
+        }
+      }
+    },
+  },
+  watch: {
+    "$store.state.channelSavedData.setScroll": function (val) {
+      //set scroll after message was sent
+      if (val != "") {
+        this.setScroll(val);
+        this.$store.commit("channelSavedData/setScroll", "");
+      }
     },
   },
 
@@ -65,7 +101,15 @@ export default defineComponent({
         var channels = this.$store.state.channelSavedData.channels;
         var currentChannel = this.$store.state.channelSavedData.currentChannel;
 
+        this.isLoading = false;
+
+        //set scroll - note: timeout is needed because I dont know why - WILL NOT WORK WITHOUT IT
+        setTimeout(() => {
+          this.setScroll("auto");
+        }, 1);
+
         var obj = channels.find((ch) => ch.channelName === currentChannel.name);
+
         return obj?.messages ? obj.messages : [];
       },
       set() {},

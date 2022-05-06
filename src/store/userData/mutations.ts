@@ -29,6 +29,17 @@ const mutation: MutationTree<UserStateInterface> = {
 
   openCloseUserList(state: UserStateInterface, val: boolean) {
     state.openUserList = val;
+  },
+
+  //reset state values to default
+  reset(state) {
+    state.signedIn = false;
+    state.name = "";
+    state.surname = "";
+    state.username = "";
+    state.email = "";
+    state.token = "";
+    state.userStatus = "";
   }
 };
 

@@ -32,10 +32,15 @@ const mutation: MutationTree<ChannelStateInterface> = {
 
     var obj = channels.find((ch) => ch.channelName === val.channelName);
     obj?.messages.push({
+      id: Infinity,
       author: val.author,
       time: val.time,
       text: val.text
     });
+  },
+
+  addOldMessages(state, obj) {
+    state.channels.find(ch => ch.channelName == obj.channel)!.messages.unshift(...obj.messages);
   },
 
   addChannel(state, val: { channel: Channel, top: boolean }) {
@@ -44,12 +49,30 @@ const mutation: MutationTree<ChannelStateInterface> = {
     } else {
       state.channels.push(val.channel);
     }
+
   },
 
   //removes channel from sidebar
   removeChannel(state, channelName: string) {
     state.channels = state.channels.filter((ch) => ch.channelName !== channelName)
   },
+
+
+  setScroll(state, value: string) {
+    state.setScroll = value;
+  },
+
+  //reset state values to default
+  reset(state) {
+    state.currentChannel = "";
+    state.setScroll = "";
+    state.channels = [];
+    state.newMessage = {
+      author: "",
+      time: "",
+      text: "",
+      channelName: "",
+    };
 
   setTopChannel(state, val: string) {
     state.topChannelName = val

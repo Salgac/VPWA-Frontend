@@ -47,8 +47,14 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
       channelName: messageData.channelName
     }
 
+    //add to store
     store.commit("channelSavedData/addMessage", newMessage)
-    console.log('sent to ' + messageData.channelName)
+
+    //change scroll if user in channel
+    if (messageData.channelName == store.state.channelSavedData.currentChannel) {
+      store.commit("channelSavedData/setScroll", "notify");
+    }
+
   })
   socket.on('newInvite', (data) => {
     const inviteData = data as InviteData
