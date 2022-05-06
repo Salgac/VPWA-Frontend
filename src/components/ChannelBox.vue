@@ -15,7 +15,11 @@
           rounded
           align="left"
           @click="setChannel"
-          :color="channelName == $store.state.channelSavedData.topChannelName ? 'red' : 'primary'"
+          :color="
+            channelName == $store.state.channelSavedData.topChannelName
+              ? 'red'
+              : 'primary'
+          "
         />
         <q-skeleton v-else type="QBtn" width="100%" />
       </q-item-section>
@@ -98,7 +102,7 @@ export default defineComponent({
     setChannel() {
       this.$store.commit(
         "channelSavedData/setCurrentChannel",
-        { name: this.channelName, owner: this.owner, isPrivate: this.isPrivate }
+        this.channelName
       );
     },
 

@@ -19,8 +19,13 @@ const mutation: MutationTree<ChannelStateInterface> = {
   },
 
   //sets current channel
-  setCurrentChannel(state, newChannel) {
-    state.currentChannel = newChannel;
+  setCurrentChannel(state, newChannelName) {
+    const ch = state.channels.find(ch => ch.channelName == newChannelName)!;
+    state.currentChannel = {
+      name: ch.channelName,
+      isPrivate: ch.isPrivate,
+      owner: ch.owner,
+    };
   },
 
   //used for loading channel list
