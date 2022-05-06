@@ -8,11 +8,28 @@ interface MessageData {
   time: string
   text: string
 }
+
 interface NewMessage {
   author: string,
   time: string,
   text: string,
   channelName: string
+}
+
+interface InviteData {
+  token: string,
+  fromUser: string,
+  toUser: string,
+  channel: {
+    name: string,
+    isPrivate: boolean,
+    owner: string
+  }
+}
+
+interface ErrorData {
+  message: string,
+  user: string
 }
 
 const socket = io(`${process.env.API_HOST}`);
@@ -38,6 +55,29 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
       store.commit("channelSavedData/setScroll", "notify");
     }
 
+  })
+  socket.on('newInvite', (data) => {
+    const inviteData = data as InviteData
+    if (inviteData.toUser == store.state.userSavedData.username) {
+      store.commit("channelSavedData/addChannel", {
+        channel: {
+          channelName: inviteData.channel.name,
+          isPrivate: inviteData.channel.isPrivate,
+          owner: inviteData.channel.owner,
+          messages: []
+        },
+        top: true
+      })
+      store.commit("channelSavedData/setTopChannel", inviteData.channel.name)
+    }
+  })
+  socket.on('inviteError', (data) => {
+    const errorData = data as ErrorData
+    console.log(errorData)
+    if (errorData.user == store.state.userSavedData.username) {
+      store.commit("commandSavedData/setMessage", errorData.message)
+      store.commit("commandSavedData/setErrorBool", true)
+    }
   })
 })
 

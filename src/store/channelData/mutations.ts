@@ -1,14 +1,25 @@
 import { MutationTree } from 'vuex';
 import { ChannelStateInterface } from './state';
 
+interface Channel {
+  channelName: string,
+  isPrivate: boolean,
+  owner: string,
+  messages: {
+    author: string,
+    time: string,
+    text: string
+  }[],
+}
+
 const mutation: MutationTree<ChannelStateInterface> = {
   openCloseChannelCreation(state, val: boolean) {
     state.openChannelCreation = val;
   },
 
   //sets current channel
-  setCurrentChannel(state, newChannelName: string) {
-    state.currentChannel = newChannelName;
+  setCurrentChannel(state, newChannel) {
+    state.currentChannel = newChannel;
   },
 
   //used for loading channel list
@@ -32,14 +43,20 @@ const mutation: MutationTree<ChannelStateInterface> = {
     state.channels.find(ch => ch.channelName == obj.channel)!.messages.unshift(...obj.messages);
   },
 
-  addChannel(state, channel) {
-    state.channels.push(channel);
+  addChannel(state, val: { channel: Channel, top: boolean }) {
+    if (val.top) {
+      state.channels.unshift(val.channel);
+    } else {
+      state.channels.push(val.channel);
+    }
+
   },
 
   //removes channel from sidebar
   removeChannel(state, channelName: string) {
     state.channels = state.channels.filter((ch) => ch.channelName !== channelName)
   },
+
 
   setScroll(state, value: string) {
     state.setScroll = value;
@@ -56,6 +73,9 @@ const mutation: MutationTree<ChannelStateInterface> = {
       text: "",
       channelName: "",
     };
+
+  setTopChannel(state, val: string) {
+    state.topChannelName = val
   }
 };
 

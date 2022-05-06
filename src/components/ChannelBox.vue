@@ -2,7 +2,7 @@
   <div>
     <q-item
       v-if="show"
-      :active="channelName == $store.state.channelSavedData.currentChannel"
+      :active="channelName == $store.state.channelSavedData.currentChannel.name"
       active-class="active-style"
     >
       <q-item-section>
@@ -15,6 +15,7 @@
           rounded
           align="left"
           @click="setChannel"
+          :color="channelName == $store.state.channelSavedData.topChannelName ? 'red' : 'primary'"
         />
         <q-skeleton v-else type="QBtn" width="100%" />
       </q-item-section>
@@ -97,7 +98,7 @@ export default defineComponent({
     setChannel() {
       this.$store.commit(
         "channelSavedData/setCurrentChannel",
-        this.channelName
+        { name: this.channelName, owner: this.owner, isPrivate: this.isPrivate }
       );
     },
 

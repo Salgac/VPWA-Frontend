@@ -7,7 +7,7 @@
       @scroll="onScroll"
     >
       <div class="q-pa-md row justify-center">
-        <div v-if="$store.state.channelSavedData.currentChannel == ''">
+        <div v-if="$store.state.channelSavedData.currentChannel.name == ''">
           No channel open
         </div>
         <div v-else-if="!messages.length">Channel is empty.</div>
@@ -108,7 +108,8 @@ export default defineComponent({
           this.setScroll("auto");
         }, 1);
 
-        var obj = channels.find((ch) => ch.channelName === currentChannel);
+        var obj = channels.find((ch) => ch.channelName === currentChannel.name);
+
         return obj?.messages ? obj.messages : [];
       },
       set() {},

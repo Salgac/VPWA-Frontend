@@ -49,7 +49,7 @@ export default defineComponent({
           "users",
           this.$store.state.userSavedData.token,
           {
-            channelName: this.$store.state.channelSavedData.currentChannel,
+            channelName: this.$store.state.channelSavedData.currentChannel.name,
           }
         );
         this.users = response.users;

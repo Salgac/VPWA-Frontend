@@ -1,6 +1,8 @@
 export interface CommandStateInterface {
   currentCommand: string;
-  commands: { commandName: string }[]
+  commands: { commandName: string }[];
+  commandMessage: string;
+  errorBool: boolean
 }
 
 function state(): CommandStateInterface {
@@ -14,7 +16,9 @@ function state(): CommandStateInterface {
       { commandName: "cancel" },
       { commandName: "quit" },
       { commandName: "list" }
-    ]
+    ],
+    commandMessage: "",
+    errorBool: false
   };
 }
 
