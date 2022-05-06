@@ -66,7 +66,7 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
     store.commit("channelSavedData/addMessage", newMessage)
 
     //change scroll if user in channel
-    if (messageData.channelName == store.state.channelSavedData.currentChannel) {
+    if (messageData.channelName == store.state.channelSavedData.currentChannel.name) {
       store.commit("channelSavedData/setScroll", "notify");
     }
 
