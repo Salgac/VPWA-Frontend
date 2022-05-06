@@ -27,6 +27,11 @@ interface InviteData {
   }
 }
 
+interface ErrorData {
+  message: string,
+  user: string
+}
+
 const socket = io(`${process.env.API_HOST}`);
 
 // "async" is optional;
@@ -60,9 +65,11 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
       store.commit("channelSavedData/setTopChannel", inviteData.channel.name)
     }
   })
-  socket.on('inviteError', (data: { message: string, user: string }) => {
-    if (data.user == store.state.userSavedData.username) {
-      store.commit("commandSavedData/setMessage", data.message)
+  socket.on('inviteError', (data) => {
+    const errorData = data as ErrorData
+    console.log(errorData)
+    if (errorData.user == store.state.userSavedData.username) {
+      store.commit("commandSavedData/setMessage", errorData.message)
       store.commit("commandSavedData/setErrorBool", true)
     }
   })

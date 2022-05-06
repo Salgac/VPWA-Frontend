@@ -1,6 +1,7 @@
 <template>
   <div>
     <UserList />
+    <ErrorPopup />
     <CommandList v-if="openCommandList" />
     <q-toolbar class="bg-grey-2 text-black row">
       <q-input
@@ -27,6 +28,7 @@
 import { defineComponent } from "vue";
 import CommandList from "src/components/chat/CommandList.vue";
 import UserList from "src/components/popups/UserList.vue";
+import ErrorPopup from "src/components/popups/ErrorPopup.vue";
 import { socket } from 'src/boot/ws'
 
 export default defineComponent({
@@ -35,6 +37,7 @@ export default defineComponent({
   components: {
     CommandList,
     UserList,
+    ErrorPopup
   },
 
   data() {
@@ -105,7 +108,7 @@ export default defineComponent({
               this.createPublic(commandParts[1]);
             } else if (commandParts[0] == "invite") {
               this.errorBool = false
-              this.commandMessage = "Invited: " + commandParts[1]
+              this.commandMessage = ""
               socket.emit(
                 'invite',
                 {
@@ -115,7 +118,7 @@ export default defineComponent({
                   channel: this.$store.state.channelSavedData.currentChannel
                 }
               )
-              this.notify(this.commandMessage, this.errorBool);
+              this.notify("Invited: " + commandParts[1], false);
             } else if (commandParts[0] == "revoke") {
               this.removeChannelUser(
                 commandParts[1],
