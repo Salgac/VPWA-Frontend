@@ -61,9 +61,11 @@ After refreshing the page, the login information of a user persists, channel dat
 
 ### Final submission
 
-As of 8.5.2022, the project is done.
+As of 8.5.2022, the project is done. The layout of the application was slightly tweaked to better handle data from api server. All dumy data was replaced with api calls and socket communication. All data are persisted in a PostrgeSQL database.
 
-**TODO**
+The app is usable according to all the specification in the assignment excpet points 8 and 11.
+
+Since the first submission we have decided to implement use case number 6 as well. Messages that are addressed to the user are now highlited with purple color, as well as the tag itself is highlited.
 
 ## Data model
 
@@ -78,7 +80,17 @@ The proposed database schema for the future backend. It is subject to change bef
 
 ## Design decisions
 
-**TODO**
+During the development of this app we came with several design decisions.
+
+The user login is remembered in a browser, so that the user doesnt have to login everytime the app is accessed. This is done using a `vuex-persistedstate` library, that is used as a vuex extension on userData store.
+
+User status is persisted in the database, as well as local storage, so that other user of the channel can see it in user list accesible with `/list` command. Persisting this value in loacl storage allows the app to select last status when user accesses the app after closing the browser.
+
+For REST communication with api server we created our own `HttpRequest` class for fetching data, that is a wrapper above the Fetch API. Loading this class allows us to easily access the api endpoints from around the app directory.
+
+The app also uses a quasar extension `quenv` to load `.env` file containing custom enviroment variables. We use it to specify the `API_HOST` variable containing the url of our api server. This variable is then accessed from inside the `HttpRequest` class, as well as socket inicialization file.
+
+For socket communication we decided to use the `socket.io` library, as the use is reccommended for use with quasar application.
 
 ## Screenshots
 
