@@ -91,19 +91,21 @@ export default defineComponent({
     },
     getTag(text: string, type: string) {
       const username = this.$store.state.userSavedData.username;
+      const regExp = new RegExp(`^.*(?:^|\\s)@${username}\\b.*$`)
       switch (type) {
         case "bg":
-          return text.includes(`@${username}`) ? "primary" : null;
+          return regExp.test(text) ? "primary" : null;
         case "text":
-          return text.includes(`@${username}`) ? "white" : null;
+          return regExp.test(text) ? "white" : null;
       }
     },
     prepareText(text: string) {
       //look for users tags and add strong effect to them
       const username = this.$store.state.userSavedData.username;
       const pattern = `@${username}`;
+      const regExp = new RegExp(`^.*(?:^|\\s)@${username}\\b.*$`)
 
-      return text.includes(pattern)
+      return regExp.test(text)
         ? text
             .split(pattern)
             .join(
