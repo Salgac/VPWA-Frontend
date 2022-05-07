@@ -56,7 +56,8 @@ export default defineComponent({
 
   async mounted() {
     //get channels
-    this.$store.dispatch("channelSavedData/loadChannels");
+    if (this.$store.state.userSavedData.signedIn)
+      this.$store.dispatch("channelSavedData/loadChannels");
   },
 
   methods: {
