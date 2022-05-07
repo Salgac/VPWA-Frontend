@@ -8,7 +8,6 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
     const response = await HttpRequest.post(
       "status",
       {
-        username: this.state.userSavedData.username,
         status: status
       },
       this.state.userSavedData.token
