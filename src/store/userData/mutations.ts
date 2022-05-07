@@ -1,3 +1,4 @@
+import { socket } from 'src/boot/ws';
 import { MutationTree } from 'vuex';
 import { UserStateInterface } from './state';
 
@@ -33,6 +34,10 @@ const mutation: MutationTree<UserStateInterface> = {
 
   //reset state values to default
   reset(state) {
+    //disconnect user
+    socket.emit('end');
+
+    //clear data
     state.signedIn = false;
     state.name = "";
     state.surname = "";

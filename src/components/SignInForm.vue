@@ -175,6 +175,7 @@
 import { defineComponent } from "vue";
 
 import HttpRequest from "src/services/request";
+import { socket } from "src/boot/ws";
 
 export default defineComponent({
   name: "SignInDialog",
@@ -308,6 +309,15 @@ export default defineComponent({
       this.username = response.user.username;
       this.email = response.user.email;
       this.token = response.token.token;
+
+      //connect user
+      socket.emit("connectUser", {
+        token: this.$store.state.userSavedData.token,
+        status: this.userStatus,
+      });
+
+      //get channel data
+      this.$store.dispatch("channelSavedData/loadChannels");
     },
 
     openRegistration() {
