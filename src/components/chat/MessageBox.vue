@@ -29,7 +29,7 @@ import { defineComponent } from "vue";
 import CommandList from "src/components/chat/CommandList.vue";
 import UserList from "src/components/popups/UserList.vue";
 import ErrorPopup from "src/components/popups/ErrorPopup.vue";
-import { socket } from 'src/boot/ws'
+import { socket } from "src/boot/ws";
 
 export default defineComponent({
   name: "MessageBox",
@@ -37,7 +37,7 @@ export default defineComponent({
   components: {
     CommandList,
     UserList,
-    ErrorPopup
+    ErrorPopup,
   },
 
   data() {
@@ -116,18 +116,15 @@ export default defineComponent({
         if (commandParts[0] == "join") {
           this.createPublic(commandParts[1]);
         } else if (commandParts[0] == "invite") {
-            this.errorBool = false
-            this.commandMessage = ""
-            socket.emit(
-              'invite',
-                {
-                  token: this.$store.state.userSavedData.token,
-                  fromUser: this.$store.state.userSavedData.username,
-                  toUser: commandParts[1],
-                  channel: this.$store.state.channelSavedData.currentChannel
-                }
-              )
-            this.notify("Invited: " + commandParts[1], false);
+          this.errorBool = false;
+          this.commandMessage = "";
+          socket.emit("invite", {
+            token: this.$store.state.userSavedData.token,
+            fromUser: this.$store.state.userSavedData.username,
+            toUser: commandParts[1],
+            channel: this.$store.state.channelSavedData.currentChannel,
+          });
+          this.notify("Invited: " + commandParts[1], false);
         } else if (commandParts[0] == "revoke") {
           this.removeChannelUser(
             commandParts[1],
@@ -177,9 +174,35 @@ export default defineComponent({
       }
     },
 
-    removeChannelUser(channelName: string, message: string) {
-      this.$store.dispatch("channelSavedData/deleteChannel", channelName);
-      this.notify(message, false);
+    removeChannelUser(userName: string, message: string) {
+      //only owner can revoke in a private channel
+      const currentChannel = this.$store.state.channelSavedData.currentChannel;
+      const user = this.$store.state.userSavedData.username;
+
+      if (currentChannel.isPrivate) {
+        if (currentChannel.owner == user) {
+          if (userName == user) {
+            this.notify(
+              "Uh oh! Revoking yourself would create a wormhole! To delete this channel use '/quit' command.",
+              true
+            );
+            return;
+          }
+
+          //emit to server
+          socket.emit("revokeUser", {
+            token: this.$store.state.userSavedData.token,
+            channelName: currentChannel.name,
+            userName: userName,
+          });
+          this.notify(message, false);
+        } else {
+          //
+          this.notify("Only channel owner can revoke users!", true);
+        }
+      } else {
+        this.notify("Revoke command only works in private channels!", true);
+      }
     },
 
     deleteChannel() {
@@ -233,21 +256,21 @@ export default defineComponent({
 
     commandMessage: {
       get() {
-        return this.$store.state.commandSavedData.commandMessage
+        return this.$store.state.commandSavedData.commandMessage;
       },
       set(val: string) {
         this.$store.commit("commandSavedData/setMessage", val);
-      }
+      },
     },
 
     errorBool: {
       get() {
-        return this.$store.state.commandSavedData.errorBool
+        return this.$store.state.commandSavedData.errorBool;
       },
       set(val: boolean) {
         this.$store.commit("commandSavedData/setErrorBool", val);
-      }
-    }
+      },
+    },
   },
 
   watch: {
