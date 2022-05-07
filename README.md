@@ -1,6 +1,6 @@
 # Poormans Discord (vpwa-frontend)
 
-A Discord clone written using Quasar for VPWA (Development of Progressive Web Applications) course. The app implements various use cases according to the project assignment without use cases 6, 8 and 11 (no WTECH).
+A Discord clone written using Quasar for VPWA (Development of Progressive Web Applications) course. The app implements various use cases according to the project assignment without use cases 8 and 11 (no WTECH).
 
 Please read [submission notes](#Notes) before testing.
 
@@ -29,8 +29,8 @@ Akékoľvek iné vylepšenia sú vítané a potešia ma :-)
     * nickName ako aj channelName sú unikátne
     * správca môže kanál zatvoriť/zrušiť príkazom /quit
 5. používateľ môže zrušiť svoje členstvo v kanáli príkazom /cancel, ak tak spraví správca kanála, kanál zaniká
-6. ~~správu v kanáli je možné adresovať konkrétnemu používateľovi cez príkaz @nickname~~
-    * ~~správa je zvýraznená danému používateľovi v zozname správ~~
+6. správu v kanáli je možné adresovať konkrétnemu používateľovi cez príkaz @nickname
+    * správa je zvýraznená danému používateľovi v zozname správ
 7. používateľ si môže pozrieť kompletnú históriu správ
     * efektívny inifinite scroll
 8. ~~používateľ je informovaný o každej novej správe prostredníctvom notifikácie~~
@@ -59,6 +59,12 @@ Commands can be used in the message text field while the available commads are s
 
 After refreshing the page, the login information of a user persists, channel data are restored to dummy data.
 
+### Final submission
+
+As of 8.5.2022, the project is done.
+
+**TODO**
+
 ## Data model
 
 The proposed database schema for the future backend. It is subject to change before implementation.
@@ -69,6 +75,14 @@ The proposed database schema for the future backend. It is subject to change bef
 ![db_schema](db_schema.svg)
 
 </details>
+
+## Design decisions
+
+**TODO**
+
+## Screenshots
+
+**TODO**
 
 ## Setup
 
