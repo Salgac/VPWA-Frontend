@@ -82,7 +82,7 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
       })
       store.commit("channelSavedData/setTopChannel", inviteData.channel.name)
     }
-  })
+  });
 
   socket.on('inviteError', (data) => {
     const errorData = data as ErrorData
@@ -91,6 +91,11 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
       store.commit("commandSavedData/setMessage", errorData.message)
       store.commit("commandSavedData/setErrorBool", true)
     }
+  });
+
+  socket.on('deleteChannel', (data) => {
+    const channelName = data.channelName;
+    store.commit("channelSavedData/removeChannel", channelName);
   })
 })
 
