@@ -63,16 +63,20 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
     if (state.currentChannel.name == "") {
       return;
     }
+
     const lastId = state.channels.find(ch => ch.channelName == currentChannelName)!.messages[0].id;
+    const payload = lastId == Infinity ? {
+      channelName: currentChannelName,
+    } : {
+      channelName: currentChannelName,
+      last: lastId,
+    };
 
     //load from server
     const response = await HttpRequest.get(
       "messages",
       this.state.userSavedData.token,
-      {
-        channelName: currentChannelName,
-        last: lastId,
-      }
+      payload
     );
 
     //insert into channel messages
