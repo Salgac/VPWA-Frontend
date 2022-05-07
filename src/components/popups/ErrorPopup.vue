@@ -1,40 +1,27 @@
-<template>
-  <q-dialog v-model="errorBool">
-    <q-card style="width: 700px">
-      <q-card-section class="row items-center q-pb-none">
-        <div style="color: red" class="text-h6">Error</div>
-        <q-space />
-        <q-btn icon="close" flat round dense v-close-popup />
-      </q-card-section>
-      <q-card-section style="max-height: 50vh" class="scroll">
-        {{ commandMessage }}
-      </q-card-section>
-    </q-card>
-  </q-dialog>
-</template>
+<template />
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  computed: {
-    commandMessage: {
-      get() {
-        return this.$store.state.commandSavedData.commandMessage
-      },
-      set(val: string) {
-        this.$store.commit("commandSavedData/setMessage", val);
+  methods: {
+    notify(message: string, err: boolean) {
+      this.$q.notify({
+        color: err ? "red-5" : "green-4",
+        textColor: "white",
+        icon: err ? "warning" : "cloud_done",
+        message: message,
+      });
+    },
+  },
+  watch: {
+    "$store.state.commandSavedData.commandMessage": function (val) {
+      //display last error message
+      if (val != "") {
+        this.notify(val, true);
+        this.$store.commit("commandSavedData/setMessage", "");
       }
     },
-
-    errorBool: {
-      get() {
-        return this.$store.state.commandSavedData.errorBool
-      },
-      set(val: boolean) {
-        this.$store.commit("commandSavedData/setErrorBool", val);
-      }
-    }
-  }
-})
+  },
+});
 </script>

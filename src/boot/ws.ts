@@ -85,11 +85,9 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
   });
 
   socket.on('inviteError', (data) => {
-    const errorData = data as ErrorData
-    console.log(errorData)
+    const errorData = data as ErrorData;
     if (errorData.user == store.state.userSavedData.username) {
-      store.commit("commandSavedData/setMessage", errorData.message)
-      store.commit("commandSavedData/setErrorBool", true)
+      store.commit("commandSavedData/setMessage", errorData.message);
     }
   });
 
