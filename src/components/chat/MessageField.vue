@@ -52,10 +52,12 @@ export default defineComponent({
       }
     },
     async loadMessages() {
+      const oldLength = this.messages.length;
       await this.$store.dispatch("channelSavedData/loadMoreMessages");
+      const newLength = this.messages.length;
 
       //scroll to old position
-      this.setScroll("load");
+      if (oldLength != newLength) this.setScroll("load");
 
       this.isLoading = false;
     },
@@ -91,7 +93,7 @@ export default defineComponent({
     },
     getTag(text: string, type: string) {
       const username = this.$store.state.userSavedData.username;
-      const regExp = new RegExp(`^.*(?:^|\\s)@${username}\\b.*$`)
+      const regExp = new RegExp(`^.*(?:^|\\s)@${username}\\b.*$`);
       switch (type) {
         case "bg":
           return regExp.test(text) ? "primary" : null;
@@ -103,7 +105,7 @@ export default defineComponent({
       //look for users tags and add strong effect to them
       const username = this.$store.state.userSavedData.username;
       const pattern = `@${username}`;
-      const regExp = new RegExp(`^.*(?:^|\\s)@${username}\\b.*$`)
+      const regExp = new RegExp(`^.*(?:^|\\s)@${username}\\b.*$`);
 
       return regExp.test(text)
         ? text
