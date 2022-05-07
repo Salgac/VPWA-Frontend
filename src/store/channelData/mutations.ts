@@ -1,3 +1,4 @@
+import { store } from 'quasar/wrappers';
 import { MutationTree } from 'vuex';
 import { ChannelStateInterface } from './state';
 
@@ -20,12 +21,7 @@ const mutation: MutationTree<ChannelStateInterface> = {
 
   //sets current channel
   setCurrentChannel(state, newChannelName) {
-    const ch = state.channels.find(ch => ch.channelName == newChannelName)!;
-    state.currentChannel = {
-      name: ch.channelName,
-      isPrivate: ch.isPrivate,
-      owner: ch.owner,
-    };
+    setCurrentChannelHelper(state, newChannelName);
   },
 
   //used for loading channel list
@@ -60,6 +56,9 @@ const mutation: MutationTree<ChannelStateInterface> = {
   //removes channel from sidebar
   removeChannel(state, channelName: string) {
     state.channels = state.channels.filter((ch) => ch.channelName !== channelName)
+
+    //set current channel at channels[0]
+    setCurrentChannelHelper(state, state.channels[0].channelName);
   },
 
 
@@ -88,5 +87,14 @@ const mutation: MutationTree<ChannelStateInterface> = {
     state.topChannelName = val
   }
 };
+
+function setCurrentChannelHelper(state: ChannelStateInterface, channelName: string) {
+  const ch = state.channels.find(ch => ch.channelName == channelName)!;
+  state.currentChannel = {
+    name: ch.channelName,
+    isPrivate: ch.isPrivate,
+    owner: ch.owner,
+  };
+}
 
 export default mutation;

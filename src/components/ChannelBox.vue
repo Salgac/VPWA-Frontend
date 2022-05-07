@@ -29,7 +29,7 @@
             <q-item
               clickable
               v-close-popup
-              v-on:click="removeChannel(channelName)"
+              v-on:click="leaveChannel(channelName)"
             >
               <q-item-section side>
                 <q-icon name="close" />
@@ -60,6 +60,7 @@
 </template>
 
 <script lang="ts">
+import { socket } from "src/boot/ws";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -106,8 +107,16 @@ export default defineComponent({
       );
     },
 
+    leaveChannel(channelName: string) {
+      this.$store.dispatch("channelSavedData/deleteChannel", channelName);
+    },
+
     removeChannel(channelName: string) {
       this.$store.dispatch("channelSavedData/deleteChannel", channelName);
+      socket.emit("channelDeleted", {
+        token: this.$store.state.userSavedData.token,
+        channelName: channelName,
+      });
     },
   },
 });

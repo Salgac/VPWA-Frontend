@@ -9,10 +9,22 @@
       <q-card-section style="max-height: 50vh" class="scroll">
         <q-list>
           <q-item v-for="user in users" v-bind:key="user.username">
-            <q-avatar class="q-mb-sm">
-              <img :src="getPFP(user.username)" />
-            </q-avatar>
             <q-item-section>
+              <q-avatar class="q-mb-sm">
+                <img :src="getPFP(user.username)" />
+              </q-avatar>
+              <q-icon
+                class="row full-height justify-center vertical-middle"
+                name="circle"
+                :color="
+                  user.status == 'online'
+                    ? 'green'
+                    : user.status == 'offline'
+                    ? 'grey'
+                    : 'red'
+                "
+                size="xs"
+              />
               {{ user.username }}
             </q-item-section>
             <q-item-section>
