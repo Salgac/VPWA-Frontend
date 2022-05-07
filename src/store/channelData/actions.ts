@@ -32,12 +32,12 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
 
     //test for errors
     if (response.hasOwnProperty("errors")) {
-      alert(response.errors);
+      return response.errors;
     } else {
       //add to store
       const channel = response.channel;
       commit('addChannel', { channel: channel, top: false });
-      commit('setCurrentChannel', data.name)
+      commit('setCurrentChannel', data.name);
     }
   },
 

@@ -142,7 +142,7 @@ export default defineComponent({
       }
     },
 
-    createPrivate(channelName: string) {
+    async createPrivate(channelName: string) {
       if (
         this.$store.state.channelSavedData.channels.some(
           (ch) => ch.channelName === channelName
@@ -150,15 +150,21 @@ export default defineComponent({
       ) {
         this.notify("Channel name '" + channelName + "' is taken", true);
       } else {
-        this.$store.dispatch("channelSavedData/createChannel", {
-          name: channelName,
-          isPrivate: true,
-        });
-        this.notify("Created private: " + channelName, false);
+        const res = await this.$store.dispatch(
+          "channelSavedData/createChannel",
+          {
+            name: channelName,
+            isPrivate: true,
+          }
+        );
+
+        //message
+        if (res) this.notify(res, true);
+        else this.notify(`Created private channel: ${channelName}`, false);
       }
     },
 
-    createPublic(channelName: string) {
+    async createPublic(channelName: string) {
       if (
         this.$store.state.channelSavedData.channels.some(
           (ch) => ch.channelName === channelName
@@ -166,11 +172,17 @@ export default defineComponent({
       ) {
         this.notify("Channel name '" + channelName + "' is taken", true);
       } else {
-        this.$store.dispatch("channelSavedData/createChannel", {
-          name: channelName,
-          isPrivate: false,
-        });
-        this.notify("Created public: " + channelName, false);
+        const res = await this.$store.dispatch(
+          "channelSavedData/createChannel",
+          {
+            name: channelName,
+            isPrivate: false,
+          }
+        );
+
+        //message
+        if (res) this.notify(res, true);
+        else this.notify(`Joined channel: ${channelName}`, false);
       }
     },
 
