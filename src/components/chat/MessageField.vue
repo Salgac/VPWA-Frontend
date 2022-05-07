@@ -20,9 +20,12 @@
             :key="index"
             :name="item.author"
             :avatar="getPFP(item.author)"
-            :text="[item.text]"
+            :text="[prepareText(item.text)]"
+            text-html
             :sent="item.author == $store.state.userSavedData.username"
             :stamp="formatTime(item.time)"
+            :bg-color="getTag(item.text, 'bg')"
+            :text-color="getTag(item.text, 'text')"
           />
         </div>
       </div>
@@ -47,7 +50,6 @@ export default defineComponent({
         this.isLoading = true;
         await this.loadMessages();
       }
-      //TODO make scroll to stay at position after load
     },
     async loadMessages() {
       await this.$store.dispatch("channelSavedData/loadMoreMessages");
@@ -86,6 +88,28 @@ export default defineComponent({
             break;
         }
       }
+    },
+    getTag(text: string, type: string) {
+      const username = this.$store.state.userSavedData.username;
+      switch (type) {
+        case "bg":
+          return text.includes(`@${username}`) ? "primary" : null;
+        case "text":
+          return text.includes(`@${username}`) ? "white" : null;
+      }
+    },
+    prepareText(text: string) {
+      //look for users tags and add strong effect to them
+      const username = this.$store.state.userSavedData.username;
+      const pattern = `@${username}`;
+
+      return text.includes(pattern)
+        ? text
+            .split(pattern)
+            .join(
+              `<strong style="color:blue;background:white">${pattern}</strong>`
+            )
+        : text;
     },
   },
 
