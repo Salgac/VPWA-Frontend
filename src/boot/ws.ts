@@ -38,19 +38,14 @@ const socket = io(`${process.env.API_HOST}`);
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 export default boot(async ({ store }/* { app, router, ... } */) => {
-  /*
-  socket.on('connect', () => {
-    if (store.state.userSavedData.username != "") {
-      store.dispatch("userSavedData/saveStatus", 'online');
-    }
-  })
 
-  socket.on('disconnect', () => {
-    if (store.state.userSavedData.username != "") {
-      store.dispatch("userSavedData/saveStatus", 'offline');
-    }
-  })
-  */
+  if (store.state.userSavedData.username != "") {
+    socket.emit("connectUser", {
+      token: store.state.userSavedData.token,
+      status: store.state.userSavedData.userStatus,
+    });
+  }
+
   socket.on('newMessage', (data) => {
     if (store.state.userSavedData.userStatus != 'online') {
       return
@@ -72,6 +67,7 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
     }
 
   })
+
   socket.on('newInvite', (data) => {
     const inviteData = data as InviteData
     if (inviteData.toUser == store.state.userSavedData.username) {
@@ -87,6 +83,7 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
       store.commit("channelSavedData/setTopChannel", inviteData.channel.name)
     }
   })
+
   socket.on('inviteError', (data) => {
     const errorData = data as ErrorData
     console.log(errorData)
