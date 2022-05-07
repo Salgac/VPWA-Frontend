@@ -131,7 +131,7 @@ export default defineComponent({
             "Revoked: " + commandParts[1]
           );
         } else if (commandParts[0] == "kick") {
-          this.removeChannelUser(commandParts[1], "Kicked: " + commandParts[1]);
+          this.kickChannelUser(commandParts[1], "Kicked: " + commandParts[1]);
         } else {
           this.notify("Unknown command: " + commandParts[0], true);
         }
@@ -202,6 +202,36 @@ export default defineComponent({
         }
       } else {
         this.notify("Revoke command only works in private channels!", true);
+      }
+    },
+
+    kickChannelUser(userName: string, message: string) {
+      //only works in public channel
+      const currentChannel = this.$store.state.channelSavedData.currentChannel;
+      const user = this.$store.state.userSavedData.username;
+
+      if (!currentChannel.isPrivate) {
+        if (userName == user) {
+          this.notify(
+            "Dum Dum give me Gum Gum! You should not kick yourself Dum Dum!",
+            true
+          );
+          return;
+        }
+        if (userName == currentChannel.owner) {
+          this.notify("You can not kick the channel owner!", true);
+          return;
+        }
+
+        //emit to server
+        socket.emit("kickUser", {
+          token: this.$store.state.userSavedData.token,
+          channelName: currentChannel.name,
+          userName: userName,
+        });
+        this.notify(message, false);
+      } else {
+        this.notify("Kick command only works in public channels!", true);
       }
     },
 
