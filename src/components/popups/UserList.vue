@@ -15,7 +15,7 @@
               </q-avatar>
               <q-icon
                 class="row full-height justify-center vertical-middle"
-                name="circle"
+                :name="user.status == 'dnd' ? 'do_not_disturb_on' : 'circle'"
                 :color="
                   user.status == 'online'
                     ? 'green'

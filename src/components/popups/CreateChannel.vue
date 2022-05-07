@@ -71,6 +71,9 @@ export default defineComponent({
         //message
         if (res) this.notify(res, true);
         else this.notify(`Created private channel: ${this.channelName}`, false);
+
+        //reset
+        this.channelName = "";
       }
     },
 
@@ -93,6 +96,9 @@ export default defineComponent({
         //message
         if (res) this.notify(res, true);
         else this.notify(`Joined channel: ${this.channelName}`, false);
+
+        //reset
+        this.channelName = "";
       }
     },
   },
