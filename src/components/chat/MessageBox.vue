@@ -29,7 +29,7 @@ import { defineComponent } from "vue";
 import CommandList from "src/components/chat/CommandList.vue";
 import UserList from "src/components/popups/UserList.vue";
 import ErrorPopup from "src/components/popups/ErrorPopup.vue";
-import { socket } from 'src/boot/ws'
+import { socket } from "src/boot/ws";
 
 export default defineComponent({
   name: "MessageBox",
@@ -37,7 +37,7 @@ export default defineComponent({
   components: {
     CommandList,
     UserList,
-    ErrorPopup
+    ErrorPopup,
   },
 
   data() {
@@ -116,25 +116,22 @@ export default defineComponent({
         if (commandParts[0] == "join") {
           this.createPublic(commandParts[1]);
         } else if (commandParts[0] == "invite") {
-            this.errorBool = false
-            this.commandMessage = ""
-            socket.emit(
-              'invite',
-                {
-                  token: this.$store.state.userSavedData.token,
-                  fromUser: this.$store.state.userSavedData.username,
-                  toUser: commandParts[1],
-                  channel: this.$store.state.channelSavedData.currentChannel
-                }
-              )
-            this.notify("Invited: " + commandParts[1], false);
+          this.errorBool = false;
+          this.commandMessage = "";
+          socket.emit("invite", {
+            token: this.$store.state.userSavedData.token,
+            fromUser: this.$store.state.userSavedData.username,
+            toUser: commandParts[1],
+            channel: this.$store.state.channelSavedData.currentChannel,
+          });
+          this.notify("Invited: " + commandParts[1], false);
         } else if (commandParts[0] == "revoke") {
           this.removeChannelUser(
             commandParts[1],
             "Revoked: " + commandParts[1]
           );
         } else if (commandParts[0] == "kick") {
-          this.removeChannelUser(commandParts[1], "Kicked: " + commandParts[1]);
+          this.kickChannelUser(commandParts[1], "Kicked: " + commandParts[1]);
         } else {
           this.notify("Unknown command: " + commandParts[0], true);
         }
@@ -145,7 +142,7 @@ export default defineComponent({
       }
     },
 
-    createPrivate(channelName: string) {
+    async createPrivate(channelName: string) {
       if (
         this.$store.state.channelSavedData.channels.some(
           (ch) => ch.channelName === channelName
@@ -153,15 +150,21 @@ export default defineComponent({
       ) {
         this.notify("Channel name '" + channelName + "' is taken", true);
       } else {
-        this.$store.dispatch("channelSavedData/createChannel", {
-          name: channelName,
-          isPrivate: true,
-        });
-        this.notify("Created private: " + channelName, false);
+        const res = await this.$store.dispatch(
+          "channelSavedData/createChannel",
+          {
+            name: channelName,
+            isPrivate: true,
+          }
+        );
+
+        //message
+        if (res) this.notify(res, true);
+        else this.notify(`Created private channel: ${channelName}`, false);
       }
     },
 
-    createPublic(channelName: string) {
+    async createPublic(channelName: string) {
       if (
         this.$store.state.channelSavedData.channels.some(
           (ch) => ch.channelName === channelName
@@ -169,17 +172,79 @@ export default defineComponent({
       ) {
         this.notify("Channel name '" + channelName + "' is taken", true);
       } else {
-        this.$store.dispatch("channelSavedData/createChannel", {
-          name: channelName,
-          isPrivate: false,
-        });
-        this.notify("Created public: " + channelName, false);
+        const res = await this.$store.dispatch(
+          "channelSavedData/createChannel",
+          {
+            name: channelName,
+            isPrivate: false,
+          }
+        );
+
+        //message
+        if (res) this.notify(res, true);
+        else this.notify(`Joined channel: ${channelName}`, false);
       }
     },
 
-    removeChannelUser(channelName: string, message: string) {
-      this.$store.dispatch("channelSavedData/deleteChannel", channelName);
-      this.notify(message, false);
+    removeChannelUser(userName: string, message: string) {
+      //only owner can revoke in a private channel
+      const currentChannel = this.$store.state.channelSavedData.currentChannel;
+      const user = this.$store.state.userSavedData.username;
+
+      if (currentChannel.isPrivate) {
+        if (currentChannel.owner == user) {
+          if (userName == user) {
+            this.notify(
+              "Uh oh! Revoking yourself would create a wormhole! To delete this channel use '/quit' command.",
+              true
+            );
+            return;
+          }
+
+          //emit to server
+          socket.emit("revokeUser", {
+            token: this.$store.state.userSavedData.token,
+            channelName: currentChannel.name,
+            userName: userName,
+          });
+          this.notify(message, false);
+        } else {
+          //
+          this.notify("Only channel owner can revoke users!", true);
+        }
+      } else {
+        this.notify("Revoke command only works in private channels!", true);
+      }
+    },
+
+    kickChannelUser(userName: string, message: string) {
+      //only works in public channel
+      const currentChannel = this.$store.state.channelSavedData.currentChannel;
+      const user = this.$store.state.userSavedData.username;
+
+      if (!currentChannel.isPrivate) {
+        if (userName == user) {
+          this.notify(
+            "Dum Dum give me Gum Gum! You should not kick yourself Dum Dum!",
+            true
+          );
+          return;
+        }
+        if (userName == currentChannel.owner) {
+          this.notify("You can not kick the channel owner!", true);
+          return;
+        }
+
+        //emit to server
+        socket.emit("kickUser", {
+          token: this.$store.state.userSavedData.token,
+          channelName: currentChannel.name,
+          userName: userName,
+        });
+        this.notify(message, false);
+      } else {
+        this.notify("Kick command only works in public channels!", true);
+      }
     },
 
     deleteChannel() {
@@ -233,21 +298,21 @@ export default defineComponent({
 
     commandMessage: {
       get() {
-        return this.$store.state.commandSavedData.commandMessage
+        return this.$store.state.commandSavedData.commandMessage;
       },
       set(val: string) {
         this.$store.commit("commandSavedData/setMessage", val);
-      }
+      },
     },
 
     errorBool: {
       get() {
-        return this.$store.state.commandSavedData.errorBool
+        return this.$store.state.commandSavedData.errorBool;
       },
       set(val: boolean) {
         this.$store.commit("commandSavedData/setErrorBool", val);
-      }
-    }
+      },
+    },
   },
 
   watch: {

@@ -85,17 +85,25 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
   });
 
   socket.on('inviteError', (data) => {
-    const errorData = data as ErrorData
-    console.log(errorData)
+    const errorData = data as ErrorData;
     if (errorData.user == store.state.userSavedData.username) {
-      store.commit("commandSavedData/setMessage", errorData.message)
-      store.commit("commandSavedData/setErrorBool", true)
+      store.commit("commandSavedData/setMessage", errorData.message);
     }
   });
 
   socket.on('deleteChannel', (data) => {
+    const userName = data.userName;
     const channelName = data.channelName;
-    store.commit("channelSavedData/removeChannel", channelName);
+
+    if (userName != undefined) {
+      //message is emited only to user with username
+      if (userName == store.state.userSavedData.username) {
+        store.commit("channelSavedData/removeChannel", channelName);
+      }
+    }
+    else {
+      store.commit("channelSavedData/removeChannel", channelName);
+    }
   })
 })
 

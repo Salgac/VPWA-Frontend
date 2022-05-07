@@ -44,46 +44,56 @@ export default defineComponent({
   },
 
   methods: {
-    notifyDuplicate() {
+    notify(message: string, err: boolean) {
       this.$q.notify({
-          color: "red-5",
-          textColor: "white",
-          icon: "warning",
-          message: "Channel name '" + this.channelName + "' is taken"
+        color: err ? "red-5" : "green-4",
+        textColor: "white",
+        icon: err ? "warning" : "cloud_done",
+        message: message,
       });
     },
-    createPrivate() {
+    async createPrivate() {
       if (
         this.$store.state.channelSavedData.channels.some(
-          ch => ch.channelName === this.channelName
+          (ch) => ch.channelName === this.channelName
         )
       ) {
-        this.notifyDuplicate();
+        this.notify("Channel name '" + this.channelName + "' is taken", true);
+      } else {
+        const res = await this.$store.dispatch(
+          "channelSavedData/createChannel",
+          {
+            name: this.channelName,
+            isPrivate: true,
+          }
+        );
+
+        //message
+        if (res) this.notify(res, true);
+        else this.notify(`Created private channel: ${this.channelName}`, false);
       }
-      else {
-        this.$store.dispatch("channelSavedData/createChannel", {
-          name: this.channelName,
-          isPrivate: true,
-        });
-      }
-      this.channelName = "";
     },
 
-    createPublic() {
+    async createPublic() {
       if (
         this.$store.state.channelSavedData.channels.some(
-          ch => ch.channelName === this.channelName
+          (ch) => ch.channelName === this.channelName
         )
       ) {
-        this.notifyDuplicate();
+        this.notify("Channel name '" + this.channelName + "' is taken", true);
+      } else {
+        const res = await this.$store.dispatch(
+          "channelSavedData/createChannel",
+          {
+            name: this.channelName,
+            isPrivate: false,
+          }
+        );
+
+        //message
+        if (res) this.notify(res, true);
+        else this.notify(`Joined channel: ${this.channelName}`, false);
       }
-      else {
-        this.$store.dispatch("channelSavedData/createChannel", {
-          name: this.channelName,
-          isPrivate: false,
-        });
-      }
-      this.channelName = "";
     },
   },
 
