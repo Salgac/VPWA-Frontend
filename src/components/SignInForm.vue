@@ -8,7 +8,7 @@
   >
     <q-card>
       <q-form class="absolute-center">
-        <img src="../../public/logo/logo_transparent.png"  style="min-width:250px;max-width:550px;width:25vw"/>
+        <img v-if="!openAccountCreation" src="../../public/logo/logo_transparent.png"  style="min-width:250px;max-width:550px;width:25vw"/>
         <div v-if="openAccountCreation">
           <q-item>
             <q-btn
@@ -114,7 +114,7 @@
             v-model="inputPassword"
             hint="Enter your password"
             :error="!isValidPassword"
-            error-message="Password required"
+            error-message="Password is required"
             no-error-icon
           >
             <template v-slot:prepend>
