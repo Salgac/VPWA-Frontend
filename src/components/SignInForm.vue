@@ -116,6 +116,7 @@
             :error="!isValidPassword"
             error-message="Password is required"
             no-error-icon
+            v-on:keyup.enter="onEnter"
           >
             <template v-slot:prepend>
               <q-icon name="password" />
@@ -304,6 +305,10 @@ export default defineComponent({
   },
 
   methods: {
+    onEnter(){
+      const launch = this.openAccountCreation ? this.register : this.signIn;
+      launch();
+    },
     async signIn() {
       //toggle spinner
       this.$store.commit('commandSavedData/setLoading', true);
