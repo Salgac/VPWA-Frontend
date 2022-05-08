@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Poormans Discord </q-toolbar-title>
+        <q-toolbar-title style='font-family:"Orbitron"'> Poormans Discord </q-toolbar-title>
 
         <div>Viktor Modroczký & Dominik Šalgovič</div>
       </q-toolbar>

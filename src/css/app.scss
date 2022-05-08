@@ -1,0 +1,9 @@
+/* app global css */
+$font-dir: "/fonts/";
+
+@font-face {
+	font-family: "Orbitron";
+	font-style: normal;
+	font-weight: normal;
+	src: url("#{$font-dir}Orbitron-Medium.ttf") format("truetype");
+}
