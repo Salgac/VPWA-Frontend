@@ -2,12 +2,14 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { AppVisibility } from "quasar";
 
 export default defineComponent({
   name: "NotificationPopup",
   data(){
     return {
       loading: null as any,
+      audio: new Audio("https://www.dropbox.com/s/qf7a9y1r82pfhlq/notification.mp3?dl=1"),
     }
   },  
   methods: {
@@ -23,6 +25,12 @@ export default defineComponent({
       });
     },
     messageNotification(message:string, user:string, channel:string){
+      //notify if visible, else play sound
+      if(!AppVisibility.appVisible){
+        this.audio.play();
+        return;
+      }
+
       const text = message.length > 30 ? message.substring(0,30) + "..." : message;
       this.$q.notify({
         color: "white",

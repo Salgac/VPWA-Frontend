@@ -33,10 +33,10 @@ Akékoľvek iné vylepšenia sú vítané a potešia ma :-)
     * správa je zvýraznená danému používateľovi v zozname správ
 7. používateľ si môže pozrieť kompletnú históriu správ
     * efektívny inifinite scroll
-8. ~~používateľ je informovaný o každej novej správe prostredníctvom notifikácie~~
-    * ~~notifikácia sa vystavuje iba ak aplikácia nie je v stave "visible" (pozrite quasar docu App Visibility)~~
-    * ~~notifikácia obsahuje časť zo správy a odosielateľa~~
-    * ~~používateľ si môže nastaviť, aby mu chodili notifikácie iba pre správy, ktoré sú mu adresované~~
+8. používateľ je informovaný o každej novej správe prostredníctvom notifikácie~~
+    * notifikácia sa vystavuje iba ak aplikácia nie je v stave "visible" (pozrite quasar docu App Visibility)
+    * notifikácia obsahuje časť zo správy a odosielateľa
+    * používateľ si môže nastaviť, aby mu chodili notifikácie iba pre správy, ktoré sú mu adresované
 9. používateľ si môže nastaviť stav (online, DND, offline)
     * stav sa zobrazuje používateľom
     * ak je nastavený DND stav, neprichádzajú notifikácie
@@ -63,9 +63,9 @@ After refreshing the page, the login information of a user persists, channel dat
 
 As of 8.5.2022, the project is done. The layout of the application was slightly tweaked to better handle data from api server. All dumy data was replaced with api calls and socket communication. All data are persisted in a PostrgeSQL database.
 
-The app is usable according to all the specification in the assignment excpet points 8 and 11.
+The app is usable according to all the specification in the assignment excpet point 11.
 
-Since the first submission we have decided to implement use case number 6 as well. Messages that are addressed to the user are now highlited with purple color, as well as the tag itself is highlited.
+Since the first submission we have decided to implement use case number 6 and 8 as well. Messages that are addressed to the user are now highlited with purple color, as well as the tag itself is highlited. User receives a notification when a mesage is posted into one of users channels, that the user is not currently in. A notification sound also plays when the app is not in focus/visible, according to quasar app visibility.
 
 ## Data model
 
