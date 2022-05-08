@@ -1,7 +1,7 @@
 <template>
   <div>
     <UserList />
-    <ErrorPopup />
+    <NotificationPopup />
     <CommandList v-if="openCommandList" />
     <q-toolbar class="bg-grey-2 text-black row">
       <q-input
@@ -28,7 +28,7 @@
 import { defineComponent } from "vue";
 import CommandList from "src/components/chat/CommandList.vue";
 import UserList from "src/components/popups/UserList.vue";
-import ErrorPopup from "src/components/popups/ErrorPopup.vue";
+import NotificationPopup from "src/components/popups/NotificationPopup.vue";
 import { socket } from "src/boot/ws";
 import { roll, magic } from "src/library/ee";
 
@@ -38,7 +38,7 @@ export default defineComponent({
   components: {
     CommandList,
     UserList,
-    ErrorPopup,
+    NotificationPopup,
   },
 
   data() {

@@ -47,7 +47,7 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
   }
 
   socket.on('newMessage', (data) => {
-    if (store.state.userSavedData.userStatus != 'online') {
+    if (store.state.userSavedData.userStatus == 'offline') {
       return
     }
     const messageData = data as MessageData
@@ -66,6 +66,9 @@ export default boot(async ({ store }/* { app, router, ... } */) => {
       store.commit("channelSavedData/setScroll", "notify");
     }
 
+    //notification
+    if (store.state.userSavedData.userStatus != 'dnd' && store.state.channelSavedData.currentChannel.name != messageData.channelName)
+      store.commit("commandSavedData/setNotification", newMessage);
   })
 
   socket.on('newInvite', (data) => {
