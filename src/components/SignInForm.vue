@@ -8,7 +8,7 @@
   >
     <q-card>
       <q-form class="absolute-center">
-        <img src="../../public/logo/logo_transparent.png"  style="width:350px;"/>
+        <img src="../../public/logo/logo_transparent.png"  style="min-width:250px;max-width:550px;width:25vw"/>
         <div v-if="openAccountCreation">
           <q-item>
             <q-btn
@@ -169,7 +169,7 @@
         <div v-if="openAccountCreation">
           <q-btn
             class="centered"
-            style="width: 75%"
+            style="width: 75%; margin-bottom: 30px;"
             label="Register"
             rounded
             @click="

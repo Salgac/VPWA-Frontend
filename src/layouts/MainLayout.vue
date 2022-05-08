@@ -11,9 +11,13 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title style='font-family:"Orbitron"'> Poormans Discord </q-toolbar-title>
+        <q-toolbar-title class="appname"> Poormans Discord </q-toolbar-title>
 
-        <div>Viktor Modroczký & Dominik Šalgovič</div>
+        <p class="by">By:</p>
+        <div class="names">
+          <p>Viktor Modroczký</p>
+          <p>Dominik Šalgovič</p>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -81,3 +85,39 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+
+.appname{
+  text-overflow: none;
+  white-space: nowrap;
+  overflow:visible;
+
+  font-family:"Orbitron";
+  letter-spacing: 0.03em;
+}
+
+.by{
+  margin:auto; 
+  padding-right: 1em;
+
+  @media screen and (max-width: 440px){
+    display:none;
+  }
+}
+
+.names{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow:hidden;
+
+  @media screen and (max-width: 420px){
+    display:none;
+  }
+
+  p{
+    padding: 0;
+    margin:0;
+  }
+}
+</style>
