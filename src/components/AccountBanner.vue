@@ -2,7 +2,7 @@
   <div>
     <q-img
       class="absolute-top"
-      src="https://cdn.quasar.dev/img/material.png"
+      src="../../public/logo/banner.png"
       style="height: 150px"
     >
       <div class="absolute-bottom bg-transparent" style="width: 100%;">
