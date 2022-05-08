@@ -5,6 +5,7 @@
     </q-item-section>
     <q-item-section>
       <q-btn-toggle
+        v-if="!$q.platform.is.mobile"
         v-model="userStatus"
         :options="
           statusOptions.map((op) => ({ value: op.name, slot: op.name }))
@@ -20,6 +21,26 @@
           <q-icon right :name="statusOption.icon" :color="statusOption.color" />
         </template>
       </q-btn-toggle>
+      <q-btn-dropdown
+        v-else
+        label="Set Status"
+        dropdown-icon="expand_more"
+      >
+        <q-list>
+          <q-item
+            clickable
+            v-close-popup
+            v-for="option in statusOptions"
+            :key="option.name"
+            @click="userStatus = option.name"
+            :active="option.name == userStatus"
+          >
+            <q-item-section>
+              <q-item-label>{{ option.label }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown>
     </q-item-section>
   </q-item>
 </template>
