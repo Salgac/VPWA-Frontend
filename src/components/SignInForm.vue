@@ -21,7 +21,7 @@
             />
             <q-space></q-space>
             <q-btn
-              v-if="!isValidPassword"
+              v-if="!isValidPassword && !$q.platform.is.mobile"
               class="q-mb-md"
               icon="help"
               color="red-5"
@@ -128,7 +128,7 @@
               />
             </template>
             <q-tooltip
-              v-if="openAccountCreation"
+              v-if="openAccountCreation && !$q.platform.is.mobile"
               v-model="showHint"
               anchor="top middle"
               self="bottom middle"
