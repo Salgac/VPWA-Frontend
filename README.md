@@ -1,8 +1,12 @@
 # Poormans Discord (vpwa-frontend)
 
+![Poormans Discord logo](public/logo/logo.png)
+
 A Discord clone written using Quasar for VPWA (Development of Progressive Web Applications) course. The app implements various use cases according to the project assignment without use cases 8 and 11 (no WTECH).
 
 Please read [submission notes](#Notes) before testing.
+
+The app is [deployed on a Linode server](http://139.162.130.177:4000/) for you to try. 
 
 ## Assignment
 
@@ -93,8 +97,6 @@ For REST communication with api server we created our own `HttpRequest` class fo
 The app also uses a quasar extension `quenv` to load `.quasar.env.json` file in the root of the project containing custom enviroment variables. We use it to specify the `API_HOST` variable containing the URL of our API server. This variable is then accessed from inside the `HttpRequest` class, as well as socket inicialization file.
 For the app to know which environment type to use, a `QENV` environment (system) variable needs to be set - `development`, `production` or `test`.
 
-Messages support HTML syntax so we can highlight a `@username` tag when showing messages.
-
 Example of `.quasar.env.json`:
 
 ```json
@@ -120,6 +122,8 @@ Example of `.quasar.env.json`:
 
 For socket communication we decided to use the `socket.io` library, as the use is reccommended for use with quasar application.
 
+Messages support HTML syntax so we can highlight a `@username` tag when showing messages. This also allows users to post images and further style the message content.
+
 ## Architecture
 
 **Quasar <-> AdonisJS <-> PostgreSQL**
@@ -135,7 +139,13 @@ For frontend-backend communication we use `socket.io` for real-time communicatio
 
 ## Screenshots
 
-**TODO**
+<img src="screenshots/screen1.jpg" width="300"/>
+<img src="screenshots/screen2.jpg" width="300"/>
+<img src="screenshots/screen3.jpg" width="300"/>
+<img src="screenshots/screen4.jpg" width="300"/>
+<img src="screenshots/screen5.jpg" width="300"/>
+<img src="screenshots/screen6.jpg" width="300"/>
+<img src="screenshots/screen7.jpg" width="300"/>
 
 ## Setup
 
@@ -148,11 +158,11 @@ npm install
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 
 ```bash
-quasar dev
+QUENV=development quasar dev
 ```
 
 ### Build the app for production
 
 ```bash
-quasar build
+QUENV=production quasar build
 ```
