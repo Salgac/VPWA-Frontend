@@ -90,7 +90,7 @@ User status is persisted in the database, as well as local storage, so that othe
 
 For REST communication with api server we created our own `HttpRequest` class for fetching data, that is a wrapper above the Fetch API. Loading this class allows us to easily access the api endpoints from around the app directory.
 
-The app also uses a quasar extension `quenv` to load `.quasar.env.json` file containing custom enviroment variables. We use it to specify the `API_HOST` variable containing the URL of our API server. This variable is then accessed from inside the `HttpRequest` class, as well as socket inicialization file.
+The app also uses a quasar extension `quenv` to load `.quasar.env.json` file in the root of the project containing custom enviroment variables. We use it to specify the `API_HOST` variable containing the URL of our API server. This variable is then accessed from inside the `HttpRequest` class, as well as socket inicialization file.
 For the app to know which environment type to use, a `QENV` environment (system) variable needs to be set - `development`, `production` or `test`.
 
 Messages support HTML syntax so we can highlight a `@username` tag when showing messages.
