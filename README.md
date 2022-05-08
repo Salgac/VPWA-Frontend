@@ -92,6 +92,19 @@ The app also uses a quasar extension `quenv` to load `.env` file containing cust
 
 For socket communication we decided to use the `socket.io` library, as the use is reccommended for use with quasar application.
 
+## Architecture
+
+**Quasar <-> AdonisJS <-> PostgreSQL**
+
+For frontend-backend communication we use `socket.io` for real-time communication and REST API endpoints for request-response data exchange.
+
+<details>
+<summary><b>Show architecture diagram</b></summary>
+
+![db_schema](architecture.svg)
+
+</details>
+
 ## Screenshots
 
 **TODO**
