@@ -47,16 +47,22 @@ export default defineComponent({
     };
   },
 
+  watch: {
+    "$store.state.userSavedData.userStatus": function (next, prev) {
+      //update missing messages with change from offline\
+       if (prev == 'offline') {
+          this.$store.dispatch("channelSavedData/loadChannels");
+        }
+    },
+  },
+
   computed: {
     userStatus: {
-      get() {
+      get():string {
         return this.$store.state.userSavedData.userStatus;
       },
       set(val: string) {
         this.$store.dispatch("userSavedData/saveStatus", val);
-        if (val == 'online') {
-          this.$store.dispatch("channelSavedData/loadChannels");
-        }
       },
     },
   },
