@@ -304,20 +304,21 @@ export default defineComponent({
 
   methods: {
     async signIn() {
+      //toggle spinner
+      this.$store.commit('commandSavedData/setLoading', true);
+
       //send api call
       const response = await HttpRequest.post("login", {
         username: this.inputUsername,
         password: this.inputPassword,
       });
 
+      //toggle spinner
+      this.$store.commit('commandSavedData/setLoading');
+
       //test for errors
       if (response.hasOwnProperty("errors")) {
-        switch (response.errors[0].message) {
-          case "E_INVALID_AUTH_UID: User not found":
-          case "E_INVALID_AUTH_PASSWORD: Password mis-match":
-            //TODO maybe change this into component
-            alert("Invalid username or password!");
-        }
+        this.$store.commit('commandSavedData/setMessage', "Invalid username or password!");
       } else {
         this.setLogin(response);
         setTimeout(() => { this.clearFields() }, 2000);
@@ -325,6 +326,9 @@ export default defineComponent({
     },
 
     async register() {
+      //toggle spinner
+      this.$store.commit('commandSavedData/setLoading');
+
       //send api call
       const response = await HttpRequest.post("register", {
         username: this.inputUsername,
@@ -333,6 +337,9 @@ export default defineComponent({
         email: this.inputEmail,
         password: this.inputPassword,
       });
+
+      //toggle spinner
+      this.$store.commit('commandSavedData/setLoading', true);
 
       //test for errors
       if (response.hasOwnProperty("error")) {

@@ -2,7 +2,16 @@ export interface CommandStateInterface {
   currentCommand: string;
   commands: { commandName: string }[];
   commandMessage: string;
-  errorBool: boolean
+  errorBool: boolean;
+
+  notification: {
+    author: string,
+    time: string,
+    text: string,
+    channelName: string,
+  } | null;
+
+  loading: boolean;
 }
 
 function state(): CommandStateInterface {
@@ -18,7 +27,10 @@ function state(): CommandStateInterface {
       { commandName: "list" }
     ],
     commandMessage: "",
-    errorBool: false
+    errorBool: false,
+
+    notification: null,
+    loading: false,
   };
 }
 

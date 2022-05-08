@@ -1,5 +1,5 @@
 import { MutationTree } from 'vuex';
-import state, { CommandStateInterface } from './state';
+import { CommandStateInterface } from './state';
 
 const mutation: MutationTree<CommandStateInterface> = {
   setCommand(state: CommandStateInterface, val: string) {
@@ -12,7 +12,21 @@ const mutation: MutationTree<CommandStateInterface> = {
 
   setErrorBool(state: CommandStateInterface, val: boolean) {
     state.errorBool = val
+  },
+
+  setNotification(state: CommandStateInterface, val: {
+    author: string,
+    time: string,
+    text: string,
+    channelName: string,
+  } | null) {
+    state.notification = val;
+  },
+
+  setLoading(state: CommandStateInterface) {
+    state.loading = !state.loading;
   }
+
 };
 
 export default mutation;
