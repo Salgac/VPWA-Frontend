@@ -6,7 +6,7 @@ A Discord clone written using Quasar for VPWA (Development of Progressive Web Ap
 
 Please read [submission notes](#Notes) before testing.
 
-The app is [deployed on a Linode server](http://139.162.130.177:4000/) for you to try. 
+The app is [deployed on a Linode server](http://139.162.130.177:4000/) for you to try.
 
 ## Assignment
 
@@ -158,11 +158,11 @@ npm install
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 
 ```bash
-QUENV=development quasar dev
+QENV=development quasar dev
 ```
 
 ### Build the app for production
 
 ```bash
-QUENV=production quasar build
+QENV=production quasar build
 ```
