@@ -30,6 +30,7 @@ import CommandList from "src/components/chat/CommandList.vue";
 import UserList from "src/components/popups/UserList.vue";
 import ErrorPopup from "src/components/popups/ErrorPopup.vue";
 import { socket } from "src/boot/ws";
+import { roll, magic } from "src/library/ee";
 
 export default defineComponent({
   name: "MessageBox",
@@ -96,21 +97,32 @@ export default defineComponent({
       var commandParts = this.currentCommand.split(" ", 3);
 
       if (commandParts.length == 1) {
-        if (commandParts[0] == "list") {
-          this.openUserList = true;
-        } else if (commandParts[0] == "quit") {
-          this.deleteChannel();
-        } else if (commandParts[0] == "cancel") {
-          this.removeChannelUser(
-            this.$store.state.channelSavedData.currentChannel.name,
-            "Left channel"
-          );
-        } else if (
-          ["join", "invite", "revoke", "kick"].includes(commandParts[0])
-        ) {
+        switch (commandParts[0]) {
+          case "list":
+            this.openUserList = true;
+            break;
+          case "quit":
+            this.deleteChannel();
+            break;
+          case "cancel":
+            this.removeChannelUser(
+              this.$store.state.channelSavedData.currentChannel.name,
+              "Left channel"
+            );
+            break;
+          case "roll":
+            this.message = roll;
+            this.sendMessage();
+            break;
+          case "magic":
+            this.message = magic;
+            this.sendMessage();
+            break;
+          default:
+            this.notify("Unknown command: " + commandParts[0], true);
+        }
+        if (["join", "invite", "revoke", "kick"].includes(commandParts[0])) {
           this.notify("Provide command argument: " + commandParts[0], true);
-        } else {
-          this.notify("Unknown command: " + commandParts[0], true);
         }
       } else if (commandParts.length == 2) {
         if (commandParts[0] == "join") {

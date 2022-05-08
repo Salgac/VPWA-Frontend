@@ -1,0 +1,2 @@
+export const roll = '<iframe width="560" height="315" src="https://www.youtube.com/embed/_3wkyerSBpw?autoplay=1&mute=0" title="roll" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+export const magic = '<img src="https://c.tenor.com/md3foOULKGIAAAAC/magic.gif" alt="magic" title="" style="">';
