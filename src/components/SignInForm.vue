@@ -7,7 +7,7 @@
     maximized
   >
     <q-card>
-      <q-form class="absolute-center">
+      <q-form class="absolute-center" style="width:max-content">
         <img v-if="!openAccountCreation" src="../../public/logo/logo_transparent.png"  style="min-width:250px;max-width:550px;width:25vw"/>
         <div v-if="openAccountCreation">
           <q-item>
