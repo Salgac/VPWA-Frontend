@@ -8,6 +8,7 @@
   >
     <q-card>
       <q-form class="absolute-center">
+        <img src="../../public/logo/logo_transparent.png"  style="width:350px;"/>
         <div v-if="openAccountCreation">
           <q-item>
             <q-btn
