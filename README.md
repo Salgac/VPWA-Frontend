@@ -86,11 +86,11 @@ During the development of this app we came with several design decisions.
 
 The user login is remembered in a browser, so that the user doesnt have to login everytime the app is accessed. This is done using a `vuex-persistedstate` library, that is used as a vuex extension on userData store.
 
-User status is persisted in the database, as well as local storage, so that other user of the channel can see it in user list accesible with `/list` command. Persisting this value in loacl storage allows the app to select last status when user accesses the app after closing the browser.
+User status is persisted in the database, as well as local storage, so that other user of the channel can see it in user list accesible with `/list` command. Persisting this value in local storage allows the app to select last status when user accesses the app after closing the browser.
 
 For REST communication with api server we created our own `HttpRequest` class for fetching data, that is a wrapper above the Fetch API. Loading this class allows us to easily access the api endpoints from around the app directory.
 
-The app also uses a quasar extension `quenv` to load `.quasar.env.json` file containing custom enviroment variables. We use it to specify the `API_HOST` variable containing the url of our API server. This variable is then accessed from inside the `HttpRequest` class, as well as socket inicialization file.
+The app also uses a quasar extension `quenv` to load `.quasar.env.json` file containing custom enviroment variables. We use it to specify the `API_HOST` variable containing the URL of our API server. This variable is then accessed from inside the `HttpRequest` class, as well as socket inicialization file.
 
 Messages support HTML syntax so we can highlight a `@username` tag when showing messages.
 
