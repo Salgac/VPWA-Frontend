@@ -130,8 +130,8 @@
             <q-tooltip
               v-if="openAccountCreation"
               v-model="showHint"
-              anchor="center right"
-              self="center left"
+              anchor="top middle"
+              self="bottom middle"
               :offset="[10, 10]"
             >
               Min. 8 characters<br />
