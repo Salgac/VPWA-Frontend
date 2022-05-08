@@ -61,6 +61,8 @@ After refreshing the page, the login information of a user persists, channel dat
 
 ### Final submission
 
+The app is deployed on this [link](http://139.162.130.177:4000/#/).
+
 As of 8.5.2022, the project is done. The layout of the application was slightly tweaked to better handle data from api server. All dumy data was replaced with api calls and socket communication. All data are persisted in a PostrgeSQL database.
 
 The app is usable according to all the specification in the assignment excpet point 11.
@@ -88,7 +90,30 @@ User status is persisted in the database, as well as local storage, so that othe
 
 For REST communication with api server we created our own `HttpRequest` class for fetching data, that is a wrapper above the Fetch API. Loading this class allows us to easily access the api endpoints from around the app directory.
 
-The app also uses a quasar extension `quenv` to load `.env` file containing custom enviroment variables. We use it to specify the `API_HOST` variable containing the url of our api server. This variable is then accessed from inside the `HttpRequest` class, as well as socket inicialization file.
+The app also uses a quasar extension `quenv` to load `.quasar.env.json` file containing custom enviroment variables. We use it to specify the `API_HOST` variable containing the url of our API server. This variable is then accessed from inside the `HttpRequest` class, as well as socket inicialization file.
+
+Messages support HTML syntax so we can highlight a `@username` tag when showing messages.
+
+Example of `.quasar.env.json`:
+
+```json
+{
+  "development": {
+    "ENV_TYPE": "Running Development",
+    "ENV_DEV": "Development",
+    "API_HOST": "http://localhost:3333"
+  },
+  "production": {
+    "ENV_TYPE": "Running Production",
+    "ENV_PROD": "Production"
+  },
+  "test": {
+    "ENV_TYPE": "Running Test",
+    "ENV_Test": "Test"
+  }
+}
+
+```
 
 For socket communication we decided to use the `socket.io` library, as the use is reccommended for use with quasar application.
 
