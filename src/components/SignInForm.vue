@@ -21,7 +21,7 @@
             />
             <q-space></q-space>
             <q-btn
-              v-if="!isValidPassword && !$q.platform.is.mobile"
+              v-if="!isValidPassword"
               class="q-mb-md"
               icon="help"
               color="red-5"
