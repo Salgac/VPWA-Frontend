@@ -4,6 +4,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  name: "NotificationPopup",
   data(){
     return {
       loading: null as any,
@@ -57,9 +58,9 @@ export default defineComponent({
         this.$store.commit("commandSavedData/setMessage", "");
       }
     },
-    "$store.state.commandSavedData.notification": function (val) {
+    "$store.state.commandSavedData.notification": function (val: any) {
       //display last notification
-      if (val != null) {
+      if ( val != null && this.$store.state.userSavedData.signedIn && !this.$store.state.commandSavedData.loading) {
         this.messageNotification(val.text, val.author, val.channelName );
         this.$store.commit("commandSavedData/setNotification", null);
       }
