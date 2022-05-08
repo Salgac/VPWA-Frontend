@@ -4,6 +4,11 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  data(){
+    return {
+      loading: null as any,
+    }
+  },  
   methods: {
     getPFP(author: string) {
       return `https://avatars.dicebear.com/api/bottts/${author}.svg`;
@@ -35,6 +40,14 @@ export default defineComponent({
         ]
       });
     },
+    loadingNotification(){
+      this.loading = this.$q.notify({
+        spinner: true,
+        message: 'Loading...',
+        position: 'bottom',
+        timeout: 0,
+      });
+    }
   },
   watch: {
     "$store.state.commandSavedData.commandMessage": function (val) {
@@ -49,6 +62,15 @@ export default defineComponent({
       if (val != null) {
         this.messageNotification(val.text, val.author, val.channelName );
         this.$store.commit("commandSavedData/setNotification", null);
+      }
+    },
+    "$store.state.commandSavedData.loading": function (val) {
+      //display spinner
+      if (val == true) {
+        this.loadingNotification();
+      } else{
+        this.loading();
+        this.loading = null;
       }
     },
   },

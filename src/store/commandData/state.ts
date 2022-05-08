@@ -10,6 +10,8 @@ export interface CommandStateInterface {
     text: string,
     channelName: string,
   } | null;
+
+  loading: boolean;
 }
 
 function state(): CommandStateInterface {
@@ -28,6 +30,7 @@ function state(): CommandStateInterface {
     errorBool: false,
 
     notification: null,
+    loading: false,
   };
 }
 

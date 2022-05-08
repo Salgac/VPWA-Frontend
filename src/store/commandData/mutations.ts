@@ -23,6 +23,10 @@ const mutation: MutationTree<CommandStateInterface> = {
     state.notification = val;
   },
 
+  setLoading(state: CommandStateInterface) {
+    state.loading = !state.loading;
+  }
+
 };
 
 export default mutation;

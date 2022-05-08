@@ -6,6 +6,9 @@ import HttpRequest from "src/services/request";
 
 const actions: ActionTree<ChannelStateInterface, StateInterface> = {
   async loadChannels({ commit, state }) {
+    //toggle spinner
+    commit('commandSavedData/setLoading', null, { root: true });
+
     //load from server
     const response = await HttpRequest.get(
       "channels",
@@ -18,6 +21,9 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
     if (channels.length != 0 && state.currentChannel.name == "") {
       commit('setCurrentChannel', channels[0].channelName)
     }
+
+    //toggle spinner
+    commit('commandSavedData/setLoading', null, { root: true });
   },
 
   async createChannel({ commit }, data) {
@@ -64,6 +70,10 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
       return;
     }
 
+    //toggle spinner
+    commit('commandSavedData/setLoading', null, { root: true });
+
+    //load
     const lastId = state.channels.find(ch => ch.channelName == currentChannelName)!.messages[0].id;
     const payload = lastId == Infinity ? {
       channelName: currentChannelName,
@@ -81,6 +91,9 @@ const actions: ActionTree<ChannelStateInterface, StateInterface> = {
 
     //insert into channel messages
     commit('addOldMessages', response);
+
+    //toggle spinner
+    commit('commandSavedData/setLoading', null, { root: true });
   }
 };
 
