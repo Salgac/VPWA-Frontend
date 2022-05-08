@@ -6,6 +6,10 @@
       </q-card-section>
       <q-card-section class="q-pa-lg">
         <q-item>
+          <q-item-section> Name and surname: </q-item-section>
+          <q-item-section> {{ user.name + ' ' + user.surname }}</q-item-section>
+        </q-item>
+        <q-item>
           <q-item-section> Username: </q-item-section>
           <q-item-section> {{ user.username }}</q-item-section>
         </q-item>

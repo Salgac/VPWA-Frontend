@@ -51,6 +51,24 @@
         <div v-if="openAccountCreation">
           <q-input
             class="q-mb-md"
+            name="Surname"
+            rounded
+            standout
+            label="Surname"
+            hint="Enter your surname"
+            :error="!isValidSurname"
+            error-message="Surname is required"
+            v-model="inputSurname"
+            no-error-icon
+          >
+            <template v-slot:prepend>
+              <q-icon name="face" />
+            </template>
+          </q-input>
+        </div>
+        <div v-if="openAccountCreation">
+          <q-input
+            class="q-mb-md"
             name="E-mail"
             rounded
             standout
@@ -131,7 +149,6 @@
             rounded
             @click="
               signIn();
-              clearFields();
             "
             :disable="!isValidPassword || !isValidUsername"
           />
@@ -156,7 +173,6 @@
             rounded
             @click="
               register();
-              clearFields();
             "
             :disable="
               !isValidPassword ||
@@ -183,6 +199,7 @@ export default defineComponent({
   data() {
     return {
       inputName: "",
+      inputSurname: "",
       inputEmail: "",
       inputUsername: "",
       inputPassword: "",
@@ -211,6 +228,10 @@ export default defineComponent({
 
     isValidName(): boolean {
       return this.inputName.length > 0;
+    },
+
+    isValidSurname(): boolean {
+      return this.inputSurname.length > 0;
     },
 
     isValidEmail(): boolean {
@@ -243,6 +264,24 @@ export default defineComponent({
       },
       set(val: string) {
         this.$store.commit("userSavedData/setUsername", val);
+      },
+    },
+
+    name: {
+      get() {
+        return this.$store.state.userSavedData.name;
+      },
+      set(val: string) {
+        this.$store.commit("userSavedData/setName", val);
+      },
+    },
+
+    surname: {
+      get() {
+        return this.$store.state.userSavedData.surname;
+      },
+      set(val: string) {
+        this.$store.commit("userSavedData/setSurname", val);
       },
     },
 
@@ -282,6 +321,7 @@ export default defineComponent({
       } else {
         this.setLogin(response);
       }
+      setTimeout(() => { this.clearFields() }, 2000);
     },
 
     async register() {
@@ -289,24 +329,28 @@ export default defineComponent({
       const response = await HttpRequest.post("register", {
         username: this.inputUsername,
         name: this.inputName,
-        surname: "", //?
+        surname: this.inputSurname,
         email: this.inputEmail,
         password: this.inputPassword,
       });
 
       //test for errors
-      if (response.hasOwnProperty("errors")) {
+      if (response.hasOwnProperty("error")) {
         //TODO
+        alert("User with this e-mail or username exists already")
       } else {
         this.openAccountCreation = !this.openAccountCreation;
         this.setLogin(response);
       }
+      setTimeout(() => { this.clearFields() }, 2000);
     },
 
     setLogin(response: any) {
       this.signedIn = !this.signedIn;
       this.userStatus = "online";
       this.username = response.user.username;
+      this.name = response.user.name;
+      this.surname = response.user.surname;
       this.email = response.user.email;
       this.token = response.token.token;
 
@@ -327,6 +371,7 @@ export default defineComponent({
 
     clearFields() {
       this.inputName = "";
+      this.inputSurname = "";
       this.inputEmail = "";
       this.inputUsername = "";
       this.inputPassword = "";
