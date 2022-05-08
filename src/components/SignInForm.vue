@@ -128,7 +128,7 @@
               />
             </template>
             <q-tooltip
-              v-if="openAccountCreation && !$q.platform.is.mobile"
+              v-if="openAccountCreation"
               v-model="showHint"
               anchor="top middle"
               self="bottom middle"
