@@ -320,8 +320,8 @@ export default defineComponent({
         }
       } else {
         this.setLogin(response);
+        setTimeout(() => { this.clearFields() }, 2000);
       }
-      setTimeout(() => { this.clearFields() }, 2000);
     },
 
     async register() {
@@ -341,8 +341,8 @@ export default defineComponent({
       } else {
         this.openAccountCreation = !this.openAccountCreation;
         this.setLogin(response);
+        setTimeout(() => { this.clearFields() }, 2000);
       }
-      setTimeout(() => { this.clearFields() }, 2000);
     },
 
     setLogin(response: any) {
